@@ -5,22 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benelux Ultra Races</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; background-color: #f9f9f9; color: #333; }
-        .race-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 8px; background-color: #fff; }
-        .race-card h2 { margin-top: 0; color: #d9534f; }
-        input { padding: 12px; width: 100%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        input, select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            flex: 1;
+        }
+        select {
+            flex: 0 0 200px;
+            background-color: white;
+            cursor: pointer;
+        }
+        #race-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .race-card {
+            border: 1px solid #e1e8ed;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .race-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .race-card h2 {
+            margin-top: 0;
+            color: #e74c3c;
+            font-size: 1.4em;
+        }
+        .race-card p {
+            margin: 8px 0;
+            color: #555;
+        }
+        .subscribe-btn {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+        .subscribe-btn:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
     <h1>Benelux Ultra Race Directory</h1>
-    <input type="text" id="search" placeholder="Search by country, distance, or race name..." onkeyup="filterRaces()">
+
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search by distance or race name..." onkeyup="filterRaces()">
+        <select id="country-filter" onchange="filterRaces()">
+            <option value="">All Countries</option>
+            <option value="belgium">Belgium</option>
+            <option value="netherlands">Netherlands</option>
+            <option value="luxembourg">Luxembourg</option>
+        </select>
+    </div>
+
     <div id="race-list"></div>
 
     <script>
         const races = [
-            { name: "Bello Gallico", country: "Belgium", distance: "160km", date: "Dec 2026" },
-            { name: "Indian Dutch Divide", country: "Netherlands", distance: "300km", date: "June 2026" },
-            { name: "Mullerthal Ultra", country: "Luxembourg", distance: "112km", date: "Sept 2026" }
+            { name: "Bello Gallico", country: "Belgium", distance: "160km", date: "Dec 2026", url: "https://www.bellogallico.be/" },
+            { name: "Indian Summer Ultra", country: "Netherlands", distance: "75km / 100km", date: "Oct 2026", url: "https://indiansummerultra.nl/home-en/" },
+            { name: "Mullerthal Ultra Trail", country: "Luxembourg", distance: "112km", date: "Sept 2026", url: "https://utml.lu/" },
+            { name: "Flatlands 300 (Gravel)", country: "Netherlands", distance: "300km", date: "TBD", url: "https://www.flatlands300.cc/" },
+            { name: "The Legends Trail", country: "Belgium", distance: "250km", date: "Feb 2026", url: "https://www.legendstrails.com/" }
         ];
 
         function displayRaces(filteredRaces) {
@@ -32,21 +114,25 @@
                 div.innerHTML = `<h2>${race.name}</h2>
                                  <p><strong>Location:</strong> ${race.country}</p>
                                  <p><strong>Distance:</strong> ${race.distance}</p>
-                                 <p><strong>Date:</strong> ${race.date}</p>`;
+                                 <p><strong>Date:</strong> ${race.date}</p>
+                                 <a href="${race.url}" target="_blank" class="subscribe-btn">Subscribe / Info</a>`;
                 container.appendChild(div);
             });
         }
 
         function filterRaces() {
             const query = document.getElementById("search").value.toLowerCase();
-            const filtered = races.filter(r => 
-                r.name.toLowerCase().includes(query) || 
-                r.country.toLowerCase().includes(query) ||
-                r.distance.toLowerCase().includes(query)
-            );
+            const countryFilter = document.getElementById("country-filter").value.toLowerCase();
+
+            const filtered = races.filter(r => {
+                const matchesSearch = r.name.toLowerCase().includes(query) || r.distance.toLowerCase().includes(query);
+                const matchesCountry = countryFilter === "" || r.country.toLowerCase() === countryFilter;
+                return matchesSearch && matchesCountry;
+            });
             displayRaces(filtered);
         }
 
+        // Initial render
         displayRaces(races);
     </script>
 </body>
