@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benelux Ultra Races</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; background-color: #f9f9f9; color: #333; }
+        .race-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 8px; background-color: #fff; }
+        .race-card h2 { margin-top: 0; color: #d9534f; }
+        input { padding: 12px; width: 100%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Benelux Ultra Race Directory</h1>
+    <input type="text" id="search" placeholder="Search by country, distance, or race name..." onkeyup="filterRaces()">
+    <div id="race-list"></div>
+
+    <script>
+        const races = [
+            { name: "Bello Gallico", country: "Belgium", distance: "160km", date: "Dec 2026" },
+            { name: "Indian Dutch Divide", country: "Netherlands", distance: "300km", date: "June 2026" },
+            { name: "Mullerthal Ultra", country: "Luxembourg", distance: "112km", date: "Sept 2026" }
+        ];
+
+        function displayRaces(filteredRaces) {
+            const container = document.getElementById("race-list");
+            container.innerHTML = "";
+            filteredRaces.forEach(race => {
+                const div = document.createElement("div");
+                div.className = "race-card";
+                div.innerHTML = `<h2>${race.name}</h2>
+                                 <p><strong>Location:</strong> ${race.country}</p>
+                                 <p><strong>Distance:</strong> ${race.distance}</p>
+                                 <p><strong>Date:</strong> ${race.date}</p>`;
+                container.appendChild(div);
+            });
+        }
+
+        function filterRaces() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const filtered = races.filter(r => 
+                r.name.toLowerCase().includes(query) || 
+                r.country.toLowerCase().includes(query) ||
+                r.distance.toLowerCase().includes(query)
+            );
+            displayRaces(filtered);
+        }
+
+        displayRaces(races);
+    </script>
+</body>
+</html>
