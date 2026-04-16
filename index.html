@@ -329,6 +329,7 @@
                 allDistances: "All Distances",
                 timedEvents: "Timed Events",
                 showPastRaces: "Show past races",
+                type: "Type:",
                 location: "Location:",
                 distance: "Distance:",
                 date: "Date:",
@@ -351,6 +352,7 @@
                 allDistances: "Alle Afstanden",
                 timedEvents: "Evenementen op Tijd",
                 showPastRaces: "Toon eerdere races",
+                type: "Type:",
                 location: "Locatie:",
                 distance: "Afstand:",
                 date: "Datum:",
@@ -373,6 +375,7 @@
                 allDistances: "Toutes les Distances",
                 timedEvents: "Événements Chronométrés",
                 showPastRaces: "Afficher les courses passées",
+                type: "Type:",
                 location: "Lieu:",
                 distance: "Distance:",
                 date: "Date:",
@@ -438,6 +441,69 @@
             markersLayer.addTo(map);
         }
 
+        function formatRaceName(name) {
+            let raceTypes = [];
+            let cleanName = name;
+
+            // Ordered by priority/length
+            const typePatterns = [
+                "Backyard Ultra", "Backyard", "Ultra Trail", "Trail", "Ultrarun", "Ultra", "Marathon", "Run", "Loop"
+            ];
+
+            for (const t of typePatterns) {
+                // Use regex with word boundaries. Case insensitive.
+                const regex = new RegExp(`\\b${t}\\b`, "i");
+                if (regex.test(cleanName)) {
+                    if (!raceTypes.includes(t)) {
+                        raceTypes.push(t);
+                    }
+                    // Replace all occurrences of this type
+                    cleanName = cleanName.replace(new RegExp(`\\b${t}\\b`, "ig"), "");
+                }
+            }
+
+            // Hardcoded replace for specific compound cases we see
+            const compoundPatterns = ["trailmarathon", "ultramarathon", "ultratrail"];
+            for (const c of compoundPatterns) {
+                const regex = new RegExp(`\\b${c}\\b`, "i");
+                if (regex.test(cleanName)) {
+                    if (c === "trailmarathon") {
+                        if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
+                        if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
+                    } else if (c === "ultramarathon") {
+                        if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
+                        if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
+                    } else if (c === "ultratrail") {
+                        if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
+                        if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
+                    }
+                    cleanName = cleanName.replace(new RegExp(`\\b${c}\\b`, "ig"), "");
+                }
+            }
+
+            // Clean up leftover punctuation and spaces
+            cleanName = cleanName.replace(/\(\s*\)/g, ''); // empty parens
+            cleanName = cleanName.replace(/:\s*$/, ''); // trailing colons
+            cleanName = cleanName.replace(/^:\s*/, ''); // leading colons
+            cleanName = cleanName.replace(/\s+-\s*$/g, ''); // trailing dash
+            cleanName = cleanName.replace(/^\s*-\s+/g, ''); // leading dash
+            cleanName = cleanName.replace(/^-/, ''); // leading dash without spaces
+            cleanName = cleanName.replace(/-\s*variant:\s*/i, ''); // clean up "backyard-variant:" -> "-variant:"
+            cleanName = cleanName.replace(/^variant:\s*/i, ''); // clean up "variant:"
+            cleanName = cleanName.replace(/\s+-\s+/g, ' - '); // fix dashes in middle
+            cleanName = cleanName.replace(/\s{2,}/g, ' '); // multiple spaces
+            cleanName = cleanName.trim();
+
+            // If we stripped everything, revert to original name and no type extracted
+            if (cleanName === "") {
+                cleanName = name;
+                raceTypes = [];
+            }
+
+            let displayType = raceTypes.length > 0 ? raceTypes.join(", ") : "Race";
+            return { name: cleanName, type: displayType };
+        }
+
         function displayRaces(filteredRaces) {
             const container = document.getElementById("race-list");
             container.innerHTML = "";
@@ -452,10 +518,13 @@
                 if (race.country.toLowerCase() === 'netherlands') translatedCountry = i18n[currentLang].netherlands;
                 if (race.country.toLowerCase() === 'luxembourg') translatedCountry = i18n[currentLang].luxembourg;
 
+                const formatted = formatRaceName(race.name);
+
                 // Add card to list
                 const div = document.createElement("div");
                 div.className = "race-card";
-                div.innerHTML = `<h2>${race.name}</h2>
+                div.innerHTML = `<h2>${formatted.name}</h2>
+                                 <p><i class="fas fa-tag"></i> <strong>${i18n[currentLang].type}</strong> ${formatted.type}</p>
                                  <p><i class="fas fa-map-marker-alt"></i> <strong>${i18n[currentLang].location}</strong> ${translatedCountry}</p>
                                  <p><i class="fas fa-route"></i> <strong>${i18n[currentLang].distance}</strong> ${race.distance}</p>
                                  <p><i class="far fa-calendar-alt"></i> <strong>${i18n[currentLang].date}</strong> ${race.date}</p>
