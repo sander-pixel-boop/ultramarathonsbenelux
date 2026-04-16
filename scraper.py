@@ -25,12 +25,27 @@ def scrape_duv():
                     link_tag = cols[1].find('a')
                     link = "https://statistik.d-u-v.org/" + link_tag['href'] if link_tag else ""
 
+                    original_url = link
+                    if link:
+                        try:
+                            event_response = requests.get(link, headers=headers)
+                            event_soup = BeautifulSoup(event_response.content, 'html.parser')
+                            webpage_td = event_soup.find('b', string=lambda t: t and 'Web page:' in t)
+                            if webpage_td:
+                                td_sibling = webpage_td.parent.find_next_sibling('td')
+                                if td_sibling:
+                                    a_tag = td_sibling.find('a')
+                                    if a_tag and a_tag.get('href'):
+                                        original_url = a_tag['href']
+                        except Exception as e:
+                            print(f"Error fetching original url for {link}: {e}")
+
                     all_races.append({
                         "name": name,
                         "country": c_name,
                         "distance": distance,
                         "date": date,
-                        "url": link
+                        "url": original_url
                     })
 
     with open('races.json', 'w') as f:
