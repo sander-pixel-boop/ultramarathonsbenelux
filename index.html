@@ -231,13 +231,7 @@
     </footer>
 
     <script>
-        const races = [
-            { name: "Bello Gallico", country: "Belgium", distance: "160km", date: "Dec 2026", url: "https://www.bellogallico.be/", lat: 50.8503, lng: 4.3517 }, // roughly Belgium center
-            { name: "Indian Summer Ultra", country: "Netherlands", distance: "75km / 100km", date: "Oct 2026", url: "https://indiansummerultra.nl/home-en/", lat: 52.8833, lng: 6.6167 }, // Drenthe/Rolde area
-            { name: "Mullerthal Ultra Trail", country: "Luxembourg", distance: "112km", date: "Sept 2026", url: "https://utml.lu/", lat: 49.8153, lng: 6.3400 }, // Echternach
-            { name: "Flatlands 300 (Gravel)", country: "Netherlands", distance: "300km", date: "TBD", url: "https://www.flatlands300.cc/", lat: 52.1000, lng: 5.1000 }, // Central NL
-            { name: "The Legends Trail", country: "Belgium", distance: "250km", date: "Feb 2026", url: "https://www.legendstrails.com/", lat: 50.0400, lng: 5.6100 } // Ardennes
-        ];
+        let races = [];
 
         let map;
         let markersLayer = L.layerGroup();
@@ -296,9 +290,17 @@
             displayRaces(filtered);
         }
 
-        // Initial render
-        initMap();
-        displayRaces(races);
+        // Fetch data and initial render
+        fetch('races.json')
+            .then(response => response.json())
+            .then(data => {
+                races = data;
+                displayRaces(races);
+            })
+            .catch(error => {
+                console.error("Error loading races data:", error);
+                document.getElementById("race-list").innerHTML = "<p>Error loading races. Please try again later.</p>";
+            });
     </script>
 </body>
 </html>
