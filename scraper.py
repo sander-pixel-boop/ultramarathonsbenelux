@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import re
 
 def scrape_ultraned():
     url = "https://ultraned.org/?post_type=tribe_events"
@@ -47,7 +48,8 @@ def scrape_ultraned():
                 "country": "Netherlands",
                 "distance": "Ultra",
                 "date": date_str,
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping Ultraned: {e}")
@@ -96,7 +98,8 @@ def scrape_hardloopkalender():
                 "country": "Netherlands",
                 "distance": "Ultra",
                 "date": date_str,
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping Hardloopkalender: {e}")
@@ -134,7 +137,8 @@ def scrape_finishers():
                         "country": "Netherlands",
                         "distance": "Ultra",
                         "date": "TBD",
-                        "url": original_url
+                        "url": original_url,
+                        "city": ""
                     })
                 except:
                     pass
@@ -176,7 +180,8 @@ def scrape_trail_running():
                 "country": "Netherlands",
                 "distance": distances,
                 "date": date_str,
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping Trail-running.eu: {e}")
@@ -220,7 +225,8 @@ def scrape_ultraracecalendar():
                 "country": "Unknown",
                 "distance": "Ultra",
                 "date": date_str,
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping ultraracecalendar: {e}")
@@ -261,7 +267,8 @@ def scrape_ahotu():
                 "country": "Belgium",
                 "distance": "Ultra",
                 "date": "TBD",
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping ahotu: {e}")
@@ -288,6 +295,8 @@ def scrape_duv():
                     date = cols[0].text.strip()
                     name = cols[1].text.strip()
                     distance = cols[2].text.strip()
+                    city_raw = cols[3].text.strip()
+                    city = re.sub(r'\s*\([^)]*\)$', '', city_raw).strip()
                     link_tag = cols[1].find('a')
                     link = "https://statistik.d-u-v.org/" + link_tag['href'] if link_tag else ""
 
@@ -311,7 +320,8 @@ def scrape_duv():
                         "country": c_name,
                         "distance": distance,
                         "date": date,
-                        "url": original_url
+                        "url": original_url,
+                        "city": city
                     })
 
     return all_races
