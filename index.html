@@ -386,7 +386,6 @@
                     }
                 }
 
-                return matchesSearch && matchesCountry && matchesYear && matchesMonth && matchesDistance;
                 let matchesDate = true;
                 if (!showPastRaces && r.date) {
                     const parts = r.date.split('.');
@@ -396,7 +395,7 @@
                     }
                 }
 
-                return matchesSearch && matchesCountry && matchesDate;
+                return matchesSearch && matchesCountry && matchesYear && matchesMonth && matchesDistance && matchesDate;
             });
             displayRaces(filtered);
         }
