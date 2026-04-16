@@ -3,50 +3,46 @@ from bs4 import BeautifulSoup
 import json
 import re
 
-def is_ultra_or_timed(name, distance_str):
-    name = str(name).strip().lower()
-    dist = str(distance_str).strip().lower()
+def verify_and_correct_race(race):
+    url = race.get('url', '')
+    if not url or not url.startswith('http'):
+        return race
 
-    if "ultra" in name or "ultra" in dist:
-        return True
+    try:
+        # Use a short timeout so one slow site doesn't block the whole scraper
+        headers = {"User-Agent": "Mozilla/5.0"}
+        response = requests.get(url, headers=headers, timeout=5)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        text = soup.get_text(separator=' ', strip=True)
 
-    if re.search(r'\d+\s*h', dist):
-        return True
+        # Verify / Correct Date
+        current_date = race.get('date', 'TBD')
+        if current_date == 'TBD' or not current_date:
+            date_match = re.search(r'\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b', text)
+            if date_match:
+                race['date'] = date_match.group(0)
+        elif current_date not in text:
+            # Let's see if we can find a date that exists in the text
+            date_match = re.search(r'\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b', text)
+            if date_match:
+                race['date'] = date_match.group(0)
 
-    if re.search(r'\d+\s*h', name):
-        return True
+        # Verify / Correct Distance
+        current_dist = race.get('distance', 'Ultra')
+        if current_dist == 'Ultra' or not current_dist:
+            dist_match = re.search(r'\b\d{2,3}\s*(km|mi|miles)\b', text, re.IGNORECASE)
+            if dist_match:
+                race['distance'] = dist_match.group(0)
+        elif current_dist not in text:
+             dist_match = re.search(r'\b\d{2,3}\s*(km|mi|miles)\b', text, re.IGNORECASE)
+             if dist_match:
+                 race['distance'] = dist_match.group(0)
 
-    if "backyard" in name or "backyard" in dist:
-        return True
+    except Exception as e:
+        # If the original website is unreachable or times out, we just keep what we have.
+        pass
 
-    km_matches = re.findall(r'([\d.]+)\s*km', dist)
-    km_matches += re.findall(r'km\s*([\d.]+)', dist)
-    mi_matches = re.findall(r'([\d.]+)\s*m[il]*e?s?', dist)
-
-    for km in km_matches:
-        try:
-            if float(km) > 42.195:
-                return True
-        except ValueError:
-            pass
-
-    for mi in mi_matches:
-        try:
-            if float(mi) > 26.219:
-                return True
-        except ValueError:
-            pass
-
-    if not km_matches and not mi_matches:
-        numbers = re.findall(r'[\d.]+', dist)
-        for num_str in numbers:
-            try:
-                if float(num_str) > 42.195:
-                    return True
-            except ValueError:
-                pass
-
-    return False
+    return race
 
 def scrape_ultraned():
     url = "https://ultraned.org/?post_type=tribe_events"
@@ -93,7 +89,8 @@ def scrape_ultraned():
                 "country": "Netherlands",
                 "distance": "Ultra",
                 "date": date_str,
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping Ultraned: {e}")
@@ -142,7 +139,8 @@ def scrape_hardloopkalender():
                 "country": "Netherlands",
                 "distance": "Ultra",
                 "date": date_str,
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping Hardloopkalender: {e}")
@@ -180,7 +178,8 @@ def scrape_finishers():
                         "country": "Netherlands",
                         "distance": "Ultra",
                         "date": "TBD",
-                        "url": original_url
+                        "url": original_url,
+                        "city": ""
                     })
                 except:
                     pass
@@ -222,7 +221,8 @@ def scrape_trail_running():
                 "country": "Netherlands",
                 "distance": distances,
                 "date": date_str,
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping Trail-running.eu: {e}")
@@ -266,7 +266,8 @@ def scrape_ultraracecalendar():
                 "country": "Unknown",
                 "distance": "Ultra",
                 "date": date_str,
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping ultraracecalendar: {e}")
@@ -307,7 +308,8 @@ def scrape_ahotu():
                 "country": "Belgium",
                 "distance": "Ultra",
                 "date": "TBD",
-                "url": original_url
+                "url": original_url,
+                "city": ""
             })
     except Exception as e:
         print(f"Error scraping ahotu: {e}")
@@ -334,6 +336,8 @@ def scrape_duv():
                     date = cols[0].text.strip()
                     name = cols[1].text.strip()
                     distance = cols[2].text.strip()
+                    city_raw = cols[3].text.strip()
+                    city = re.sub(r'\s*\([^)]*\)$', '', city_raw).strip()
                     link_tag = cols[1].find('a')
                     link = "https://statistik.d-u-v.org/" + link_tag['href'] if link_tag else ""
 
@@ -357,7 +361,8 @@ def scrape_duv():
                         "country": c_name,
                         "distance": distance,
                         "date": date,
-                        "url": original_url
+                        "url": original_url,
+                        "city": city
                     })
 
     return all_races
@@ -393,12 +398,12 @@ if __name__ == '__main__':
     ahotu_races = scrape_ahotu()
     all_races.extend(ahotu_races)
 
-    filtered_races = []
+    print("Verifying and correcting races...")
+    verified_races = []
     for race in all_races:
-        if is_ultra_or_timed(race.get('name', ''), race.get('distance', '')):
-            filtered_races.append(race)
+        verified_races.append(verify_and_correct_race(race))
 
     with open('races.json', 'w') as f:
-        json.dump(filtered_races, f, indent=4)
+        json.dump(verified_races, f, indent=4)
 
-    print(f"Successfully scraped {len(all_races)} races. Filtered down to {len(filtered_races)} ultra/timed races. Saved to races.json")
+    print(f"Successfully scraped and verified {len(verified_races)} races and saved to races.json")
