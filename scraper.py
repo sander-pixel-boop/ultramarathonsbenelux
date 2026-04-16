@@ -3,6 +3,47 @@ from bs4 import BeautifulSoup
 import json
 import re
 
+def verify_and_correct_race(race):
+    url = race.get('url', '')
+    if not url or not url.startswith('http'):
+        return race
+
+    try:
+        # Use a short timeout so one slow site doesn't block the whole scraper
+        headers = {"User-Agent": "Mozilla/5.0"}
+        response = requests.get(url, headers=headers, timeout=5)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        text = soup.get_text(separator=' ', strip=True)
+
+        # Verify / Correct Date
+        current_date = race.get('date', 'TBD')
+        if current_date == 'TBD' or not current_date:
+            date_match = re.search(r'\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b', text)
+            if date_match:
+                race['date'] = date_match.group(0)
+        elif current_date not in text:
+            # Let's see if we can find a date that exists in the text
+            date_match = re.search(r'\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b', text)
+            if date_match:
+                race['date'] = date_match.group(0)
+
+        # Verify / Correct Distance
+        current_dist = race.get('distance', 'Ultra')
+        if current_dist == 'Ultra' or not current_dist:
+            dist_match = re.search(r'\b\d{2,3}\s*(km|mi|miles)\b', text, re.IGNORECASE)
+            if dist_match:
+                race['distance'] = dist_match.group(0)
+        elif current_dist not in text:
+             dist_match = re.search(r'\b\d{2,3}\s*(km|mi|miles)\b', text, re.IGNORECASE)
+             if dist_match:
+                 race['distance'] = dist_match.group(0)
+
+    except Exception as e:
+        # If the original website is unreachable or times out, we just keep what we have.
+        pass
+
+    return race
+
 def scrape_ultraned():
     url = "https://ultraned.org/?post_type=tribe_events"
     headers = {"User-Agent": "Mozilla/5.0"}
@@ -357,7 +398,12 @@ if __name__ == '__main__':
     ahotu_races = scrape_ahotu()
     all_races.extend(ahotu_races)
 
-    with open('races.json', 'w') as f:
-        json.dump(all_races, f, indent=4)
+    print("Verifying and correcting races...")
+    verified_races = []
+    for race in all_races:
+        verified_races.append(verify_and_correct_race(race))
 
-    print(f"Successfully scraped {len(all_races)} races and saved to races.json")
+    with open('races.json', 'w') as f:
+        json.dump(verified_races, f, indent=4)
+
+    print(f"Successfully scraped and verified {len(verified_races)} races and saved to races.json")
