@@ -254,6 +254,12 @@
                 <option value="100km+">100km+</option>
                 <option value="timed">Timed Events</option>
             </select>
+            <select id="sort-select" class="filter-select" onchange="filterRaces()">
+                <option value="date-asc">Date (Ascending)</option>
+                <option value="date-desc">Date (Descending)</option>
+                <option value="distance-asc">Distance (Ascending)</option>
+                <option value="distance-desc">Distance (Descending)</option>
+            </select>
             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475569; font-weight: 500;">
                 <input type="checkbox" id="show-past-races" onchange="filterRaces()" style="width: auto; padding: 0;">
                 Show past races
@@ -315,6 +321,28 @@
                     markersLayer.addLayer(marker);
                 }
             });
+        }
+
+        function parseDateForSort(dateStr) {
+            if (!dateStr) return 0;
+            const parts = dateStr.split('.');
+            if (parts.length === 3) {
+                return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+            }
+            return 0;
+        }
+
+        function parseDistanceForSort(distStr) {
+            if (!distStr) return 0;
+            distStr = distStr.toLowerCase();
+            let num = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+            if (isNaN(num)) return 0;
+            if (distStr.includes("mi")) {
+                num = num * 1.60934;
+            } else if (distStr.includes("h")) {
+                num = num * 10; // rough estimation for timed events
+            }
+            return num;
         }
 
         function filterRaces() {
@@ -386,7 +414,6 @@
                     }
                 }
 
-                return matchesSearch && matchesCountry && matchesYear && matchesMonth && matchesDistance;
                 let matchesDate = true;
                 if (!showPastRaces && r.date) {
                     const parts = r.date.split('.');
@@ -396,8 +423,23 @@
                     }
                 }
 
-                return matchesSearch && matchesCountry && matchesDate;
+                return matchesSearch && matchesCountry && matchesYear && matchesMonth && matchesDistance && matchesDate;
             });
+
+            const sortOption = document.getElementById("sort-select").value;
+            filtered.sort((a, b) => {
+                if (sortOption.startsWith('date')) {
+                    const dateA = parseDateForSort(a.date);
+                    const dateB = parseDateForSort(b.date);
+                    return sortOption === 'date-asc' ? dateA - dateB : dateB - dateA;
+                } else if (sortOption.startsWith('distance')) {
+                    const distA = parseDistanceForSort(a.distance);
+                    const distB = parseDistanceForSort(b.distance);
+                    return sortOption === 'distance-asc' ? distA - distB : distB - distA;
+                }
+                return 0;
+            });
+
             displayRaces(filtered);
         }
 
