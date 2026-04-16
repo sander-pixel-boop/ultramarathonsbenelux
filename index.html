@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -96,6 +98,15 @@
             background-repeat: no-repeat;
             background-position: right 15px center;
             background-size: 20px;
+        }
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            z-index: 1; /* Keep map below dropdowns if any */
         }
         #race-list {
             display: grid;
@@ -210,6 +221,8 @@
             </select>
         </div>
 
+        <div id="map"></div>
+
         <div id="race-list"></div>
     </div>
 
@@ -220,10 +233,31 @@
     <script>
         let races = [];
 
+        let map;
+        let markersLayer = L.layerGroup();
+
+        function initMap() {
+            // Initialize map centered roughly over Benelux
+            map = L.map('map').setView([51.2, 5.5], 7);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+
+            markersLayer.addTo(map);
+        }
+
         function displayRaces(filteredRaces) {
             const container = document.getElementById("race-list");
             container.innerHTML = "";
+
+            // Clear existing map markers
+            markersLayer.clearLayers();
+
             filteredRaces.forEach(race => {
+                // Add card to list
                 const div = document.createElement("div");
                 div.className = "race-card";
                 div.innerHTML = `<h2>${race.name}</h2>
@@ -234,6 +268,13 @@
                                      Subscribe / Info <i class="fas fa-arrow-right"></i>
                                  </a>`;
                 container.appendChild(div);
+
+                // Add marker to map
+                if (race.lat && race.lng) {
+                    const marker = L.marker([race.lat, race.lng]);
+                    marker.bindPopup(`<b>${race.name}</b><br>${race.distance} - ${race.country}`);
+                    markersLayer.addLayer(marker);
+                }
             });
         }
 
