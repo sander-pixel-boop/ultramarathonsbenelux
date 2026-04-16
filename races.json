@@ -3918,5 +3918,103 @@
         "distance": "Ultra",
         "date": "TBD",
         "url": "https://www.worldhistory.org/trans/fr/1-17645/chateau-de-caernarfon/"
+    },
+    {
+        "name": "Austerlitz Ultra",
+        "country": "Netherlands",
+        "distance": "50",
+        "date": "30 August 2026",
+        "url": "https://www.trail-events.eu/events?searchText=Austerlitz%20ultra"
+    },
+    {
+        "name": "Dutch Backyard Ultra",
+        "country": "Netherlands",
+        "distance": "6",
+        "date": "17 October 2026",
+        "url": "https://www.trail-events.eu/events?category=Backyard%20Ultra"
+    },
+    {
+        "name": "Dutch Backyard Ultra",
+        "country": "Netherlands",
+        "distance": "6",
+        "date": "12 March 2027",
+        "url": "https://www.trail-events.eu/events?category=Backyard%20Ultra"
+    },
+    {
+        "name": "Lage Vuursche Ultra",
+        "country": "Netherlands",
+        "distance": "50",
+        "date": "31 October 2026",
+        "url": "https://www.trail-events.eu/events?searchText=Lage%20vuursche%20ultra"
+    },
+    {
+        "name": "Gelderse Poort Ultra",
+        "country": "Netherlands",
+        "distance": "50",
+        "date": "26 September 2026",
+        "url": "https://www.trail-events.eu/events?searchText=Gelderse%20poort"
+    },
+    {
+        "name": "Hollands Duin Ultra",
+        "country": "Netherlands",
+        "distance": "50",
+        "date": "19 December 2026",
+        "url": "https://www.trail-events.eu/events?searchText=hollands%20duin%20ultra"
+    },
+    {
+        "name": "UHUT100 Winter",
+        "country": "Netherlands",
+        "distance": "50-50-100",
+        "date": "28 November 2026",
+        "url": "https://www.trail-events.eu/events?searchText=uhut"
+    },
+    {
+        "name": "UHUT100 Winter",
+        "country": "Netherlands",
+        "distance": "50-50-100",
+        "date": "29 November 2026",
+        "url": "https://www.trail-events.eu/events?searchText=uhut"
+    },
+    {
+        "name": "Leenderbos Ultra",
+        "country": "Netherlands",
+        "distance": "50",
+        "date": "19 April 2026",
+        "url": "https://www.trail-events.eu/events?searchText=leenderbos%20ultra"
+    },
+    {
+        "name": "Veluwse Ultra Trail (VUT100)",
+        "country": "Netherlands",
+        "distance": "50-75-100",
+        "date": "25 July 2026",
+        "url": "https://www.trail-events.eu/events?searchText=veluwse%20ultra%20trail"
+    },
+    {
+        "name": "Utrechtse Heuvelrug Ultra Trail (UHUT100)",
+        "country": "Netherlands",
+        "distance": "50-50-75-100",
+        "date": "30 May 2026",
+        "url": "https://www.trail-events.eu/events?searchText=uhut"
+    },
+    {
+        "name": "Utrechtse Heuvelrug Ultra Trail (UHUT100)",
+        "country": "Netherlands",
+        "distance": "50-50-75-100",
+        "date": "31 May 2026",
+        "url": "https://www.trail-events.eu/events?searchText=uhut"
+    },
+    {
+        "name": "Brabantse Ultra Trail (BUT100)",
+        "country": "Netherlands",
+        "distance": "50-50-75-100",
+        "date": "27 June 2026",
+        "url": "https://www.trail-events.eu/events?searchText=BUT100"
+    },
+    {
+        "name": "Brabantse Ultra Trail (BUT100)",
+        "country": "Netherlands",
+        "distance": "50-50-75-100",
+        "date": "28 June 2026",
+        "url": "https://www.trail-events.eu/events?searchText=BUT100"
     }
 ]

@@ -1,6 +1,52 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import re
+
+def is_ultra_or_timed(name, distance_str):
+    name = str(name).strip().lower()
+    dist = str(distance_str).strip().lower()
+
+    if "ultra" in name or "ultra" in dist:
+        return True
+
+    if re.search(r'\d+\s*h', dist):
+        return True
+
+    if re.search(r'\d+\s*h', name):
+        return True
+
+    if "backyard" in name or "backyard" in dist:
+        return True
+
+    km_matches = re.findall(r'([\d.]+)\s*km', dist)
+    km_matches += re.findall(r'km\s*([\d.]+)', dist)
+    mi_matches = re.findall(r'([\d.]+)\s*m[il]*e?s?', dist)
+
+    for km in km_matches:
+        try:
+            if float(km) > 42.195:
+                return True
+        except ValueError:
+            pass
+
+    for mi in mi_matches:
+        try:
+            if float(mi) > 26.219:
+                return True
+        except ValueError:
+            pass
+
+    if not km_matches and not mi_matches:
+        numbers = re.findall(r'[\d.]+', dist)
+        for num_str in numbers:
+            try:
+                if float(num_str) > 42.195:
+                    return True
+            except ValueError:
+                pass
+
+    return False
 
 def scrape_ultraned():
     url = "https://ultraned.org/?post_type=tribe_events"
@@ -347,7 +393,12 @@ if __name__ == '__main__':
     ahotu_races = scrape_ahotu()
     all_races.extend(ahotu_races)
 
-    with open('races.json', 'w') as f:
-        json.dump(all_races, f, indent=4)
+    filtered_races = []
+    for race in all_races:
+        if is_ultra_or_timed(race.get('name', ''), race.get('distance', '')):
+            filtered_races.append(race)
 
-    print(f"Successfully scraped {len(all_races)} races and saved to races.json")
+    with open('races.json', 'w') as f:
+        json.dump(filtered_races, f, indent=4)
+
+    print(f"Successfully scraped {len(all_races)} races. Filtered down to {len(filtered_races)} ultra/timed races. Saved to races.json")
