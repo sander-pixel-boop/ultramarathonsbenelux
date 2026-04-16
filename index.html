@@ -63,7 +63,7 @@
         }
         .input-group {
             position: relative;
-            flex: 1;
+            flex: 2;
             min-width: 250px;
         }
         .input-group i {
@@ -75,15 +75,22 @@
         }
         input, select {
             width: 100%;
-            padding: 14px 14px 14px 45px;
+            padding: 14px;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             box-sizing: border-box;
-            font-size: 16px;
+            font-size: 15px;
             font-family: inherit;
             color: #334155;
             transition: all 0.2s ease;
             background-color: #f8fafc;
+        }
+        input {
+            padding-left: 45px;
+        }
+        .filter-select {
+            flex: 1;
+            min-width: 140px;
         }
         input:focus, select:focus {
             outline: none;
@@ -213,11 +220,39 @@
                 <i class="fas fa-search"></i>
                 <input type="text" id="search" placeholder="Search by distance or race name..." onkeyup="filterRaces()">
             </div>
-            <select id="country-filter" onchange="filterRaces()">
+            <select id="country-filter" class="filter-select" onchange="filterRaces()">
                 <option value="">All Countries</option>
                 <option value="belgium">Belgium</option>
                 <option value="netherlands">Netherlands</option>
                 <option value="luxembourg">Luxembourg</option>
+            </select>
+            <select id="year-filter" class="filter-select" onchange="filterRaces()">
+                <option value="">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+            </select>
+            <select id="month-filter" class="filter-select" onchange="filterRaces()">
+                <option value="">All Months</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+            <select id="distance-filter" class="filter-select" onchange="filterRaces()">
+                <option value="">All Distances</option>
+                <option value="<60km">&lt; 60km</option>
+                <option value="60-99km">60 - 99km</option>
+                <option value="100km+">100km+</option>
+                <option value="timed">Timed Events</option>
             </select>
         </div>
 
@@ -281,11 +316,69 @@
         function filterRaces() {
             const query = document.getElementById("search").value.toLowerCase();
             const countryFilter = document.getElementById("country-filter").value.toLowerCase();
+            const yearFilter = document.getElementById("year-filter").value;
+            const monthFilter = document.getElementById("month-filter").value;
+            const distanceFilter = document.getElementById("distance-filter").value;
 
             const filtered = races.filter(r => {
                 const matchesSearch = r.name.toLowerCase().includes(query) || r.distance.toLowerCase().includes(query);
                 const matchesCountry = countryFilter === "" || r.country.toLowerCase() === countryFilter;
-                return matchesSearch && matchesCountry;
+
+                // Parse Date (DD.MM.YYYY)
+                let matchesYear = true;
+                let matchesMonth = true;
+                if (yearFilter !== "" || monthFilter !== "") {
+                    if (r.date) {
+                        const parts = r.date.split('.');
+                        if (parts.length === 3) {
+                            const rDay = parts[0];
+                            const rMonth = parts[1];
+                            const rYear = parts[2];
+
+                            if (yearFilter !== "") {
+                                matchesYear = (rYear === yearFilter);
+                            }
+                            if (monthFilter !== "") {
+                                matchesMonth = (rMonth === monthFilter);
+                            }
+                        } else {
+                            // Date exists but malformed
+                            matchesYear = (yearFilter === "");
+                            matchesMonth = (monthFilter === "");
+                        }
+                    } else {
+                        // Missing date
+                        matchesYear = (yearFilter === "");
+                        matchesMonth = (monthFilter === "");
+                    }
+                }
+
+                // Parse Distance
+                let matchesDistance = true;
+                if (distanceFilter !== "") {
+                    const distStr = r.distance.toLowerCase();
+                    if (distanceFilter === "timed") {
+                        matchesDistance = distStr.includes("h");
+                    } else if (distStr.includes("km") || distStr.includes("mi")) {
+                        // Extract number
+                        let num = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+                        if (distStr.includes("mi")) {
+                            num = num * 1.60934; // Convert miles to km
+                        }
+
+                        if (distanceFilter === "<60km") {
+                            matchesDistance = num < 60;
+                        } else if (distanceFilter === "60-99km") {
+                            matchesDistance = num >= 60 && num < 100;
+                        } else if (distanceFilter === "100km+") {
+                            matchesDistance = num >= 100;
+                        }
+                    } else {
+                        matchesDistance = false;
+                    }
+                }
+
+                return matchesSearch && matchesCountry && matchesYear && matchesMonth && matchesDistance;
             });
             displayRaces(filtered);
         }
