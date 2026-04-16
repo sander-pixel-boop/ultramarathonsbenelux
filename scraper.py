@@ -274,7 +274,7 @@ def scrape_duv():
 
     for c_code, c_name in countries.items():
         # Scrape for current year and future
-        for year in ['2024', '2025', '2026']:
+        for year in ['2024', '2025', '2026', '2027']:
             url = f"https://statistik.d-u-v.org/calendar.php?year={year}&country={c_code}"
             headers = {"User-Agent": "Mozilla/5.0"}
             response = requests.get(url, headers=headers)
