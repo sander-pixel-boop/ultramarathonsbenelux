@@ -444,6 +444,7 @@
         }
 
         // Fetch data and initial render
+        initMap();
         fetch('races.json')
             .then(response => response.json())
             .then(data => {
