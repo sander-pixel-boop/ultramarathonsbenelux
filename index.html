@@ -218,13 +218,7 @@
     </footer>
 
     <script>
-        const races = [
-            { name: "Bello Gallico", country: "Belgium", distance: "160km", date: "Dec 2026", url: "https://www.bellogallico.be/" },
-            { name: "Indian Summer Ultra", country: "Netherlands", distance: "75km / 100km", date: "Oct 2026", url: "https://indiansummerultra.nl/home-en/" },
-            { name: "Mullerthal Ultra Trail", country: "Luxembourg", distance: "112km", date: "Sept 2026", url: "https://utml.lu/" },
-            { name: "Flatlands 300 (Gravel)", country: "Netherlands", distance: "300km", date: "TBD", url: "https://www.flatlands300.cc/" },
-            { name: "The Legends Trail", country: "Belgium", distance: "250km", date: "Feb 2026", url: "https://www.legendstrails.com/" }
-        ];
+        let races = [];
 
         function displayRaces(filteredRaces) {
             const container = document.getElementById("race-list");
@@ -255,8 +249,17 @@
             displayRaces(filtered);
         }
 
-        // Initial render
-        displayRaces(races);
+        // Fetch data and initial render
+        fetch('races.json')
+            .then(response => response.json())
+            .then(data => {
+                races = data;
+                displayRaces(races);
+            })
+            .catch(error => {
+                console.error("Error loading races data:", error);
+                document.getElementById("race-list").innerHTML = "<p>Error loading races. Please try again later.</p>";
+            });
     </script>
 </body>
 </html>
