@@ -254,6 +254,10 @@
                 <option value="100km+">100km+</option>
                 <option value="timed">Timed Events</option>
             </select>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475569; font-weight: 500;">
+                <input type="checkbox" id="show-past-races" onchange="filterRaces()" style="width: auto; padding: 0;">
+                Show past races
+            </label>
         </div>
 
         <div id="map"></div>
@@ -319,6 +323,10 @@
             const yearFilter = document.getElementById("year-filter").value;
             const monthFilter = document.getElementById("month-filter").value;
             const distanceFilter = document.getElementById("distance-filter").value;
+            const showPastRaces = document.getElementById("show-past-races").checked;
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
 
             const filtered = races.filter(r => {
                 const matchesSearch = r.name.toLowerCase().includes(query) || r.distance.toLowerCase().includes(query);
@@ -379,6 +387,16 @@
                 }
 
                 return matchesSearch && matchesCountry && matchesYear && matchesMonth && matchesDistance;
+                let matchesDate = true;
+                if (!showPastRaces && r.date) {
+                    const parts = r.date.split('.');
+                    if (parts.length === 3) {
+                        const raceDate = new Date(parts[2], parts[1] - 1, parts[0]);
+                        matchesDate = raceDate >= today;
+                    }
+                }
+
+                return matchesSearch && matchesCountry && matchesDate;
             });
             displayRaces(filtered);
         }
@@ -388,7 +406,7 @@
             .then(response => response.json())
             .then(data => {
                 races = data;
-                displayRaces(races);
+                filterRaces();
             })
             .catch(error => {
                 console.error("Error loading races data:", error);
