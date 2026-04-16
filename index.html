@@ -210,53 +210,58 @@
 </head>
 <body>
     <div class="hero">
-        <h1>Benelux Ultra Race Directory</h1>
-        <p>Discover the toughest footraces and gravel events across Belgium, Netherlands, and Luxembourg.</p>
+        <h1 data-i18n="title">Benelux Ultra Race Directory</h1>
+        <p data-i18n="subtitle">Discover the toughest footraces and gravel events across Belgium, Netherlands, and Luxembourg.</p>
     </div>
 
     <div class="container">
         <div class="controls">
+            <select id="language-selector" class="filter-select" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="nl">Nederlands</option>
+                <option value="fr">Français</option>
+            </select>
             <div class="input-group">
                 <i class="fas fa-search"></i>
-                <input type="text" id="search" placeholder="Search by distance or race name..." onkeyup="filterRaces()">
+                <input type="text" id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search by distance or race name..." onkeyup="filterRaces()">
             </div>
             <select id="country-filter" class="filter-select" onchange="filterRaces()">
-                <option value="">All Countries</option>
-                <option value="belgium">Belgium</option>
-                <option value="netherlands">Netherlands</option>
-                <option value="luxembourg">Luxembourg</option>
+                <option value="" data-i18n="allCountries">All Countries</option>
+                <option value="belgium" data-i18n="belgium">Belgium</option>
+                <option value="netherlands" data-i18n="netherlands">Netherlands</option>
+                <option value="luxembourg" data-i18n="luxembourg">Luxembourg</option>
             </select>
             <select id="year-filter" class="filter-select" onchange="filterRaces()">
-                <option value="">All Years</option>
+                <option value="" data-i18n="allYears">All Years</option>
                 <option value="2024">2024</option>
                 <option value="2025">2025</option>
                 <option value="2026">2026</option>
             </select>
             <select id="month-filter" class="filter-select" onchange="filterRaces()">
-                <option value="">All Months</option>
-                <option value="01">January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
+                <option value="" data-i18n="allMonths">All Months</option>
+                <option value="01" data-i18n="jan">January</option>
+                <option value="02" data-i18n="feb">February</option>
+                <option value="03" data-i18n="mar">March</option>
+                <option value="04" data-i18n="apr">April</option>
+                <option value="05" data-i18n="may">May</option>
+                <option value="06" data-i18n="jun">June</option>
+                <option value="07" data-i18n="jul">July</option>
+                <option value="08" data-i18n="aug">August</option>
+                <option value="09" data-i18n="sep">September</option>
+                <option value="10" data-i18n="oct">October</option>
+                <option value="11" data-i18n="nov">November</option>
+                <option value="12" data-i18n="dec">December</option>
             </select>
             <select id="distance-filter" class="filter-select" onchange="filterRaces()">
-                <option value="">All Distances</option>
+                <option value="" data-i18n="allDistances">All Distances</option>
                 <option value="<60km">&lt; 60km</option>
                 <option value="60-99km">60 - 99km</option>
                 <option value="100km+">100km+</option>
-                <option value="timed">Timed Events</option>
+                <option value="timed" data-i18n="timedEvents">Timed Events</option>
             </select>
             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475569; font-weight: 500;">
                 <input type="checkbox" id="show-past-races" onchange="filterRaces()" style="width: auto; padding: 0;">
-                Show past races
+                <span data-i18n="showPastRaces">Show past races</span>
             </label>
         </div>
 
@@ -266,10 +271,108 @@
     </div>
 
     <footer>
-        <p>Made with <i class="fas fa-heart"></i> for the ultra running community</p>
+        <p><span data-i18n="footerText">Made with</span> <i class="fas fa-heart"></i> <span data-i18n="footerCommunity">for the ultra running community</span></p>
     </footer>
 
     <script>
+        const i18n = {
+            en: {
+                title: "Benelux Ultra Race Directory",
+                subtitle: "Discover the toughest footraces and gravel events across Belgium, Netherlands, and Luxembourg.",
+                searchPlaceholder: "Search by distance or race name...",
+                allCountries: "All Countries",
+                belgium: "Belgium",
+                netherlands: "Netherlands",
+                luxembourg: "Luxembourg",
+                allYears: "All Years",
+                allMonths: "All Months",
+                jan: "January", feb: "February", mar: "March", apr: "April", may: "May", jun: "June",
+                jul: "July", aug: "August", sep: "September", oct: "October", nov: "November", dec: "December",
+                allDistances: "All Distances",
+                timedEvents: "Timed Events",
+                showPastRaces: "Show past races",
+                location: "Location:",
+                distance: "Distance:",
+                date: "Date:",
+                subscribe: "Subscribe / Info",
+                footerText: "Made with",
+                footerCommunity: "for the ultra running community"
+            },
+            nl: {
+                title: "Benelux Ultra Race Gids",
+                subtitle: "Ontdek de zwaarste hardloop- en gravel-evenementen in België, Nederland en Luxemburg.",
+                searchPlaceholder: "Zoek op afstand of naam...",
+                allCountries: "Alle Landen",
+                belgium: "België",
+                netherlands: "Nederland",
+                luxembourg: "Luxemburg",
+                allYears: "Alle Jaren",
+                allMonths: "Alle Maanden",
+                jan: "Januari", feb: "Februari", mar: "Maart", apr: "April", may: "Mei", jun: "Juni",
+                jul: "Juli", aug: "Augustus", sep: "September", oct: "Oktober", nov: "November", dec: "December",
+                allDistances: "Alle Afstanden",
+                timedEvents: "Evenementen op Tijd",
+                showPastRaces: "Toon eerdere races",
+                location: "Locatie:",
+                distance: "Afstand:",
+                date: "Datum:",
+                subscribe: "Inschrijven / Info",
+                footerText: "Gemaakt met",
+                footerCommunity: "voor de ultra hardloop gemeenschap"
+            },
+            fr: {
+                title: "Annuaire des Ultra Courses du Benelux",
+                subtitle: "Découvrez les courses à pied et événements gravel les plus difficiles de Belgique, des Pays-Bas et du Luxembourg.",
+                searchPlaceholder: "Rechercher par distance ou nom...",
+                allCountries: "Tous les Pays",
+                belgium: "Belgique",
+                netherlands: "Pays-Bas",
+                luxembourg: "Luxembourg",
+                allYears: "Toutes les Années",
+                allMonths: "Tous les Mois",
+                jan: "Janvier", feb: "Février", mar: "Mars", apr: "Avril", may: "Mai", jun: "Juin",
+                jul: "Juillet", aug: "Août", sep: "Septembre", oct: "Octobre", nov: "Novembre", dec: "Décembre",
+                allDistances: "Toutes les Distances",
+                timedEvents: "Événements Chronométrés",
+                showPastRaces: "Afficher les courses passées",
+                location: "Lieu:",
+                distance: "Distance:",
+                date: "Date:",
+                subscribe: "S'inscrire / Info",
+                footerText: "Fait avec",
+                footerCommunity: "pour la communauté de l'ultra course"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function changeLanguage() {
+            currentLang = document.getElementById("language-selector").value;
+
+            // Update static elements with data-i18n
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang] && i18n[currentLang][key]) {
+                    el.textContent = i18n[currentLang][key];
+                }
+            });
+
+            // Update placeholders
+            const inputs = document.querySelectorAll('[data-i18n-placeholder]');
+            inputs.forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (i18n[currentLang] && i18n[currentLang][key]) {
+                    el.setAttribute('placeholder', i18n[currentLang][key]);
+                }
+            });
+
+            // Re-render dynamic content
+            if (races.length > 0) {
+                filterRaces();
+            }
+        }
+
         let races = [];
 
         let map;
@@ -296,22 +399,28 @@
             markersLayer.clearLayers();
 
             filteredRaces.forEach(race => {
+                // Helper to translate country
+                let translatedCountry = race.country;
+                if (race.country.toLowerCase() === 'belgium') translatedCountry = i18n[currentLang].belgium;
+                if (race.country.toLowerCase() === 'netherlands') translatedCountry = i18n[currentLang].netherlands;
+                if (race.country.toLowerCase() === 'luxembourg') translatedCountry = i18n[currentLang].luxembourg;
+
                 // Add card to list
                 const div = document.createElement("div");
                 div.className = "race-card";
                 div.innerHTML = `<h2>${race.name}</h2>
-                                 <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> ${race.country}</p>
-                                 <p><i class="fas fa-route"></i> <strong>Distance:</strong> ${race.distance}</p>
-                                 <p><i class="far fa-calendar-alt"></i> <strong>Date:</strong> ${race.date}</p>
+                                 <p><i class="fas fa-map-marker-alt"></i> <strong>${i18n[currentLang].location}</strong> ${translatedCountry}</p>
+                                 <p><i class="fas fa-route"></i> <strong>${i18n[currentLang].distance}</strong> ${race.distance}</p>
+                                 <p><i class="far fa-calendar-alt"></i> <strong>${i18n[currentLang].date}</strong> ${race.date}</p>
                                  <a href="${race.url}" target="_blank" class="subscribe-btn">
-                                     Subscribe / Info <i class="fas fa-arrow-right"></i>
+                                     ${i18n[currentLang].subscribe} <i class="fas fa-arrow-right"></i>
                                  </a>`;
                 container.appendChild(div);
 
                 // Add marker to map
                 if (race.lat && race.lng) {
                     const marker = L.marker([race.lat, race.lng]);
-                    marker.bindPopup(`<b>${race.name}</b><br>${race.distance} - ${race.country}`);
+                    marker.bindPopup(`<b>${race.name}</b><br>${race.distance} - ${translatedCountry}`);
                     markersLayer.addLayer(marker);
                 }
             });
