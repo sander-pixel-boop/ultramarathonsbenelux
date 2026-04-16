@@ -206,9 +206,46 @@
         footer i {
             color: #ef4444;
         }
+
+        .language-flags {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .language-flags .flag {
+            width: 30px;
+            height: auto;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.2s ease;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .language-flags .flag:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .language-flags .flag.active {
+            opacity: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            border: 2px solid white;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
+    <div class="language-flags">
+        <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" class="flag active" onclick="changeLanguage('en')">
+        <img src="https://flagcdn.com/w40/nl.png" alt="Nederlands" title="Nederlands" class="flag" onclick="changeLanguage('nl')">
+        <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" class="flag" onclick="changeLanguage('fr')">
+    </div>
+
     <div class="hero">
         <h1 data-i18n="title">Benelux Ultra Race Directory</h1>
         <p data-i18n="subtitle">Discover the toughest footraces and gravel events across Belgium, Netherlands, and Luxembourg.</p>
@@ -216,11 +253,6 @@
 
     <div class="container">
         <div class="controls">
-            <select id="language-selector" class="filter-select" onchange="changeLanguage()">
-                <option value="en">English</option>
-                <option value="nl">Nederlands</option>
-                <option value="fr">Français</option>
-            </select>
             <div class="input-group">
                 <i class="fas fa-search"></i>
                 <input type="text" id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search by distance or race name..." onkeyup="filterRaces()">
@@ -352,8 +384,17 @@
 
         let currentLang = 'en';
 
-        function changeLanguage() {
-            currentLang = document.getElementById("language-selector").value;
+        function changeLanguage(lang) {
+            currentLang = lang;
+
+            // Update active flag UI
+            document.querySelectorAll('.language-flags .flag').forEach(flag => {
+                flag.classList.remove('active');
+            });
+            const clickedFlag = document.querySelector(`.language-flags .flag[onclick="changeLanguage('${lang}')"]`);
+            if (clickedFlag) {
+                clickedFlag.classList.add('active');
+            }
 
             // Update static elements with data-i18n
             const elements = document.querySelectorAll('[data-i18n]');
