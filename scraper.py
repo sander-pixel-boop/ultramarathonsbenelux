@@ -2,6 +2,41 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import re
+import time
+
+GEO_CACHE = {}
+
+def geocode(city, country):
+    if not city:
+        return None, None
+
+    query = f"{city}, {country}"
+    if query in GEO_CACHE:
+        return GEO_CACHE[query]
+
+    url = "https://nominatim.openstreetmap.org/search"
+    headers = {"User-Agent": "BeneluxUltraRacesScraper/1.0"}
+    params = {
+        "city": city,
+        "country": country,
+        "format": "json",
+        "limit": 1
+    }
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        data = response.json()
+        if data:
+            lat = float(data[0]["lat"])
+            lon = float(data[0]["lon"])
+            GEO_CACHE[query] = (lat, lon)
+            time.sleep(1) # Be nice to Nominatim API
+            return lat, lon
+    except Exception as e:
+        print(f"Error geocoding {query}: {e}")
+
+    GEO_CACHE[query] = (None, None)
+    time.sleep(1)
+    return None, None
 
 def verify_and_correct_race(race):
     url = race.get('url', '')
@@ -402,6 +437,14 @@ if __name__ == '__main__':
     verified_races = []
     for race in all_races:
         verified_races.append(verify_and_correct_race(race))
+
+    print("Geocoding races...")
+    for race in verified_races:
+        if race.get('city'):
+            lat, lon = geocode(race.get('city', ''), race.get('country', ''))
+            if lat is not None and lon is not None:
+                race['lat'] = lat
+                race['lng'] = lon
 
     with open('races.json', 'w') as f:
         json.dump(verified_races, f, indent=4)
