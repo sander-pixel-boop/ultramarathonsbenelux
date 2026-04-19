@@ -523,10 +523,13 @@
                     locationStr = `${race.city}, ${translatedCountry}`;
                 }
 
+                const formattedRace = formatRaceName(race.name);
+
                 // Add card to list
                 const div = document.createElement("div");
                 div.className = "race-card";
-                div.innerHTML = `<h2>${race.name}</h2>
+                div.innerHTML = `<h2>${formattedRace.name}</h2>
+                                 <p><i class="fas fa-running"></i> <strong>${i18n[currentLang].type}</strong> ${formattedRace.type}</p>
                                  <p><i class="fas fa-map-marker-alt"></i> <strong>${i18n[currentLang].location}</strong> ${locationStr}</p>
                                  <p><i class="fas fa-route"></i> <strong>${i18n[currentLang].distance}</strong> ${race.distance}</p>
                                  <p><i class="far fa-calendar-alt"></i> <strong>${i18n[currentLang].date}</strong> ${race.date}</p>
@@ -538,7 +541,7 @@
                 // Add marker to map
                 if (race.lat && race.lng) {
                     const marker = L.marker([race.lat, race.lng]);
-                    marker.bindPopup(`<b>${race.name}</b><br>${race.distance} - ${translatedCountry}`);
+                    marker.bindPopup(`<b>${formattedRace.name}</b><br>${race.distance} - ${translatedCountry}`);
                     markersLayer.addLayer(marker);
                 }
             });
