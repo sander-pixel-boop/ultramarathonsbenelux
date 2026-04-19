@@ -6,14 +6,14 @@ This project displays a calendar of ultramarathons in the Benelux region. The da
 
 Install the required dependencies for the scraper:
 ```bash
-pip install -r requirements.txt
+npm install
 ```
 
 ## Running the Scraper
 
 To fetch the latest race data, run:
 ```bash
-python scraper.py
+npm run build
 ```
 This will automatically parse the latest data and store it in `races.json`.
 

@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "build": "node scraper.js"
+  },
   "dependencies": {
+    "cheerio": "^1.2.0",
     "jsdom": "^29.0.2",
     "puppeteer": "^24.41.0"
   }
