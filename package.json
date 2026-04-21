@@ -1,10 +1,18 @@
 {
   "scripts": {
-    "build": "node scraper.js"
+    "dev": "next dev",
+    "build": "node scraper.js && next build",
+    "start": "next start"
   },
   "dependencies": {
     "cheerio": "^1.2.0",
     "jsdom": "^29.0.2",
-    "puppeteer": "^24.41.0"
+    "leaflet": "^1.9.4",
+    "next": "^16.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.42.0"
   }
 }

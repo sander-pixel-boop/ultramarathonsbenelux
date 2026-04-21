@@ -1,0 +1,226 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8fafc;
+    color: #334155;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+.hero {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.hero h1 {
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+.hero p {
+    margin-top: 15px;
+    font-size: 1.1em;
+    color: #cbd5e1;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.controls {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    flex-wrap: wrap;
+}
+.input-group {
+    position: relative;
+    flex: 2;
+    min-width: 250px;
+}
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+input, select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-family: inherit;
+    color: #334155;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+}
+input {
+    padding-left: 45px;
+}
+.filter-select {
+    flex: 1;
+    min-width: 140px;
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background-color: white;
+}
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+}
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    z-index: 1; /* Keep map below dropdowns if any */
+}
+#race-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+.race-card {
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+.race-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.race-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.race-card:hover::before {
+    opacity: 1;
+}
+.race-card h2 {
+    margin-top: 0;
+    color: #0f172a;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+.race-card p {
+    margin: 10px 0;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.race-card p i {
+    color: #64748b;
+    width: 20px;
+    text-align: center;
+}
+.race-card p strong {
+    color: #334155;
+    font-weight: 500;
+}
+.subscribe-btn {
+    margin-top: auto;
+    padding: 12px 20px;
+    background-color: #3b82f6;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+}
+.subscribe-btn:hover {
+    background-color: #2563eb;
+}
+.subscribe-btn:active {
+    transform: scale(0.98);
+}
+footer {
+    text-align: center;
+    padding: 30px;
+    background-color: #0f172a;
+    color: #94a3b8;
+    margin-top: 60px;
+    font-size: 0.9em;
+}
+footer i {
+    color: #ef4444;
+}
+
+.language-flags {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.language-flags .flag {
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.language-flags .flag:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+.language-flags .flag.active {
+    opacity: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    border: 2px solid white;
+    transform: scale(1.1);
+}
