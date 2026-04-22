@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
   const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   const page = await browser.newPage();
 
-  await page.goto('http://localhost:8000/index.html', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:8000/', { waitUntil: 'networkidle0' });
 
   const raceCards = await page.$$eval('.race-card', cards => {
     return cards.map(card => {
