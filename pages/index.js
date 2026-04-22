@@ -180,6 +180,7 @@ export default function Home({ initialRaces }) {
     const [distanceFilter, setDistanceFilter] = useState('');
     const [sortSelect, setSortSelect] = useState('date-asc');
     const [showPastRaces, setShowPastRaces] = useState(false);
+    const [selectedRace, setSelectedRace] = useState(null);
 
     const t = i18n[lang];
 
@@ -351,24 +352,37 @@ export default function Home({ initialRaces }) {
                         const formattedRace = formatRaceName(race.name);
 
                         return (
-                            <div key={idx} className="race-card">
+                            <div key={idx} className="race-card" onClick={() => setSelectedRace({ ...race, formattedRace, locationStr })}>
                                 <h2>{formattedRace.name}</h2>
                                 <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {formattedRace.type}</p>
                                 <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {locationStr}</p>
                                 <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {race.distance}</p>
                                 <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {race.date}</p>
-
-                                <FinishTimeCalculator race={race} t={t} />
-                                <PackYourBag race={race} t={t} />
-
-                                <a href={race.url} target="_blank" rel="noopener noreferrer" className="subscribe-btn">
-                                    {t.subscribe} <i className="fas fa-arrow-right"></i>
-                                </a>
                             </div>
                         );
                     })}
                 </div>
             </div>
+
+            {selectedRace && (
+                <div className="modal-overlay" onClick={() => setSelectedRace(null)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="modal-close" onClick={() => setSelectedRace(null)}>&times;</button>
+                        <h2>{selectedRace.formattedRace.name}</h2>
+                        <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {selectedRace.formattedRace.type}</p>
+                        <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {selectedRace.locationStr}</p>
+                        <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {selectedRace.distance}</p>
+                        <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {selectedRace.date}</p>
+
+                        <FinishTimeCalculator race={selectedRace} t={t} />
+                        <PackYourBag race={selectedRace} t={t} />
+
+                        <a href={selectedRace.url} target="_blank" rel="noopener noreferrer" className="subscribe-btn" style={{ marginTop: '20px', width: '100%', boxSizing: 'border-box' }}>
+                            {t.subscribe} <i className="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            )}
 
             <footer>
                 <p><span>{t.footerText}</span> <i className="fas fa-heart"></i> <span>{t.footerCommunity}</span></p>

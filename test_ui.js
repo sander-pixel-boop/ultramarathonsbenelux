@@ -14,7 +14,33 @@ const puppeteer = require('puppeteer');
     });
   });
 
-  console.log(JSON.stringify(raceCards.slice(0, 5), null, 2));
+  console.log('Race Cards Content (First 2):', JSON.stringify(raceCards.slice(0, 2), null, 2));
+
+  // Click the first race card to open modal
+  await page.click('.race-card');
+
+  // Wait for the modal to be visible
+  await page.waitForSelector('.modal-overlay', { visible: true });
+
+  // Check modal contents
+  const modalData = await page.$eval('.modal-content', modal => {
+    const title = modal.querySelector('h2').innerText;
+    const subscribeBtn = modal.querySelector('.subscribe-btn');
+    return {
+      title,
+      hasSubscribeButton: !!subscribeBtn
+    };
+  });
+
+  console.log('Modal Data:', modalData);
+
+  // Close the modal
+  await page.click('.modal-close');
+
+  // Wait for modal to disappear
+  await page.waitForSelector('.modal-overlay', { hidden: true });
+
+  console.log('Modal closed successfully.');
 
   await browser.close();
 })();
