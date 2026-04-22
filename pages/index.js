@@ -168,6 +168,8 @@ function parseDistanceForSort(distStr) {
 // Map Component - loaded dynamically without SSR
 const Map = dynamic(() => import('../components/Map'), { ssr: false });
 
+import FinishTimeCalculator from '../components/FinishTimeCalculator';
+
 export default function Home({ initialRaces }) {
     const [lang, setLang] = useState('en');
     const [search, setSearch] = useState('');
@@ -354,6 +356,9 @@ export default function Home({ initialRaces }) {
                                 <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {locationStr}</p>
                                 <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {race.distance}</p>
                                 <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {race.date}</p>
+
+                                <FinishTimeCalculator race={race} t={t} />
+
                                 <a href={race.url} target="_blank" rel="noopener noreferrer" className="subscribe-btn">
                                     {t.subscribe} <i className="fas fa-arrow-right"></i>
                                 </a>
