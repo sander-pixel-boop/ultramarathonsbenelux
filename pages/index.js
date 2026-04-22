@@ -169,6 +169,7 @@ function parseDistanceForSort(distStr) {
 const Map = dynamic(() => import('../components/Map'), { ssr: false });
 
 import FinishTimeCalculator from '../components/FinishTimeCalculator';
+import PackYourBag from '../components/PackYourBag';
 
 export default function Home({ initialRaces }) {
     const [lang, setLang] = useState('en');
@@ -358,6 +359,7 @@ export default function Home({ initialRaces }) {
                                 <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {race.date}</p>
 
                                 <FinishTimeCalculator race={race} t={t} />
+                                <PackYourBag race={race} t={t} />
 
                                 <a href={race.url} target="_blank" rel="noopener noreferrer" className="subscribe-btn">
                                     {t.subscribe} <i className="fas fa-arrow-right"></i>
