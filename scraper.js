@@ -41,8 +41,9 @@ async function geocode(city, country) {
     url.searchParams.append("limit", "1");
 
     try {
-        const response = await fetch(url.toString(), {
-            headers: { "User-Agent": "BeneluxUltraRacesScraper/1.0" }
+        const response = await fetchWithTimeout(url.toString(), {
+            headers: { "User-Agent": "BeneluxUltraRacesScraper/1.0" },
+            timeout: 10000
         });
         const data = await response.json();
 
@@ -115,7 +116,7 @@ async function scrape_ultraned() {
     const headers = { "User-Agent": "Mozilla/5.0" };
     const races = [];
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
         const html = await response.text();
         const $ = cheerio.load(html);
 
@@ -148,7 +149,7 @@ async function scrape_ultraned() {
             let original_url = event_url;
             try {
                 if (event_url) {
-                    const event_page = await fetch(event_url, { headers });
+                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
                     const event_html = await event_page.text();
                     const event_soup = cheerio.load(event_html);
 
@@ -187,7 +188,7 @@ async function scrape_hardloopkalender() {
     const headers = { "User-Agent": "Mozilla/5.0" };
     const races = [];
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
         const html = await response.text();
         const $ = cheerio.load(html);
 
@@ -216,7 +217,7 @@ async function scrape_hardloopkalender() {
             let original_url = full_url;
 
             try {
-                const event_page = await fetch(full_url, { headers });
+                const event_page = await fetchWithTimeout(full_url, { headers, timeout: 15000 });
                 const event_html = await event_page.text();
                 const event_soup = cheerio.load(event_html);
 
@@ -254,7 +255,7 @@ async function scrape_finishers() {
     const headers = { "User-Agent": "Mozilla/5.0" };
     const races = [];
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
         const html = await response.text();
         const $ = cheerio.load(html);
 
@@ -269,7 +270,7 @@ async function scrape_finishers() {
                 let original_url = full_url;
 
                 try {
-                    const event_page = await fetch(full_url, { headers });
+                    const event_page = await fetchWithTimeout(full_url, { headers, timeout: 15000 });
                     const event_html = await event_page.text();
                     const event_soup = cheerio.load(event_html);
 
@@ -306,7 +307,7 @@ async function scrape_trail_running() {
     const headers = { "User-Agent": "Mozilla/5.0" };
     const races = [];
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
         if (response.status === 403) return races;
 
         const data = await response.json();
@@ -321,7 +322,7 @@ async function scrape_trail_running() {
             let original_url = event_url;
             try {
                 if (event_url) {
-                    const event_page = await fetch(event_url, { headers });
+                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
                     const event_html = await event_page.text();
                     const event_soup = cheerio.load(event_html);
 
@@ -355,7 +356,7 @@ async function scrape_ultraracecalendar() {
     const headers = { "User-Agent": "Mozilla/5.0" };
     const races = [];
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
         if (response.status === 403) {
             console.log("Ultraracecalendar returned 403 - blocked by Cloudflare");
             return races;
@@ -378,7 +379,7 @@ async function scrape_ultraracecalendar() {
 
             if (event_url) {
                 try {
-                    const event_page = await fetch(event_url, { headers });
+                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
                     const event_html = await event_page.text();
                     const event_soup = cheerio.load(event_html);
 
@@ -412,7 +413,7 @@ async function scrape_ahotu() {
     const headers = { "User-Agent": "Mozilla/5.0" };
     const races = [];
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
         if (response.status === 403) {
             console.log("Ahotu returned 403 - blocked by Cloudflare");
             return races;
@@ -432,7 +433,7 @@ async function scrape_ahotu() {
                     event_url = 'https://www.ahotu.com' + event_url;
                 }
                 try {
-                    const event_page = await fetch(event_url, { headers });
+                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
                     const event_html = await event_page.text();
                     const event_soup = cheerio.load(event_html);
 
@@ -470,7 +471,7 @@ async function scrape_duv() {
         for (const year of ['2024', '2025', '2026', '2027']) {
             const url = `https://statistik.d-u-v.org/calendar.php?year=${year}&country=${c_code}`;
             try {
-                const response = await fetch(url, { headers });
+                const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
                 const html = await response.text();
                 const $ = cheerio.load(html);
 
@@ -495,7 +496,7 @@ async function scrape_duv() {
                             let original_url = link;
                             if (link) {
                                 try {
-                                    const event_response = await fetch(link, { headers });
+                                    const event_response = await fetchWithTimeout(link, { headers, timeout: 15000 });
                                     const event_html = await event_response.text();
                                     const event_soup = cheerio.load(event_html);
 
