@@ -571,9 +571,11 @@ async function main() {
 
     console.log("Verifying and correcting races...");
     const verified_races = [];
-    for (const race of all_races) {
-        const verified = await verify_and_correct_race(race);
-        verified_races.push(verified);
+    const batchSize = 20;
+    for (let i = 0; i < all_races.length; i += batchSize) {
+        const batch = all_races.slice(i, i + batchSize);
+        const results = await Promise.all(batch.map(race => verify_and_correct_race(race)));
+        verified_races.push(...results);
     }
 
     console.log("Geocoding races...");
