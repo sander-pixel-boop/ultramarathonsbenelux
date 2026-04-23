@@ -171,6 +171,7 @@ const Map = dynamic(() => import('../components/Map'), { ssr: false });
 import FinishTimeCalculator from '../components/FinishTimeCalculator';
 import PackYourBag from '../components/PackYourBag';
 import CourseProfile from '../components/CourseProfile';
+import FOMO from "../components/FOMO";
 import Quiz from '../components/Quiz';
 
 export default function Home({ initialRaces }) {
@@ -422,6 +423,7 @@ export default function Home({ initialRaces }) {
                         <FinishTimeCalculator race={selectedRace} t={t} />
                         <PackYourBag race={selectedRace} t={t} />
                         <CourseProfile race={selectedRace} t={t} />
+                        <FOMO race={selectedRace} allRaces={filteredRaces} onSelectRace={(r) => { let locationStr = r.country; if (r.country && r.country.toLowerCase() === "belgium") locationStr = t.belgium; if (r.country && r.country.toLowerCase() === "netherlands") locationStr = t.netherlands; if (r.country && r.country.toLowerCase() === "luxembourg") locationStr = t.luxembourg; if (r.city) { locationStr = `${r.city}, ${locationStr}`; } setSelectedRace({ ...r, formattedRace: formatRaceName(r.name), locationStr }); }} />
 
                         <a href={selectedRace.url} target="_blank" rel="noopener noreferrer" className="subscribe-btn" style={{ marginTop: '20px', width: '100%', boxSizing: 'border-box' }}>
                             {t.subscribe} <i className="fas fa-arrow-right"></i>
