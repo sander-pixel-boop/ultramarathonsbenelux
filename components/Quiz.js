@@ -85,7 +85,7 @@ export default function Quiz({ races, onClose, onSelectRace, t }) {
     return (
         <div className="quiz-container" style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h2 style={{ margin: 0, color: '#0f172a' }}>Is This Race For You?</h2>
+                <h2 style={{ margin: 0, color: '#0f172a' }}>Find my Race</h2>
                 <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: '#64748b' }}>&times;</button>
             </div>
 
