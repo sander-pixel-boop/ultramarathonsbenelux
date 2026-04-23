@@ -1,53 +1,23 @@
-function formatRaceName(name) {
-    let raceTypes = [];
-    let cleanName = name;
+const fs = require('fs');
 
-    // Ordered by priority/length
-    const typePatterns = [
-        "Backyard Ultra", "Backyard", "Ultra Trail", "Trail", "Ultrarun", "Ultra", "Marathon", "Run", "Loop"
-    ];
-
-    for (const t of typePatterns) {
-        // Use regex with word boundaries. Case insensitive.
-        const regex = new RegExp(`\\b${t}\\b`, "i");
-        if (regex.test(cleanName)) {
-            raceTypes.push(t);
-            // Replace all occurrences of this type
-            cleanName = cleanName.replace(new RegExp(`\\b${t}\\b`, "ig"), "");
-        }
-    }
-
-    // Clean up leftover punctuation and spaces
-    cleanName = cleanName.replace(/\(\s*\)/g, ''); // empty parens
-    cleanName = cleanName.replace(/\s+-\s*$/g, ''); // trailing dash
-    cleanName = cleanName.replace(/^\s*-\s+/g, ''); // leading dash
-    cleanName = cleanName.replace(/\s+-\s+/g, ' - '); // fix dashes in middle
-    cleanName = cleanName.replace(/\s{2,}/g, ' '); // multiple spaces
-    cleanName = cleanName.trim();
-
-    // If we stripped everything, revert to original name and no type extracted
-    if (cleanName === "") {
-        cleanName = name;
-        raceTypes = [];
-    }
-
-    let displayType = raceTypes.length > 0 ? raceTypes.join(", ") : "Race";
-    return { name: cleanName, type: displayType };
-}
-
-const races = [
-  "The Bello Gallico Trail 50mi",
-  "Grand Trail des Lacs et Châteaux Winter",
-  "4. Antwerp Backyard Ultra",
-  "La Chouffe Trail 51km",
-  "3 De Wase (Halve en Ultra) Marathon",
-  "De Warmste Loop - The Warmest Run",
-  "L.A.T Legends Ardennes Trail 100km",
-  "17e Ohm Trail - XL",
-  "Until the End - Backyard Ultra"
-];
-
+const races = JSON.parse(fs.readFileSync('races.json'));
 races.forEach(r => {
-    const res = formatRaceName(r);
-    console.log(`Original: "${r}" -> Name: "${res.name}" | Type: "${res.type}"`);
+    // let's add some mock elevation points to one of the races for testing
+    if (r.name === 'The Bello Gallico Trail 50mi') {
+        r.elevation_points = [
+            { d: 0, e: 100 },
+            { d: 10, e: 200 },
+            { d: 20, e: 150 },
+            { d: 30, e: 300 },
+            { d: 40, e: 250 },
+            { d: 50, e: 400 },
+            { d: 60, e: 100 },
+            { d: 70, e: 50 },
+            { d: 80, e: 100 }
+        ];
+        // aid stations every 15km
+        r.aid_stations = [15, 30, 45, 60, 75];
+    }
 });
+
+fs.writeFileSync('races.json', JSON.stringify(races, null, 4));

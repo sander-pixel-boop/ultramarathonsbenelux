@@ -170,6 +170,7 @@ const Map = dynamic(() => import('../components/Map'), { ssr: false });
 
 import FinishTimeCalculator from '../components/FinishTimeCalculator';
 import PackYourBag from '../components/PackYourBag';
+import CourseProfile from '../components/CourseProfile';
 
 export default function Home({ initialRaces }) {
     const [lang, setLang] = useState('en');
@@ -376,6 +377,7 @@ export default function Home({ initialRaces }) {
 
                         <FinishTimeCalculator race={selectedRace} t={t} />
                         <PackYourBag race={selectedRace} t={t} />
+                        <CourseProfile race={selectedRace} t={t} />
 
                         <a href={selectedRace.url} target="_blank" rel="noopener noreferrer" className="subscribe-btn" style={{ marginTop: '20px', width: '100%', boxSizing: 'border-box' }}>
                             {t.subscribe} <i className="fas fa-arrow-right"></i>
