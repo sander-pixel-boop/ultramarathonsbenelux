@@ -299,7 +299,7 @@ export default function Home({ initialRaces }) {
                         cursor: 'pointer',
                         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                     }}>
-                    <i className="fas fa-clipboard-question"></i> Is This Race For You?
+                    <i className="fas fa-clipboard-question"></i> Find my Race
                 </button>
             </div>
 
