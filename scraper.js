@@ -590,8 +590,12 @@ async function main() {
         }
     }
 
-    await fs.writeFile('races.json', JSON.stringify(verified_races, null, 4));
-    console.log(`Successfully scraped and verified ${verified_races.length} races and saved to races.json`);
+    const filtered_races = verified_races.filter(race => {
+        return race.date && race.date !== 'TBD' && race.distance && race.distance !== 'Ultra';
+    });
+
+    await fs.writeFile('races.json', JSON.stringify(filtered_races, null, 4));
+    console.log(`Successfully scraped and verified ${filtered_races.length} races and saved to races.json`);
 }
 
 main().catch(console.error);
