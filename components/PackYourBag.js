@@ -22,15 +22,15 @@ export default function PackYourBag({ race, t }) {
         const gear = [];
 
         // Base gear
-        gear.push({ id: 'survival_blanket', label: 'Survival Blanket', affiliateLink: '#' });
+        gear.push({ id: 'survival_blanket', label: 'Survival Blanket', affiliateLink: 'https://www.amazon.com/s?k=survival+blanket&tag=your_amazon_tag_here' });
 
         if (d2 >= 50 || distStr.includes('h')) {
-            gear.push({ id: 'water_1l', label: '1L Water Capacity', affiliateLink: '#' });
-            gear.push({ id: 'headlamp', label: 'Headlamp', affiliateLink: '#' });
+            gear.push({ id: 'water_1l', label: '1L Water Capacity', affiliateLink: 'https://www.amazon.com/s?k=running+hydration+vest+1L&tag=your_amazon_tag_here' });
+            gear.push({ id: 'headlamp', label: 'Headlamp', affiliateLink: 'https://www.amazon.com/s?k=running+headlamp&tag=your_amazon_tag_here' });
         }
 
         if (d2 >= 80 || distStr.includes('h')) {
-            gear.push({ id: 'waterproof_jacket', label: 'Waterproof Jacket', affiliateLink: '#' });
+            gear.push({ id: 'waterproof_jacket', label: 'Waterproof Jacket', affiliateLink: 'https://www.amazon.com/s?k=running+waterproof+jacket&tag=your_amazon_tag_here' });
         }
 
         return gear;
