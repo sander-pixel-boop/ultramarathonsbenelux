@@ -171,6 +171,7 @@ const Map = dynamic(() => import('../components/Map'), { ssr: false });
 import FinishTimeCalculator from '../components/FinishTimeCalculator';
 import PackYourBag from '../components/PackYourBag';
 import CourseProfile from '../components/CourseProfile';
+import Quiz from '../components/Quiz';
 
 export default function Home({ initialRaces }) {
     const [lang, setLang] = useState('en');
@@ -182,6 +183,7 @@ export default function Home({ initialRaces }) {
     const [sortSelect, setSortSelect] = useState('date-asc');
     const [showPastRaces, setShowPastRaces] = useState(false);
     const [selectedRace, setSelectedRace] = useState(null);
+    const [showQuiz, setShowQuiz] = useState(false);
 
     const t = i18n[lang];
 
@@ -282,6 +284,22 @@ export default function Home({ initialRaces }) {
             <div className="hero">
                 <h1>{t.title}</h1>
                 <p>{t.subtitle}</p>
+                <button
+                    onClick={() => setShowQuiz(true)}
+                    style={{
+                        marginTop: '20px',
+                        padding: '12px 24px',
+                        backgroundColor: '#f59e0b',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontSize: '1.1em',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                    }}>
+                    <i className="fas fa-clipboard-question"></i> Is This Race For You?
+                </button>
             </div>
 
             <div className="container">
@@ -364,6 +382,32 @@ export default function Home({ initialRaces }) {
                     })}
                 </div>
             </div>
+
+            {showQuiz && (
+                <div className="modal-overlay" onClick={() => setShowQuiz(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <Quiz
+                            races={filteredRaces}
+                            onClose={() => setShowQuiz(false)}
+                            onSelectRace={(race) => {
+                                setShowQuiz(false);
+                                let translatedCountry = race.country;
+                                if (race.country && race.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
+                                if (race.country && race.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
+                                if (race.country && race.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
+
+                                let locationStr = translatedCountry;
+                                if (race.city) {
+                                    locationStr = `${race.city}, ${translatedCountry}`;
+                                }
+                                const formattedRace = formatRaceName(race.name);
+                                setSelectedRace({ ...race, formattedRace, locationStr });
+                            }}
+                            t={t}
+                        />
+                    </div>
+                </div>
+            )}
 
             {selectedRace && (
                 <div className="modal-overlay" onClick={() => setSelectedRace(null)}>
