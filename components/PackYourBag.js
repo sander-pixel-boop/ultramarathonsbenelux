@@ -1,7 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { getUserCountry, getAffiliateLink } from '../utils/geoAffiliate';
 
 export default function PackYourBag({ race, t }) {
     const [checkedItems, setCheckedItems] = useState({});
+    const [userCountry, setUserCountry] = useState(null);
+
+    useEffect(() => {
+        getUserCountry().then(setUserCountry);
+    }, []);
 
     const items = useMemo(() => {
         if (!race || !race.distance) return [];
@@ -22,19 +28,19 @@ export default function PackYourBag({ race, t }) {
         const gear = [];
 
         // Base gear
-        gear.push({ id: 'survival_blanket', label: 'Survival Blanket', affiliateLink: 'https://www.amazon.com/s?k=survival+blanket&tag=your_amazon_tag_here' });
+        gear.push({ id: 'survival_blanket', label: 'Survival Blanket', affiliateLink: getAffiliateLink('survival blanket', userCountry) });
 
         if (d2 >= 50 || distStr.includes('h')) {
-            gear.push({ id: 'water_1l', label: '1L Water Capacity', affiliateLink: 'https://www.amazon.com/s?k=running+hydration+vest+1L&tag=your_amazon_tag_here' });
-            gear.push({ id: 'headlamp', label: 'Headlamp', affiliateLink: 'https://www.amazon.com/s?k=running+headlamp&tag=your_amazon_tag_here' });
+            gear.push({ id: 'water_1l', label: '1L Water Capacity', affiliateLink: getAffiliateLink('running hydration vest 1L', userCountry) });
+            gear.push({ id: 'headlamp', label: 'Headlamp', affiliateLink: getAffiliateLink('running headlamp', userCountry) });
         }
 
         if (d2 >= 80 || distStr.includes('h')) {
-            gear.push({ id: 'waterproof_jacket', label: 'Waterproof Jacket', affiliateLink: 'https://www.amazon.com/s?k=running+waterproof+jacket&tag=your_amazon_tag_here' });
+            gear.push({ id: 'waterproof_jacket', label: 'Waterproof Jacket', affiliateLink: getAffiliateLink('running waterproof jacket', userCountry) });
         }
 
         return gear;
-    }, [race]);
+    }, [race, userCountry]);
 
     if (items.length === 0) return null;
 
