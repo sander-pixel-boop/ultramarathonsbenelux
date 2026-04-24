@@ -10,6 +10,10 @@ const i18n = {
         content2: "Our mission is to provide a comprehensive, accurate, and easy-to-use directory for ultra runners of all levels. Whether you are looking for your first 50k or a multi-day backyard ultra, we curate the best events in the region.",
         content3: "Built by runners, for runners. We understand the specific terrain, weather challenges, and the unique ultra community in the Benelux. This platform is our contribution to growing and supporting this incredible sport.",
         backToHome: "Back to Home",
+        aboutUs: "About Us",
+        privacyPolicy: "Privacy Policy",
+        termsOfService: "Terms of Service",
+        disclaimer: "Disclaimer",
         footerText: "Made with",
         footerCommunity: "for the ultra running community"
     },
@@ -20,6 +24,10 @@ const i18n = {
         content2: "Onze missie is om een uitgebreide, nauwkeurige en gebruiksvriendelijke gids te bieden voor ultra lopers van alle niveaus. Of je nu op zoek bent naar je eerste 50k of een meerdaagse backyard ultra, wij verzamelen de beste evenementen in de regio.",
         content3: "Gemaakt door hardlopers, voor hardlopers. We begrijpen het specifieke terrein, de weersuitdagingen en de unieke ultra-gemeenschap in de Benelux. Dit platform is onze bijdrage aan het laten groeien en ondersteunen van deze geweldige sport.",
         backToHome: "Terug naar Home",
+        aboutUs: "Over Ons",
+        privacyPolicy: "Privacybeleid",
+        termsOfService: "Servicevoorwaarden",
+        disclaimer: "Disclaimer",
         footerText: "Gemaakt met",
         footerCommunity: "voor de ultra hardloop gemeenschap"
     },
@@ -30,6 +38,10 @@ const i18n = {
         content2: "Notre mission est de fournir un annuaire complet, précis et facile à utiliser pour les ultra-marathoniens de tous niveaux. Que vous cherchiez votre premier 50 km ou un backyard ultra de plusieurs jours, nous sélectionnons les meilleurs événements de la région.",
         content3: "Conçu par des coureurs, pour des coureurs. Nous comprenons le terrain spécifique, les défis météorologiques et la communauté ultra unique du Benelux. Cette plateforme est notre contribution au développement et au soutien de ce sport incroyable.",
         backToHome: "Retour à l'Accueil",
+        aboutUs: "À Propos",
+        privacyPolicy: "Politique de Confidentialité",
+        termsOfService: "Conditions d'Utilisation",
+        disclaimer: "Avis de Non-Responsabilité",
         footerText: "Fait avec",
         footerCommunity: "pour la communauté de l'ultra course"
     }
@@ -81,8 +93,14 @@ export default function About() {
                 </div>
             </div>
 
-            <footer>
+            <footer style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                 <p><span>{t.footerText}</span> <i className="fas fa-heart"></i> <span>{t.footerCommunity}</span></p>
+                <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <Link href="/about" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.aboutUs}</Link>
+                    <Link href="/privacy" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.privacyPolicy}</Link>
+                    <Link href="/terms" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.termsOfService}</Link>
+                    <Link href="/disclaimer" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.disclaimer}</Link>
+                </div>
             </footer>
         </>
     );
