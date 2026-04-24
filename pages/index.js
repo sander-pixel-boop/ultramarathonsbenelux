@@ -438,6 +438,19 @@ export default function Home({ initialRaces }) {
                                 <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {locationStr}</p>
                                 <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {race.distance}</p>
                                 <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {race.date}</p>
+                                <FOMO race={race} allRaces={filteredRaces} onSelectRace={(r) => {
+                                    let translatedCountry = r.country;
+                                    if (r.country && r.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
+                                    if (r.country && r.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
+                                    if (r.country && r.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
+
+                                    let rLocationStr = translatedCountry;
+                                    if (r.city) {
+                                        rLocationStr = `${r.city}, ${translatedCountry}`;
+                                    }
+                                    const rFormattedRace = formatRaceName(r.name);
+                                    setSelectedRace({ ...r, formattedRace: rFormattedRace, locationStr: rLocationStr });
+                                }} />
                             </div>
                         );
                     })}
