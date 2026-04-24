@@ -1,0 +1,18 @@
+
+> dev
+> next dev
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 518ms
+
+Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"). Use Document instead.
+See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
+Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"). Use Document instead.
+See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
+ GET / 200 in 1625ms (next.js: 1488ms, application-code: 137ms)
+[browser] Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"). Use Document instead.
+See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component (<anonymous>)
+[browser] Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"). Use Document instead.
+See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component (<anonymous>)
