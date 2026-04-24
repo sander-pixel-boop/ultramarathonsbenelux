@@ -53,17 +53,17 @@ export default function PackYourBag({ race, t }) {
 
     return (
         <div className="pack-your-bag" style={{
-            marginTop: '15px', padding: '15px', backgroundColor: '#e2e8f0', borderRadius: '8px', fontSize: '0.9em'
+            marginTop: '15px', padding: '15px', backgroundColor: '#e2e8f0', borderRadius: '8px', fontSize: '0.9em', textAlign: 'left'
         }}>
-            <h3 style={{ margin: '0 0 10px 0', fontSize: '1em', color: '#1e293b' }}>
+            <h3 style={{ margin: '0 0 10px 0', fontSize: '1em', color: '#1e293b', textAlign: 'left' }}>
                 <i className="fas fa-backpack" style={{ marginRight: '8px', color: '#475569' }}></i>
                 Pack Your Bag - Mandatory Gear
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left' }}>
                 {items.map(item => (
                     <div key={item.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#334155' }}>
-                            <input
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#334155', textAlign: 'left', margin: 0 }}>
+                            <input style={{ width: 'auto' }}
                                 type="checkbox"
                                 checked={!!checkedItems[item.id]}
                                 onChange={() => toggleItem(item.id)}
