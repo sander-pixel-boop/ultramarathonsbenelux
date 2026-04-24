@@ -340,7 +340,10 @@ export default function Home({ initialRaces }) {
                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
             </Head>
+
             <div className="language-flags">
+                <Link href="/blog" style={{ color: 'white', marginRight: '20px', textDecoration: 'none', fontWeight: '500', fontSize: '1.2em' }}>Blog</Link>
+
                 <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" className={`flag ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')} />
                 <img src="https://flagcdn.com/w40/nl.png" alt="Nederlands" title="Nederlands" className={`flag ${lang === 'nl' ? 'active' : ''}`} onClick={() => setLang('nl')} />
                 <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" className={`flag ${lang === 'fr' ? 'active' : ''}`} onClick={() => setLang('fr')} />
