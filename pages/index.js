@@ -1,10 +1,12 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 
 const i18n = {
     en: {
         title: "Benelux Ultra Race Directory",
+        aboutUs: "About Us",
         subtitle: "Discover the toughest footraces and gravel events across Belgium, Netherlands, and Luxembourg.",
         searchPlaceholder: "Search by distance or race name...",
         allCountries: "All Countries",
@@ -33,6 +35,7 @@ const i18n = {
     },
     nl: {
         title: "Benelux Ultra Race Gids",
+        aboutUs: "Over Ons",
         subtitle: "Ontdek de zwaarste hardloop- en gravel-evenementen in België, Nederland en Luxemburg.",
         searchPlaceholder: "Zoek op afstand of naam...",
         allCountries: "Alle Landen",
@@ -61,6 +64,7 @@ const i18n = {
     },
     fr: {
         title: "Annuaire des Ultra Courses du Benelux",
+        aboutUs: "À Propos",
         subtitle: "Découvrez les courses à pied et événements gravel les plus difficiles de Belgique, des Pays-Bas et du Luxembourg.",
         searchPlaceholder: "Rechercher par distance ou nom...",
         allCountries: "Tous les Pays",
@@ -510,8 +514,10 @@ export default function Home({ initialRaces }) {
                 </div>
             )}
 
-            <footer>
+
+            <footer style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                 <p><span>{t.footerText}</span> <i className="fas fa-heart"></i> <span>{t.footerCommunity}</span></p>
+                <Link href="/about" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.aboutUs}</Link>
             </footer>
         </>
     );
