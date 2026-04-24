@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
+import { parseStandardDate } from '../utils/date';
 import dynamic from 'next/dynamic';
 
 const i18n = {
@@ -178,10 +179,9 @@ function formatRaceName(name) {
 }
 
 function parseDateForSort(dateStr) {
-    if (!dateStr) return 0;
-    const parts = dateStr.split('.');
-    if (parts.length === 3) {
-        return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+    const parsed = parseStandardDate(dateStr);
+    if (parsed) {
+        return new Date(parsed.year, parsed.month - 1, parsed.day).getTime();
     }
     return 0;
 }
@@ -278,10 +278,10 @@ export default function Home({ initialRaces }) {
             let matchesMonth = true;
             if (yearFilter !== "" || monthFilter !== "") {
                 if (r.date) {
-                    const parts = r.date.split('.');
-                    if (parts.length === 3) {
-                        const rMonth = parts[1];
-                        const rYear = parts[2];
+                    const parsed = parseStandardDate(r.date);
+                    if (parsed) {
+                        const rMonth = String(parsed.month).padStart(2, '0');
+                        const rYear = String(parsed.year);
 
                         if (yearFilter !== "") matchesYear = (rYear === yearFilter);
                         if (monthFilter !== "") matchesMonth = (rMonth === monthFilter);
@@ -314,9 +314,9 @@ export default function Home({ initialRaces }) {
 
             let matchesDate = true;
             if (!showPastRaces && r.date) {
-                const parts = r.date.split('.');
-                if (parts.length === 3) {
-                    const raceDate = new Date(parts[2], parts[1] - 1, parts[0]);
+                const parsed = parseStandardDate(r.date);
+                if (parsed) {
+                    const raceDate = new Date(parsed.year, parsed.month - 1, parsed.day);
                     matchesDate = raceDate >= today;
                 }
             }
