@@ -6,7 +6,7 @@ export default function Sitemap() {
 }
 
 export const getServerSideProps = async ({ res }) => {
-  const BASE_URL = 'https://ultramarathonsbenelux.com';
+  const BASE_URL = 'https://www.ultramarathonsbenelux.com';
 
   // Static routes
   const staticPaths = [

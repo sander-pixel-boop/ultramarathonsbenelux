@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.ultramarathonsbenelux.com/sitemap.xml
+Sitemap: https://ultramarathonsbenelux.com/sitemap.xml
