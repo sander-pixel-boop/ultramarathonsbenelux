@@ -22,7 +22,6 @@ const i18n = {
         jul: "July", aug: "August", sep: "September", oct: "October", nov: "November", dec: "December",
         allDistances: "All Distances",
         timedEvents: "Timed Events",
-        showPastRaces: "Show past races",
         type: "Type:",
         location: "Location:",
         distance: "Distance:",
@@ -54,7 +53,6 @@ const i18n = {
         jul: "Juli", aug: "Augustus", sep: "September", oct: "Oktober", nov: "November", dec: "December",
         allDistances: "Alle Afstanden",
         timedEvents: "Evenementen op Tijd",
-        showPastRaces: "Toon eerdere races",
         type: "Type:",
         location: "Locatie:",
         distance: "Afstand:",
@@ -86,7 +84,6 @@ const i18n = {
         jul: "Juillet", aug: "Août", sep: "Septembre", oct: "Octobre", nov: "Novembre", dec: "Décembre",
         allDistances: "Toutes les Distances",
         timedEvents: "Événements Chronométrés",
-        showPastRaces: "Afficher les courses passées",
         type: "Type:",
         location: "Lieu:",
         distance: "Distance:",
@@ -177,13 +174,42 @@ function formatRaceName(name) {
     return result;
 }
 
+function parseStandardDate(dateStr) {
+    if (!dateStr) return null;
+    let match = String(dateStr).trim().match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})$/);
+    if (match) {
+        let month = parseInt(match[2], 10);
+        if (month < 1 || month > 12) return null;
+        return { year: parseInt(match[1], 10), month, day: parseInt(match[3], 10) };
+    }
+    match = String(dateStr).trim().match(/^(\d{1,2})[-./](\d{1,2})[-./](\d{2,4})$/);
+    if (match) {
+        let month = parseInt(match[2], 10);
+        if (month < 1 || month > 12) return null;
+        let year = parseInt(match[3], 10);
+        if (year < 100) year += 2000;
+        return { day: parseInt(match[1], 10), month, year };
+    }
+    return null;
+}
+
 function parseDateForSort(dateStr) {
-    if (!dateStr) return 0;
-    const parts = dateStr.split('.');
-    if (parts.length === 3) {
-        return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+    const parsed = parseStandardDate(dateStr);
+    if (parsed) {
+        return new Date(parsed.year, parsed.month - 1, parsed.day).getTime();
     }
     return 0;
+}
+
+function formatDateDisplay(dateStr, t) {
+    const parsed = parseStandardDate(dateStr);
+    if (!parsed) return dateStr;
+    const { day, month, year } = parsed;
+    const monthNamesEn = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+    const monthKey = monthNamesEn[month - 1];
+    let monthName = t[monthKey];
+    if (!monthName) return dateStr;
+    return `${day} ${monthName.toLowerCase()} ${year}`;
 }
 
 function getFlatEquivalent(race) {
@@ -255,8 +281,7 @@ export default function Home({ initialRaces }) {
     const [monthFilter, setMonthFilter] = useState('');
     const [distanceFilter, setDistanceFilter] = useState('');
     const [sortSelect, setSortSelect] = useState('date-asc');
-    const [showPastRaces, setShowPastRaces] = useState(false);
-    const [selectedRace, setSelectedRace] = useState(null);
+        const [selectedRace, setSelectedRace] = useState(null);
     const [showQuiz, setShowQuiz] = useState(false);
 
     const t = i18n[lang];
@@ -278,10 +303,10 @@ export default function Home({ initialRaces }) {
             let matchesMonth = true;
             if (yearFilter !== "" || monthFilter !== "") {
                 if (r.date) {
-                    const parts = r.date.split('.');
-                    if (parts.length === 3) {
-                        const rMonth = parts[1];
-                        const rYear = parts[2];
+                    const parsed = parseStandardDate(r.date);
+                    if (parsed) {
+                        const rYear = String(parsed.year);
+                        const rMonth = String(parsed.month).padStart(2, '0');
 
                         if (yearFilter !== "") matchesYear = (rYear === yearFilter);
                         if (monthFilter !== "") matchesMonth = (rMonth === monthFilter);
@@ -313,11 +338,18 @@ export default function Home({ initialRaces }) {
             }
 
             let matchesDate = true;
-            if (!showPastRaces && r.date) {
-                const parts = r.date.split('.');
-                if (parts.length === 3) {
-                    const raceDate = new Date(parts[2], parts[1] - 1, parts[0]);
+            if (r.date) {
+                const parsed = parseStandardDate(r.date);
+                if (parsed) {
+                    const raceDate = new Date(parsed.year, parsed.month - 1, parsed.day);
                     matchesDate = raceDate >= today;
+                    if (matchesDate && yearFilter === "" && monthFilter === "") {
+                        const twelveMonthsFromNow = new Date(today);
+                        twelveMonthsFromNow.setFullYear(twelveMonthsFromNow.getFullYear() + 1);
+                        if (raceDate > twelveMonthsFromNow) {
+                            matchesDate = false;
+                        }
+                    }
                 }
             }
 
@@ -338,7 +370,7 @@ export default function Home({ initialRaces }) {
         });
 
         return filtered;
-    }, [initialRaces, search, countryFilter, yearFilter, monthFilter, distanceFilter, sortSelect, showPastRaces]);
+    }, [initialRaces, search, countryFilter, yearFilter, monthFilter, distanceFilter, sortSelect]);
 
     return (
         <>
@@ -425,10 +457,6 @@ export default function Home({ initialRaces }) {
                         <option value="distance-asc">{t.distanceAsc}</option>
                         <option value="distance-desc">{t.distanceDesc}</option>
                     </select>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#475569', fontWeight: 500 }}>
-                        <input type="checkbox" id="show-past-races" style={{ width: 'auto', padding: 0 }} checked={showPastRaces} onChange={(e) => setShowPastRaces(e.target.checked)} />
-                        <span>{t.showPastRaces}</span>
-                    </label>
                 </div>
 
                 <Map races={filteredRaces} t={t} formatRaceName={formatRaceName} lang={lang} />
@@ -453,7 +481,7 @@ export default function Home({ initialRaces }) {
                                 <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {formattedRace.type}</p>
                                 <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {locationStr}</p>
                                 <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {race.distance}</p>
-                                <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {race.date}</p>
+                                <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {formatDateDisplay(race.date, t)}</p>
                                 <FOMO race={race} allRaces={filteredRaces} onSelectRace={(r) => {
                                     let translatedCountry = r.country;
                                     if (r.country && r.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
@@ -512,7 +540,7 @@ export default function Home({ initialRaces }) {
                                 <i className="fas fa-equals"></i> <strong>{t.flatEquivalent}</strong> {getFlatEquivalent(selectedRace)}km
                             </p>
                         )}
-                        <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {selectedRace.date}</p>
+                        <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {formatDateDisplay(selectedRace.date, t)}</p>
 
                         <FinishTimeCalculator race={selectedRace} t={t} />
                         <PackYourBag race={selectedRace} t={t} />
