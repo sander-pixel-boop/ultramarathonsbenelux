@@ -464,92 +464,77 @@ async function scrape_ahotu() {
 
 async function scrape_duv() {
     const countries = { 'BEL': 'Belgium', 'NED': 'Netherlands', 'LUX': 'Luxembourg' };
-    let all_races = [];
+    const all_races = [];
     const headers = { "User-Agent": "Mozilla/5.0" };
-
-    const pagePromises = [];
 
     for (const [c_code, c_name] of Object.entries(countries)) {
         for (const year of ['2024', '2025', '2026', '2027']) {
-            pagePromises.push((async () => {
-                const url = `https://statistik.d-u-v.org/calendar.php?year=${year}&country=${c_code}`;
-                const page_races = [];
-                try {
-                    const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
-                    const html = await response.text();
-                    const $ = cheerio.load(html);
+            const url = `https://statistik.d-u-v.org/calendar.php?year=${year}&country=${c_code}`;
+            try {
+                const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
+                const html = await response.text();
+                const $ = cheerio.load(html);
 
-                    const rows = $('tr').toArray();
-                    const rowPromises = [];
+                const rows = $('tr').toArray();
+                for (const row of rows) {
+                    const cols = $(row).find('td');
+                    // A valid event row typically has ~7 columns and first column is a date
+                    if (cols.length >= 4) {
+                        const dateText = $(cols[0]).text().trim();
+                        if ((dateText.match(/\./g) || []).length === 2) {
+                            const date = dateText;
+                            const name = $(cols[1]).text().trim();
+                            const distance = $(cols[2]).text().trim();
 
-                    for (const row of rows) {
-                        const cols = $(row).find('td');
-                        if (cols.length >= 4) {
-                            const dateText = $(cols[0]).text().trim();
-                            if ((dateText.match(/\./g) || []).length === 2) {
-                                rowPromises.push((async () => {
-                                    const date = dateText;
-                                    const name = $(cols[1]).text().trim();
-                                    const distance = $(cols[2]).text().trim();
+                            const city_raw = $(cols[3]).text().trim();
+                            const city = city_raw.replace(/\s*\([^)]*\)$/, '').trim();
 
-                                    const city_raw = $(cols[3]).text().trim();
-                                    const city = city_raw.replace(/\s*\([^)]*\)$/, '').trim();
+                            const link_tag = $(cols[1]).find('a');
+                            const link_href = link_tag.attr('href');
+                            const link = link_href ? "https://statistik.d-u-v.org/" + link_href : "";
 
-                                    const link_tag = $(cols[1]).find('a');
-                                    const link_href = link_tag.attr('href');
-                                    const link = link_href ? "https://statistik.d-u-v.org/" + link_href : "";
+                            let original_url = link;
+                            if (link) {
+                                try {
+                                    const event_response = await fetchWithTimeout(link, { headers, timeout: 15000 });
+                                    const event_html = await event_response.text();
+                                    const event_soup = cheerio.load(event_html);
 
-                                    let original_url = link;
-                                    if (link) {
-                                        try {
-                                            const event_response = await fetchWithTimeout(link, { headers, timeout: 15000 });
-                                            const event_html = await event_response.text();
-                                            const event_soup = cheerio.load(event_html);
-
-                                            let foundWebPage = false;
-                                            event_soup('b').each((i, b) => {
-                                                if ($(b).text().includes('Web page:')) {
-                                                    foundWebPage = true;
-                                                    const td_sibling = $(b).parent().next('td');
-                                                    if (td_sibling.length > 0) {
-                                                        const a_tag = td_sibling.find('a');
-                                                        if (a_tag.length > 0 && a_tag.attr('href')) {
-                                                            original_url = a_tag.attr('href');
-                                                        }
-                                                    }
-                                                    return false; // break
+                                    let foundWebPage = false;
+                                    event_soup('b').each((i, b) => {
+                                        if ($(b).text().includes('Web page:')) {
+                                            foundWebPage = true;
+                                            const td_sibling = $(b).parent().next('td');
+                                            if (td_sibling.length > 0) {
+                                                const a_tag = td_sibling.find('a');
+                                                if (a_tag.length > 0 && a_tag.attr('href')) {
+                                                    original_url = a_tag.attr('href');
                                                 }
-                                            });
-                                        } catch (err) {
-                                            console.error(`Error fetching original url for ${link}: ${err.message}`);
+                                            }
+                                            return false; // break
                                         }
-                                    }
-
-                                    page_races.push({
-                                        name: name,
-                                        country: c_name,
-                                        distance: distance,
-                                        date: date,
-                                        url: original_url,
-                                        city: city
                                     });
-                                })());
+                                } catch (err) {
+                                    console.error(`Error fetching original url for ${link}: ${err.message}`);
+                                }
                             }
+
+                            all_races.push({
+                                name: name,
+                                country: c_name,
+                                distance: distance,
+                                date: date,
+                                url: original_url,
+                                city: city
+                            });
                         }
                     }
-                    await Promise.all(rowPromises);
-                } catch (e) {
-                    console.error(`Error scraping DUV ${c_code} ${year}: ${e.message}`);
                 }
-                return page_races;
-            })());
+            } catch (e) {
+                console.error(`Error scraping DUV ${c_code} ${year}: ${e.message}`);
+            }
         }
     }
-
-    const results = await Promise.all(pagePromises);
-    results.forEach(res => {
-        all_races = all_races.concat(res);
-    });
 
     return all_races;
 }
@@ -557,57 +542,44 @@ async function scrape_duv() {
 async function main() {
     let all_races = [];
 
-    try {
-        const existingRaces = JSON.parse(await fs.readFile('./races.json', 'utf8'));
-        for (const race of existingRaces) {
-            if (race.city && race.lat && race.lng) {
-                const query = `${race.city}, ${race.country || ''}`;
-                GEO_CACHE[query] = { lat: race.lat, lon: race.lng };
-            }
-        }
-        console.log(`Preloaded ${Object.keys(GEO_CACHE).length} coordinates from existing races.json`);
-    } catch (e) {
-        console.log("No existing races.json found to preload geocache.");
-    }
-
-    console.log("Scraping DUV...");
+    console.time("DUV"); console.log("Scraping DUV...");
     const duv_races = await scrape_duv();
-    all_races = all_races.concat(duv_races);
+    all_races = all_races.concat(duv_races); console.timeEnd("DUV");
 
-    console.log("Scraping Ultraned...");
+    console.time("Ultraned"); console.log("Scraping Ultraned...");
     const ultraned_races = await scrape_ultraned();
-    all_races = all_races.concat(ultraned_races);
+    all_races = all_races.concat(ultraned_races); console.timeEnd("Ultraned");
 
-    console.log("Scraping Hardloopkalender...");
+    console.time("Hardloopkalender"); console.log("Scraping Hardloopkalender...");
     const hardloopkalender_races = await scrape_hardloopkalender();
-    all_races = all_races.concat(hardloopkalender_races);
+    all_races = all_races.concat(hardloopkalender_races); console.timeEnd("Hardloopkalender");
 
-    console.log("Scraping Finishers...");
+    console.time("Finishers"); console.log("Scraping Finishers...");
     const finishers_races = await scrape_finishers();
-    all_races = all_races.concat(finishers_races);
+    all_races = all_races.concat(finishers_races); console.timeEnd("Finishers");
 
-    console.log("Scraping Trail-running.eu...");
+    console.time("Trail"); console.log("Scraping Trail-running.eu...");
     const trail_races = await scrape_trail_running();
-    all_races = all_races.concat(trail_races);
+    all_races = all_races.concat(trail_races); console.timeEnd("Trail");
 
-    console.log("Scraping Ultraracecalendar...");
+    console.time("Ultraracecalendar"); console.log("Scraping Ultraracecalendar...");
     const ultrarace_races = await scrape_ultraracecalendar();
-    all_races = all_races.concat(ultrarace_races);
+    all_races = all_races.concat(ultrarace_races); console.timeEnd("Ultraracecalendar");
 
-    console.log("Scraping Ahotu...");
+    console.time("Ahotu"); console.log("Scraping Ahotu...");
     const ahotu_races = await scrape_ahotu();
-    all_races = all_races.concat(ahotu_races);
+    all_races = all_races.concat(ahotu_races); console.timeEnd("Ahotu");
 
-    console.log("Verifying and correcting races...");
+    console.time("Verify"); console.log("Verifying and correcting races...");
     const verified_races = [];
-    const batchSize = 50;
+    const batchSize = 20;
     for (let i = 0; i < all_races.length; i += batchSize) {
         const batch = all_races.slice(i, i + batchSize);
         const results = await Promise.all(batch.map(race => verify_and_correct_race(race)));
         verified_races.push(...results);
     }
 
-    console.log("Geocoding races...");
+    console.timeEnd("Verify"); console.time("Geocoding"); console.log("Geocoding races...");
     for (const race of verified_races) {
         if (race.city) {
             const { lat, lon } = await geocode(race.city, race.country || '');
@@ -618,7 +590,7 @@ async function main() {
         }
     }
 
-    await fs.writeFile('races.json', JSON.stringify(verified_races, null, 4));
+    console.timeEnd("Geocoding"); await fs.writeFile('races.json', JSON.stringify(verified_races, null, 4));
     console.log(`Successfully scraped and verified ${verified_races.length} races and saved to races.json`);
 }
 
