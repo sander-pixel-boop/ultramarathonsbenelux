@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 
@@ -511,6 +512,11 @@ export default function Home({ initialRaces }) {
             )}
 
             <footer>
+                <div style={{ marginBottom: "15px", display: "flex", justifyContent: "center", gap: "20px" }}>
+                    <Link href="/privacy" style={{ color: "#94a3b8", textDecoration: "none" }}>Privacy Policy</Link>
+                    <Link href="/terms" style={{ color: "#94a3b8", textDecoration: "none" }}>Terms of Service</Link>
+                    <Link href="/disclaimer" style={{ color: "#94a3b8", textDecoration: "none" }}>Disclaimer</Link>
+                </div>
                 <p><span>{t.footerText}</span> <i className="fas fa-heart"></i> <span>{t.footerCommunity}</span></p>
             </footer>
         </>
