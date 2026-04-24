@@ -111,7 +111,10 @@ function FOMO({ race, allRaces, onSelectRace }) {
                     <div style={{ marginTop: '10px' }}>
                         <p style={{ margin: '0 0 10px 0', color: '#7f1d1d' }}><strong>Next Available:</strong> Looking for another race this month?</p>
                         <button
-                            onClick={() => onSelectRace(nextRace)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onSelectRace(nextRace);
+                            }}
                             style={{ padding: '8px 16px', backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
                         >
                             Check out {nextRace.name}
