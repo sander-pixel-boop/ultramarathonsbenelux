@@ -86,39 +86,55 @@ const i18n = {
     }
 };
 
+const typePatterns = [
+    "Backyard Ultra", "Backyard", "Ultra Trail", "Trail", "Ultrarun", "Ultra", "Marathon", "Run", "Loop"
+];
+const compoundPatterns = ["trailmarathon", "ultramarathon", "ultratrail"];
+
+const compiledTypeRegexes = typePatterns.map(t => ({
+    type: t,
+    testRegex: new RegExp(`\\b${t}\\b`, "i"),
+    replaceRegex: new RegExp(`\\b${t}\\b`, "ig")
+}));
+
+const compiledCompoundRegexes = compoundPatterns.map(c => ({
+    compound: c,
+    testRegex: new RegExp(`\\b${c}\\b`, "i"),
+    replaceRegex: new RegExp(`\\b${c}\\b`, "ig")
+}));
+
+const formatRaceNameMemo = new globalThis.Map();
+
 function formatRaceName(name) {
+    if (formatRaceNameMemo.has(name)) {
+        return formatRaceNameMemo.get(name);
+    }
+
     let raceTypes = [];
     let cleanName = name;
 
-    const typePatterns = [
-        "Backyard Ultra", "Backyard", "Ultra Trail", "Trail", "Ultrarun", "Ultra", "Marathon", "Run", "Loop"
-    ];
-
-    for (const t of typePatterns) {
-        const regex = new RegExp(`\\b${t}\\b`, "i");
-        if (regex.test(cleanName)) {
-            if (!raceTypes.includes(t)) {
-                raceTypes.push(t);
+    for (const { type, testRegex, replaceRegex } of compiledTypeRegexes) {
+        if (testRegex.test(cleanName)) {
+            if (!raceTypes.includes(type)) {
+                raceTypes.push(type);
             }
-            cleanName = cleanName.replace(new RegExp(`\\b${t}\\b`, "ig"), "");
+            cleanName = cleanName.replace(replaceRegex, "");
         }
     }
 
-    const compoundPatterns = ["trailmarathon", "ultramarathon", "ultratrail"];
-    for (const c of compoundPatterns) {
-        const regex = new RegExp(`\\b${c}\\b`, "i");
-        if (regex.test(cleanName)) {
-            if (c === "trailmarathon") {
+    for (const { compound, testRegex, replaceRegex } of compiledCompoundRegexes) {
+        if (testRegex.test(cleanName)) {
+            if (compound === "trailmarathon") {
                 if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
                 if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
-            } else if (c === "ultramarathon") {
+            } else if (compound === "ultramarathon") {
                 if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
                 if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
-            } else if (c === "ultratrail") {
+            } else if (compound === "ultratrail") {
                 if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
                 if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
             }
-            cleanName = cleanName.replace(new RegExp(`\\b${c}\\b`, "ig"), "");
+            cleanName = cleanName.replace(replaceRegex, "");
         }
     }
 
@@ -140,7 +156,9 @@ function formatRaceName(name) {
     }
 
     let displayType = raceTypes.length > 0 ? raceTypes.join(", ") : "Race";
-    return { name: cleanName, type: displayType };
+    const result = { name: cleanName, type: displayType };
+    formatRaceNameMemo.set(name, result);
+    return result;
 }
 
 function parseDateForSort(dateStr) {
