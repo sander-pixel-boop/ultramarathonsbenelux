@@ -1,3 +1,7 @@
 ## 2024-04-24 - Naming Conflict with React Components vs Standard Objects
 **Learning:** In Next.js/React, components are often dynamically imported and might share names with standard JavaScript objects (like `Map`). In this project, `pages/index.js` dynamically imports a `Map` component from `../components/Map`. When adding memoization using `new Map()`, it caused a `ReferenceError` ("Cannot access 'Map' before initialization") because `Map` resolved to the React component variable which was declared further down via `const Map = dynamic(...)`.
 **Action:** When adding standard objects like `Map`, `Set`, `URL` in the top level of a module where React components might be imported/declared, prefix with `globalThis.` (e.g., `new globalThis.Map()`) to avoid naming conflicts.
+
+### Date Filtering & UI Checkbox Removal
+* When fulfilling tasks that modify core filtering parameters (like `showPastRaces`), ensure you comprehensively trace state variables, dependent `useMemo` hooks, and associated dictionary (i18n) properties to securely unmount features.
+* The Next.js dev server has a tendency to silently hang or throw port errors. Prefer using an isolated puppeteer test script pointing to the correct background-running local instance to accurately verify UX state against modifications.
