@@ -28,7 +28,8 @@ const i18n = {
         dateAsc: "Date (Ascending)",
         dateDesc: "Date (Descending)",
         distanceAsc: "Distance (Ascending)",
-        distanceDesc: "Distance (Descending)"
+        distanceDesc: "Distance (Descending)",
+        flatEquivalent: "Flat Equivalent:"
     },
     nl: {
         title: "Benelux Ultra Race Gids",
@@ -55,7 +56,8 @@ const i18n = {
         dateAsc: "Datum (Oplopend)",
         dateDesc: "Datum (Aflopend)",
         distanceAsc: "Afstand (Oplopend)",
-        distanceDesc: "Afstand (Aflopend)"
+        distanceDesc: "Afstand (Aflopend)",
+        flatEquivalent: "Vlakke Equivalent:"
     },
     fr: {
         title: "Annuaire des Ultra Courses du Benelux",
@@ -82,43 +84,60 @@ const i18n = {
         dateAsc: "Date (Croissante)",
         dateDesc: "Date (Décroissante)",
         distanceAsc: "Distance (Croissante)",
-        distanceDesc: "Distance (Décroissante)"
+        distanceDesc: "Distance (Décroissante)",
+        flatEquivalent: "Équivalent Plat:"
     }
 };
 
+const typePatterns = [
+    "Backyard Ultra", "Backyard", "Ultra Trail", "Trail", "Ultrarun", "Ultra", "Marathon", "Run", "Loop"
+];
+const compoundPatterns = ["trailmarathon", "ultramarathon", "ultratrail"];
+
+const compiledTypeRegexes = typePatterns.map(t => ({
+    type: t,
+    testRegex: new RegExp(`\\b${t}\\b`, "i"),
+    replaceRegex: new RegExp(`\\b${t}\\b`, "ig")
+}));
+
+const compiledCompoundRegexes = compoundPatterns.map(c => ({
+    compound: c,
+    testRegex: new RegExp(`\\b${c}\\b`, "i"),
+    replaceRegex: new RegExp(`\\b${c}\\b`, "ig")
+}));
+
+const formatRaceNameMemo = new globalThis.Map();
+
 function formatRaceName(name) {
+    if (formatRaceNameMemo.has(name)) {
+        return formatRaceNameMemo.get(name);
+    }
+
     let raceTypes = [];
     let cleanName = name;
 
-    const typePatterns = [
-        "Backyard Ultra", "Backyard", "Ultra Trail", "Trail", "Ultrarun", "Ultra", "Marathon", "Run", "Loop"
-    ];
-
-    for (const t of typePatterns) {
-        const regex = new RegExp(`\\b${t}\\b`, "i");
-        if (regex.test(cleanName)) {
-            if (!raceTypes.includes(t)) {
-                raceTypes.push(t);
+    for (const { type, testRegex, replaceRegex } of compiledTypeRegexes) {
+        if (testRegex.test(cleanName)) {
+            if (!raceTypes.includes(type)) {
+                raceTypes.push(type);
             }
-            cleanName = cleanName.replace(new RegExp(`\\b${t}\\b`, "ig"), "");
+            cleanName = cleanName.replace(replaceRegex, "");
         }
     }
 
-    const compoundPatterns = ["trailmarathon", "ultramarathon", "ultratrail"];
-    for (const c of compoundPatterns) {
-        const regex = new RegExp(`\\b${c}\\b`, "i");
-        if (regex.test(cleanName)) {
-            if (c === "trailmarathon") {
+    for (const { compound, testRegex, replaceRegex } of compiledCompoundRegexes) {
+        if (testRegex.test(cleanName)) {
+            if (compound === "trailmarathon") {
                 if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
                 if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
-            } else if (c === "ultramarathon") {
+            } else if (compound === "ultramarathon") {
                 if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
                 if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
-            } else if (c === "ultratrail") {
+            } else if (compound === "ultratrail") {
                 if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
                 if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
             }
-            cleanName = cleanName.replace(new RegExp(`\\b${c}\\b`, "ig"), "");
+            cleanName = cleanName.replace(replaceRegex, "");
         }
     }
 
@@ -140,7 +159,9 @@ function formatRaceName(name) {
     }
 
     let displayType = raceTypes.length > 0 ? raceTypes.join(", ") : "Race";
-    return { name: cleanName, type: displayType };
+    const result = { name: cleanName, type: displayType };
+    formatRaceNameMemo.set(name, result);
+    return result;
 }
 
 function parseDateForSort(dateStr) {
@@ -150,6 +171,45 @@ function parseDateForSort(dateStr) {
         return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
     }
     return 0;
+}
+
+function getFlatEquivalent(race) {
+    if (!race) return null;
+
+    let distNum = 0;
+    const distStr = String(race.distance || '').toLowerCase();
+    if (distStr.includes('h')) return null; // timed event
+
+    if (distStr.includes('km')) {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+    } else if (distStr.includes('mi')) {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, '')) * 1.60934;
+    } else {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+    }
+
+    if (!distNum || isNaN(distNum)) return null;
+
+    let totalElevation = 0;
+    if (race.elevation) {
+        const elevStr = String(race.elevation).toLowerCase();
+        const elevMeters = parseFloat(elevStr.replace(/[^0-9.]/g, ''));
+        if (!isNaN(elevMeters)) totalElevation = elevMeters;
+    } else if (race.elevation_points && race.elevation_points.length > 0) {
+        let ascent = 0;
+        const pts = race.elevation_points;
+        for (let i = 0; i < pts.length - 1; i++) {
+            if (pts[i+1].e > pts[i].e) {
+                ascent += (pts[i+1].e - pts[i].e);
+            }
+        }
+        totalElevation = ascent;
+    }
+
+    if (totalElevation <= 0) return null;
+
+    const flatEq = distNum + (totalElevation / 100);
+    return Math.round(flatEq);
 }
 
 function parseDistanceForSort(distStr) {
@@ -171,6 +231,7 @@ const Map = dynamic(() => import('../components/Map'), { ssr: false });
 import FinishTimeCalculator from '../components/FinishTimeCalculator';
 import PackYourBag from '../components/PackYourBag';
 import CourseProfile from '../components/CourseProfile';
+import FOMO from "../components/FOMO";
 import Quiz from '../components/Quiz';
 
 export default function Home({ initialRaces }) {
@@ -298,7 +359,7 @@ export default function Home({ initialRaces }) {
                         cursor: 'pointer',
                         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                     }}>
-                    <i className="fas fa-clipboard-question"></i> Is This Race For You?
+                    <i className="fas fa-clipboard-question"></i> Find my Race
                 </button>
             </div>
 
@@ -412,16 +473,22 @@ export default function Home({ initialRaces }) {
             {selectedRace && (
                 <div className="modal-overlay" onClick={() => setSelectedRace(null)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="modal-close" onClick={() => setSelectedRace(null)}>&times;</button>
+                        <button className="modal-close" aria-label="Close" onClick={() => setSelectedRace(null)}>&times;</button>
                         <h2>{selectedRace.formattedRace.name}</h2>
                         <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {selectedRace.formattedRace.type}</p>
                         <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {selectedRace.locationStr}</p>
                         <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {selectedRace.distance}</p>
+                        {getFlatEquivalent(selectedRace) && (
+                            <p style={{ color: '#d97706', fontWeight: '500' }}>
+                                <i className="fas fa-equals"></i> <strong>{t.flatEquivalent}</strong> {getFlatEquivalent(selectedRace)}km
+                            </p>
+                        )}
                         <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {selectedRace.date}</p>
 
                         <FinishTimeCalculator race={selectedRace} t={t} />
                         <PackYourBag race={selectedRace} t={t} />
                         <CourseProfile race={selectedRace} t={t} />
+                        <FOMO race={selectedRace} allRaces={filteredRaces} onSelectRace={(r) => { let locationStr = r.country; if (r.country && r.country.toLowerCase() === "belgium") locationStr = t.belgium; if (r.country && r.country.toLowerCase() === "netherlands") locationStr = t.netherlands; if (r.country && r.country.toLowerCase() === "luxembourg") locationStr = t.luxembourg; if (r.city) { locationStr = `${r.city}, ${locationStr}`; } setSelectedRace({ ...r, formattedRace: formatRaceName(r.name), locationStr }); }} />
 
                         <a href={selectedRace.url} target="_blank" rel="noopener noreferrer" className="subscribe-btn" style={{ marginTop: '20px', width: '100%', boxSizing: 'border-box' }}>
                             {t.subscribe} <i className="fas fa-arrow-right"></i>
