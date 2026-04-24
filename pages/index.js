@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
+import { parseStandardDate } from '../utils/date';
 import dynamic from 'next/dynamic';
 
 const i18n = {
