@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { getUserCountry, getAffiliateLink } from '../utils/geoAffiliate';
+import { getUserCountry, getAffiliateLinks } from '../utils/geoAffiliate';
 
 export default function PackYourBag({ race, t }) {
     const [checkedItems, setCheckedItems] = useState({});
@@ -28,15 +28,15 @@ export default function PackYourBag({ race, t }) {
         const gear = [];
 
         // Base gear
-        gear.push({ id: 'survival_blanket', label: 'Survival Blanket', affiliateLink: getAffiliateLink('survival blanket', userCountry) });
+        gear.push({ id: 'survival_blanket', label: 'Survival Blanket', affiliateLinks: getAffiliateLinks('survival blanket', userCountry) });
 
         if (d2 >= 50 || distStr.includes('h')) {
-            gear.push({ id: 'water_1l', label: '1L Water Capacity', affiliateLink: getAffiliateLink('running hydration vest 1L', userCountry) });
-            gear.push({ id: 'headlamp', label: 'Headlamp', affiliateLink: getAffiliateLink('running headlamp', userCountry) });
+            gear.push({ id: 'water_1l', label: '1L Water Capacity', affiliateLinks: getAffiliateLinks('running hydration vest 1L', userCountry) });
+            gear.push({ id: 'headlamp', label: 'Headlamp', affiliateLinks: getAffiliateLinks('running headlamp', userCountry) });
         }
 
         if (d2 >= 80 || distStr.includes('h')) {
-            gear.push({ id: 'waterproof_jacket', label: 'Waterproof Jacket', affiliateLink: getAffiliateLink('running waterproof jacket', userCountry) });
+            gear.push({ id: 'waterproof_jacket', label: 'Waterproof Jacket', affiliateLinks: getAffiliateLinks('running waterproof jacket', userCountry) });
         }
 
         return gear;
@@ -61,8 +61,8 @@ export default function PackYourBag({ race, t }) {
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left' }}>
                 {items.map(item => (
-                    <div key={item.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#334155', textAlign: 'left', margin: 0 }}>
+                    <div key={item.id} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#334155', textAlign: 'left', margin: 0, flex: '1 1 auto' }}>
                             <input style={{ width: 'auto' }}
                                 type="checkbox"
                                 checked={!!checkedItems[item.id]}
@@ -73,17 +73,22 @@ export default function PackYourBag({ race, t }) {
                             </span>
                         </label>
                         {!checkedItems[item.id] && (
-                            <a href={item.affiliateLink} target="_blank" rel="noopener noreferrer" style={{
-                                backgroundColor: '#f59e0b',
-                                color: 'white',
-                                padding: '4px 8px',
-                                borderRadius: '4px',
-                                textDecoration: 'none',
-                                fontSize: '0.8em',
-                                fontWeight: 'bold'
-                            }}>
-                                Buy Now
-                            </a>
+                            <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                                {item.affiliateLinks.map((link, i) => (
+                                    <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" style={{
+                                        backgroundColor: link.store === 'Amazon' ? '#f59e0b' : '#3b82f6',
+                                        color: 'white',
+                                        padding: '4px 8px',
+                                        borderRadius: '4px',
+                                        textDecoration: 'none',
+                                        fontSize: '0.8em',
+                                        fontWeight: 'bold',
+                                        whiteSpace: 'nowrap'
+                                    }}>
+                                        {link.store}
+                                    </a>
+                                ))}
+                            </div>
                         )}
                     </div>
                 ))}
