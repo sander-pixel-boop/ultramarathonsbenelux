@@ -7,6 +7,9 @@ const i18n = {
     en: {
         title: "Benelux Ultra Race Directory",
         aboutUs: "About Us",
+        privacyPolicy: "Privacy Policy",
+        termsOfService: "Terms of Service",
+        disclaimer: "Disclaimer",
         subtitle: "Discover the toughest footraces and gravel events across Belgium, Netherlands, and Luxembourg.",
         searchPlaceholder: "Search by distance or race name...",
         allCountries: "All Countries",
@@ -36,6 +39,9 @@ const i18n = {
     nl: {
         title: "Benelux Ultra Race Gids",
         aboutUs: "Over Ons",
+        privacyPolicy: "Privacybeleid",
+        termsOfService: "Servicevoorwaarden",
+        disclaimer: "Disclaimer",
         subtitle: "Ontdek de zwaarste hardloop- en gravel-evenementen in België, Nederland en Luxemburg.",
         searchPlaceholder: "Zoek op afstand of naam...",
         allCountries: "Alle Landen",
@@ -65,6 +71,9 @@ const i18n = {
     fr: {
         title: "Annuaire des Ultra Courses du Benelux",
         aboutUs: "À Propos",
+        privacyPolicy: "Politique de Confidentialité",
+        termsOfService: "Conditions d'Utilisation",
+        disclaimer: "Avis de Non-Responsabilité",
         subtitle: "Découvrez les courses à pied et événements gravel les plus difficiles de Belgique, des Pays-Bas et du Luxembourg.",
         searchPlaceholder: "Rechercher par distance ou nom...",
         allCountries: "Tous les Pays",
@@ -520,7 +529,12 @@ export default function Home({ initialRaces }) {
 
             <footer style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                 <p><span>{t.footerText}</span> <i className="fas fa-heart"></i> <span>{t.footerCommunity}</span></p>
-                <Link href="/about" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.aboutUs}</Link>
+                <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <Link href="/about" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.aboutUs}</Link>
+                    <Link href="/privacy" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.privacyPolicy}</Link>
+                    <Link href="/terms" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.termsOfService}</Link>
+                    <Link href="/disclaimer" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>{t.disclaimer}</Link>
+                </div>
             </footer>
         </>
     );
