@@ -473,7 +473,7 @@ export default function Home({ initialRaces }) {
             {selectedRace && (
                 <div className="modal-overlay" onClick={() => setSelectedRace(null)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="modal-close" onClick={() => setSelectedRace(null)}>&times;</button>
+                        <button className="modal-close" aria-label="Close" onClick={() => setSelectedRace(null)}>&times;</button>
                         <h2>{selectedRace.formattedRace.name}</h2>
                         <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {selectedRace.formattedRace.type}</p>
                         <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {selectedRace.locationStr}</p>
