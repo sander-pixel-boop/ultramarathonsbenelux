@@ -28,7 +28,8 @@ const i18n = {
         dateAsc: "Date (Ascending)",
         dateDesc: "Date (Descending)",
         distanceAsc: "Distance (Ascending)",
-        distanceDesc: "Distance (Descending)"
+        distanceDesc: "Distance (Descending)",
+        flatEquivalent: "Flat Equivalent:"
     },
     nl: {
         title: "Benelux Ultra Race Gids",
@@ -55,7 +56,8 @@ const i18n = {
         dateAsc: "Datum (Oplopend)",
         dateDesc: "Datum (Aflopend)",
         distanceAsc: "Afstand (Oplopend)",
-        distanceDesc: "Afstand (Aflopend)"
+        distanceDesc: "Afstand (Aflopend)",
+        flatEquivalent: "Vlakke Equivalent:"
     },
     fr: {
         title: "Annuaire des Ultra Courses du Benelux",
@@ -82,7 +84,8 @@ const i18n = {
         dateAsc: "Date (Croissante)",
         dateDesc: "Date (Décroissante)",
         distanceAsc: "Distance (Croissante)",
-        distanceDesc: "Distance (Décroissante)"
+        distanceDesc: "Distance (Décroissante)",
+        flatEquivalent: "Équivalent Plat:"
     }
 };
 
@@ -150,6 +153,45 @@ function parseDateForSort(dateStr) {
         return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
     }
     return 0;
+}
+
+function getFlatEquivalent(race) {
+    if (!race) return null;
+
+    let distNum = 0;
+    const distStr = String(race.distance || '').toLowerCase();
+    if (distStr.includes('h')) return null; // timed event
+
+    if (distStr.includes('km')) {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+    } else if (distStr.includes('mi')) {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, '')) * 1.60934;
+    } else {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+    }
+
+    if (!distNum || isNaN(distNum)) return null;
+
+    let totalElevation = 0;
+    if (race.elevation) {
+        const elevStr = String(race.elevation).toLowerCase();
+        const elevMeters = parseFloat(elevStr.replace(/[^0-9.]/g, ''));
+        if (!isNaN(elevMeters)) totalElevation = elevMeters;
+    } else if (race.elevation_points && race.elevation_points.length > 0) {
+        let ascent = 0;
+        const pts = race.elevation_points;
+        for (let i = 0; i < pts.length - 1; i++) {
+            if (pts[i+1].e > pts[i].e) {
+                ascent += (pts[i+1].e - pts[i].e);
+            }
+        }
+        totalElevation = ascent;
+    }
+
+    if (totalElevation <= 0) return null;
+
+    const flatEq = distNum + (totalElevation / 100);
+    return Math.round(flatEq);
 }
 
 function parseDistanceForSort(distStr) {
@@ -418,6 +460,11 @@ export default function Home({ initialRaces }) {
                         <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {selectedRace.formattedRace.type}</p>
                         <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {selectedRace.locationStr}</p>
                         <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {selectedRace.distance}</p>
+                        {getFlatEquivalent(selectedRace) && (
+                            <p style={{ color: '#d97706', fontWeight: '500' }}>
+                                <i className="fas fa-equals"></i> <strong>{t.flatEquivalent}</strong> {getFlatEquivalent(selectedRace)}km
+                            </p>
+                        )}
                         <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {selectedRace.date}</p>
 
                         <FinishTimeCalculator race={selectedRace} t={t} />
