@@ -86,12 +86,72 @@ async function verify_and_correct_race(race) {
 
         // Verify / Correct Date
         const currentDate = race.date || 'TBD';
+
+        const monthMap = {
+            "janvier": "01", "january": "01", "januari": "01",
+            "février": "02", "february": "02", "februari": "02",
+            "mars": "03", "march": "03", "maart": "03",
+            "avril": "04", "april": "04",
+            "mai": "05", "may": "05", "mei": "05",
+            "juin": "06", "june": "06", "juni": "06",
+            "juillet": "07", "july": "07", "juli": "07",
+            "août": "08", "august": "08", "augustus": "08",
+            "septembre": "09", "september": "09",
+            "octobre": "10", "october": "10", "oktober": "10",
+            "novembre": "11", "november": "11",
+            "décembre": "12", "december": "12"
+        };
+
+        function normalizeDate(d) {
+            if (!d || d === 'TBD') return null;
+            const parts = d.match(/\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/);
+            if (parts) {
+                let day = parts[1].padStart(2, '0');
+                let month = parts[2].padStart(2, '0');
+                let year = parts[3];
+                if (year.length === 2) year = "20" + year;
+                return `${day}/${month}/${year}`;
+            }
+            return null;
+        }
+
+        function extractDates(text) {
+            const dates = [];
+
+            const textDateRegex = new RegExp(`\\b(\\d{1,2})\\s+(${Object.keys(monthMap).join('|')})\\s+(\\d{4})\\b`, 'gi');
+            let match;
+            while ((match = textDateRegex.exec(text)) !== null) {
+                const day = match[1].padStart(2, '0');
+                const month = monthMap[match[2].toLowerCase()];
+                const year = match[3];
+                dates.push(`${day}/${month}/${year}`);
+            }
+
+            const numericDateRegex = /\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/g;
+            while ((match = numericDateRegex.exec(text)) !== null) {
+                let day = match[1].padStart(2, '0');
+                let month = match[2].padStart(2, '0');
+                let year = match[3];
+                if (year.length === 2) year = "20" + year;
+                dates.push(`${day}/${month}/${year}`);
+            }
+
+            return dates;
+        }
+
+        const normCurrent = normalizeDate(currentDate);
+        const foundDates = extractDates(text);
+
         if (currentDate === 'TBD' || !currentDate) {
-            const dateMatch = text.match(/\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b/);
-            if (dateMatch) race.date = dateMatch[0];
-        } else if (!text.includes(currentDate)) {
-            const dateMatch = text.match(/\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b/);
-            if (dateMatch) race.date = dateMatch[0];
+            if (foundDates.length > 0) {
+                race.date = foundDates[0];
+            }
+        } else if (normCurrent && foundDates.includes(normCurrent)) {
+            // we already know this is a correct date, do nothing
+            // wait, we can standardise the format!
+            race.date = normCurrent;
+        } else if (foundDates.length > 0) {
+            race.date = foundDates[0];
         }
 
         // Verify / Correct Distance
