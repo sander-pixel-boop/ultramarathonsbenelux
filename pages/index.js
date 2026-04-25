@@ -175,24 +175,6 @@ function formatRaceName(name) {
     return result;
 }
 
-function parseStandardDate(dateStr) {
-    if (!dateStr) return null;
-    let match = String(dateStr).trim().match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})$/);
-    if (match) {
-        let month = parseInt(match[2], 10);
-        if (month < 1 || month > 12) return null;
-        return { year: parseInt(match[1], 10), month, day: parseInt(match[3], 10) };
-    }
-    match = String(dateStr).trim().match(/^(\d{1,2})[-./](\d{1,2})[-./](\d{2,4})$/);
-    if (match) {
-        let month = parseInt(match[2], 10);
-        if (month < 1 || month > 12) return null;
-        let year = parseInt(match[3], 10);
-        if (year < 100) year += 2000;
-        return { day: parseInt(match[1], 10), month, year };
-    }
-    return null;
-}
 
 function parseDateForSort(dateStr) {
     const parsed = parseStandardDate(dateStr);
