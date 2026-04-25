@@ -34,7 +34,10 @@ const i18n = {
         dateDesc: "Date (Descending)",
         distanceAsc: "Distance (Ascending)",
         distanceDesc: "Distance (Descending)",
-        flatEquivalent: "Flat Equivalent:"
+        flatEquivalent: "Flat Equivalent:",
+        noRacesFound: "No races found",
+        tryAdjusting: "Try adjusting your search or filters to find what you're looking for.",
+        clearFilters: "Clear filters"
     },
     nl: {
         title: "Benelux Ultra Race Gids",
@@ -65,7 +68,10 @@ const i18n = {
         dateDesc: "Datum (Aflopend)",
         distanceAsc: "Afstand (Oplopend)",
         distanceDesc: "Afstand (Aflopend)",
-        flatEquivalent: "Vlakke Equivalent:"
+        flatEquivalent: "Vlakke Equivalent:",
+        noRacesFound: "Geen races gevonden",
+        tryAdjusting: "Probeer je zoekopdracht of filters aan te passen om te vinden wat je zoekt.",
+        clearFilters: "Wis filters"
     },
     fr: {
         title: "Annuaire des Ultra Courses du Benelux",
@@ -96,7 +102,10 @@ const i18n = {
         dateDesc: "Date (Décroissante)",
         distanceAsc: "Distance (Croissante)",
         distanceDesc: "Distance (Décroissante)",
-        flatEquivalent: "Équivalent Plat:"
+        flatEquivalent: "Équivalent Plat:",
+        noRacesFound: "Aucune course trouvée",
+        tryAdjusting: "Essayez de modifier votre recherche ou vos filtres pour trouver ce que vous cherchez.",
+        clearFilters: "Effacer les filtres"
     }
 };
 
@@ -175,24 +184,6 @@ function formatRaceName(name) {
     return result;
 }
 
-function parseStandardDate(dateStr) {
-    if (!dateStr) return null;
-    let match = String(dateStr).trim().match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})$/);
-    if (match) {
-        let month = parseInt(match[2], 10);
-        if (month < 1 || month > 12) return null;
-        return { year: parseInt(match[1], 10), month, day: parseInt(match[3], 10) };
-    }
-    match = String(dateStr).trim().match(/^(\d{1,2})[-./](\d{1,2})[-./](\d{2,4})$/);
-    if (match) {
-        let month = parseInt(match[2], 10);
-        if (month < 1 || month > 12) return null;
-        let year = parseInt(match[3], 10);
-        if (year < 100) year += 2000;
-        return { day: parseInt(match[1], 10), month, year };
-    }
-    return null;
-}
 
 function parseDateForSort(dateStr) {
     const parsed = parseStandardDate(dateStr);
@@ -463,7 +454,27 @@ export default function Home({ initialRaces }) {
                 <Map races={filteredRaces} t={t} formatRaceName={formatRaceName} lang={lang} />
 
                 <div id="race-list">
-                    {filteredRaces.map((race, idx) => {
+                    {filteredRaces.length === 0 ? (
+                        <div style={{ textAlign: 'center', padding: '40px 20px', gridColumn: '1 / -1', backgroundColor: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                            <i className="fas fa-search" style={{ fontSize: '3em', color: '#94a3b8', marginBottom: '20px' }}></i>
+                            <h2 style={{ fontSize: '1.5em', color: '#334155', margin: '0 0 10px 0' }}>{t.noRacesFound}</h2>
+                            <p style={{ color: '#64748b', marginBottom: '20px' }}>{t.tryAdjusting}</p>
+                            <button
+                                onClick={() => {
+                                    setSearch('');
+                                    setCountryFilter('');
+                                    setYearFilter('');
+                                    setMonthFilter('');
+                                    setDistanceFilter('');
+                                }}
+                                style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', transition: 'background-color 0.2s' }}
+                                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
+                                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
+                            >
+                                {t.clearFilters}
+                            </button>
+                        </div>
+                    ) : filteredRaces.map((race, idx) => {
                         let translatedCountry = race.country;
                         if (race.country && race.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
                         if (race.country && race.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
