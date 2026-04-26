@@ -1,28 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { parseStandardDate } from '../utils/date';
 
 function parseDate(dateStr) {
-    if (!dateStr) return null;
-    let parts;
-    if (dateStr.includes('.')) {
-        parts = dateStr.split('.');
-    } else if (dateStr.includes('/')) {
-        parts = dateStr.split('/');
-    } else {
-        return null;
-    }
-
-    if (parts.length === 3) {
-        let day = parseInt(parts[0], 10);
-        let month = parseInt(parts[1], 10) - 1;
-        let year = parseInt(parts[2], 10);
-        if (year < 100) year += 2000;
-
-        if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
-
-        // Sanity check for month
-        if (month < 0 || month > 11) return null;
-
-        return new Date(year, month, day);
+    const parsed = parseStandardDate(dateStr);
+    if (parsed) {
+        return new Date(parsed.year, parsed.month - 1, parsed.day);
     }
     return null;
 }
