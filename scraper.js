@@ -716,6 +716,17 @@ async function main() {
         return race.date && race.date !== 'TBD' && race.distance && race.distance !== 'Ultra';
     });
 
+    function generateSlug(name, dateStr) {
+        let slug = (name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+        let year = "";
+        if (dateStr) {
+            const match = dateStr.match(/\b(20\d{2})\b/);
+            if (match) year = `-${match[1]}`;
+        }
+        return `${slug}${year}`;
+    }
+    filtered_races.forEach(race => { race.slug = generateSlug(race.name, race.date); });
+
     await fs.writeFile('races.json', JSON.stringify(filtered_races, null, 4));
     console.log(`Successfully scraped and verified ${filtered_races.length} races and saved to races.json`);
 }
