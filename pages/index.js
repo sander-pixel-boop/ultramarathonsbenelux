@@ -405,9 +405,9 @@ export default function Home({ initialRaces }) {
             <div className="language-flags">
                 <Link href="/blog" style={{ color: 'white', marginRight: '20px', textDecoration: 'none', fontWeight: '500', fontSize: '1.2em' }}>Blog</Link>
 
-                <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" className={`flag ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')} />
-                <img src="https://flagcdn.com/w40/nl.png" alt="Nederlands" title="Nederlands" className={`flag ${lang === 'nl' ? 'active' : ''}`} onClick={() => setLang('nl')} />
-                <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" className={`flag ${lang === 'fr' ? 'active' : ''}`} onClick={() => setLang('fr')} />
+                <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" className={`flag ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')} tabIndex={0} role="button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang('en'); } }} />
+                <img src="https://flagcdn.com/w40/nl.png" alt="Nederlands" title="Nederlands" className={`flag ${lang === 'nl' ? 'active' : ''}`} onClick={() => setLang('nl')} tabIndex={0} role="button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang('nl'); } }} />
+                <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" className={`flag ${lang === 'fr' ? 'active' : ''}`} onClick={() => setLang('fr')} tabIndex={0} role="button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang('fr'); } }} />
             </div>
 
             <div className="hero">
@@ -435,21 +435,21 @@ export default function Home({ initialRaces }) {
                 <div className="controls">
                     <div className="input-group">
                         <i className="fas fa-search"></i>
-                        <input type="text" id="search" placeholder={t.searchPlaceholder} value={search} onChange={(e) => setSearch(e.target.value)} />
+                        <input type="text" id="search" placeholder={t.searchPlaceholder} aria-label={t.searchPlaceholder} value={search} onChange={(e) => setSearch(e.target.value)} />
                     </div>
-                    <select id="country-filter" className="filter-select" value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)}>
+                    <select id="country-filter" className="filter-select" aria-label="Filter by country" value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)}>
                         <option value="">{t.allCountries}</option>
                         <option value="belgium">{t.belgium}</option>
                         <option value="netherlands">{t.netherlands}</option>
                         <option value="luxembourg">{t.luxembourg}</option>
                     </select>
-                    <select id="year-filter" className="filter-select" value={yearFilter} onChange={(e) => setYearFilter(e.target.value)}>
+                    <select id="year-filter" className="filter-select" aria-label="Filter by year" value={yearFilter} onChange={(e) => setYearFilter(e.target.value)}>
                         <option value="">{t.allYears}</option>
                         <option value="2024">2024</option>
                         <option value="2025">2025</option>
                         <option value="2026">2026</option>
                     </select>
-                    <select id="month-filter" className="filter-select" value={monthFilter} onChange={(e) => setMonthFilter(e.target.value)}>
+                    <select id="month-filter" className="filter-select" aria-label="Filter by month" value={monthFilter} onChange={(e) => setMonthFilter(e.target.value)}>
                         <option value="">{t.allMonths}</option>
                         <option value="01">{t.jan}</option>
                         <option value="02">{t.feb}</option>
@@ -464,14 +464,14 @@ export default function Home({ initialRaces }) {
                         <option value="11">{t.nov}</option>
                         <option value="12">{t.dec}</option>
                     </select>
-                    <select id="distance-filter" className="filter-select" value={distanceFilter} onChange={(e) => setDistanceFilter(e.target.value)}>
+                    <select id="distance-filter" className="filter-select" aria-label="Filter by distance" value={distanceFilter} onChange={(e) => setDistanceFilter(e.target.value)}>
                         <option value="">{t.allDistances}</option>
                         <option value="<60km">&lt; 60km</option>
                         <option value="60-99km">60 - 99km</option>
                         <option value="100km+">100km+</option>
                         <option value="timed">{t.timedEvents}</option>
                     </select>
-                    <select id="sort-select" className="filter-select" value={sortSelect} onChange={(e) => setSortSelect(e.target.value)}>
+                    <select id="sort-select" className="filter-select" aria-label="Sort races" value={sortSelect} onChange={(e) => setSortSelect(e.target.value)}>
                         <option value="date-asc">{t.dateAsc}</option>
                         <option value="date-desc">{t.dateDesc}</option>
                         <option value="distance-asc">{t.distanceAsc}</option>
@@ -516,7 +516,7 @@ export default function Home({ initialRaces }) {
                         const formattedRace = formatRaceName(race.name);
 
                         return (
-                            <div key={idx} className="race-card" onClick={() => setSelectedRace({ ...race, formattedRace, locationStr })}>
+                            <div key={idx} className="race-card" tabIndex={0} role="button" onClick={() => setSelectedRace({ ...race, formattedRace, locationStr })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedRace({ ...race, formattedRace, locationStr }); } }}>
                                 <h2>{formattedRace.name}</h2>
                                 <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {formattedRace.type}</p>
                                 <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {locationStr}</p>
