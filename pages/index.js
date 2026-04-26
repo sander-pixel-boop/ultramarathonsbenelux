@@ -522,6 +522,8 @@ export default function Home({ initialRaces }) {
                                 <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {locationStr}</p>
                                 <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {race.distance}</p>
                                 <p><i className="far fa-calendar-alt"></i> <strong>{t.date}</strong> {formatDateDisplay(race.date, t)}</p>
+                                {/* Added hidden link for SEO crawlability */}
+                                <Link href={`/race/${race.slug}`} style={{ display: "none" }}>{race.name} Details</Link>
                                 <FOMO race={race} allRaces={filteredRaces} onSelectRace={(r) => {
                                     let translatedCountry = r.country;
                                     if (r.country && r.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;

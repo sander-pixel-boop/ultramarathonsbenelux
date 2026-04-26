@@ -29,7 +29,18 @@ export const getServerSideProps = async ({ res }) => {
     console.error('Error reading blog.json for sitemap:', error);
   }
 
-  const allPaths = [...staticPaths, ...blogPaths];
+  // Dynamic routes (races)
+  const raceDataPath = path.join(process.cwd(), 'races.json');
+  let racePaths = [];
+  try {
+    const raceJson = fs.readFileSync(raceDataPath, 'utf8');
+    const races = JSON.parse(raceJson);
+    racePaths = races.filter(r => r.slug).map((race) => `/race/${race.slug}`);
+  } catch (error) {
+    console.error('Error reading races.json for sitemap:', error);
+  }
+
+  const allPaths = [...staticPaths, ...blogPaths, ...racePaths];
 
   // Generate XML
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
