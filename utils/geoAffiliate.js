@@ -11,17 +11,29 @@ export async function getUserCountry() {
     return null;
 }
 
-export function getAffiliateLink(itemKeyword, country) {
-    // If the user is in the Netherlands, point links to amazon.nl or futurumshop.nl
-    // if in Belgium/Luxembourg, prioritize amazon.de or asadventure.com.
+export function getAffiliateLinks(itemKeyword, country) {
     const keyword = encodeURIComponent(itemKeyword);
-    const tag = 'your_amazon_tag_here'; // default placeholder tag
+
+    // Placeholder tags
+    const amazonTag = 'your_amazon_tag_here';
+    const decathlonTag = 'your_decathlon_tag_here';
+    const asAdventureTag = 'your_asadventure_tag_here';
+    const futurumshopTag = 'your_futurumshop_tag_here';
+
+    const links = [];
 
     if (country === 'NL') {
-        return `https://www.amazon.nl/s?k=${keyword}&tag=${tag}`;
+        links.push({ store: 'Amazon', url: `https://www.amazon.nl/s?k=${keyword}&tag=${amazonTag}` });
+        links.push({ store: 'Decathlon', url: `https://www.decathlon.nl/search?Ntt=${keyword}&affiliate=${decathlonTag}` });
+        links.push({ store: 'Futurumshop', url: `https://www.futurumshop.nl/zoeken?q=${keyword}&affiliate=${futurumshopTag}` });
     } else if (country === 'BE' || country === 'LU') {
-        return `https://www.amazon.de/s?k=${keyword}&tag=${tag}`;
+        links.push({ store: 'Amazon', url: `https://www.amazon.de/s?k=${keyword}&tag=${amazonTag}` });
+        links.push({ store: 'Decathlon', url: `https://www.decathlon.be/nl/search?Ntt=${keyword}&affiliate=${decathlonTag}` });
+        links.push({ store: 'AS Adventure', url: `https://www.asadventure.com/nl/c/search.html?q=${keyword}&affiliate=${asAdventureTag}` });
     } else {
-        return `https://www.amazon.com/s?k=${keyword}&tag=${tag}`;
+        links.push({ store: 'Amazon', url: `https://www.amazon.com/s?k=${keyword}&tag=${amazonTag}` });
+        links.push({ store: 'Decathlon', url: `https://www.decathlon.com/search?q=${keyword}&affiliate=${decathlonTag}` });
     }
+
+    return links;
 }

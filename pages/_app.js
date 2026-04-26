@@ -1,12 +1,19 @@
 import "leaflet/dist/leaflet.css";
 import '../styles/global.css';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import Script from 'next/script';
 
 export default function App({ Component, pageProps }) {
   return (
     <>
       <Component {...pageProps} />
-      <SpeedInsights />
+      {process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ID && (
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ID}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      )}
     </>
   );
 }
