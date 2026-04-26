@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "next dev",
-    "build": "node scraper.js && next build",
+    "build": "node scripts/scraper.js && next build",
+    "scrape": "node scripts/scraper.js",
     "start": "next start"
   },
   "dependencies": {
