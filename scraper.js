@@ -106,6 +106,9 @@ async function verify_and_correct_race(race) {
             if (!d || d === 'TBD') return null;
             const parts = d.match(/\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/);
             if (parts) {
+                let dNum = parseInt(parts[1], 10);
+                let mNum = parseInt(parts[2], 10);
+                if (dNum < 1 || dNum > 31 || mNum < 1 || mNum > 12) return null;
                 let day = parts[1].padStart(2, '0');
                 let month = parts[2].padStart(2, '0');
                 let year = parts[3];
@@ -129,6 +132,9 @@ async function verify_and_correct_race(race) {
 
             const numericDateRegex = /\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/g;
             while ((match = numericDateRegex.exec(text)) !== null) {
+                let dNum = parseInt(match[1], 10);
+                let mNum = parseInt(match[2], 10);
+                if (dNum < 1 || dNum > 31 || mNum < 1 || mNum > 12) continue;
                 let day = match[1].padStart(2, '0');
                 let month = match[2].padStart(2, '0');
                 let year = match[3];
@@ -682,6 +688,34 @@ async function main() {
         const results = await Promise.all(batch.map(race => verify_and_correct_race(race)));
         verified_races.push(...results);
     }
+
+    console.log("Normalizing all dates as fallback...");
+    verified_races.forEach(r => {
+        if (r.date && r.date !== 'TBD') {
+            const parts = r.date.match(/\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/);
+            if (parts) {
+                let dNum = parseInt(parts[1], 10);
+                let mNum = parseInt(parts[2], 10);
+                if (dNum >= 1 && dNum <= 31 && mNum >= 1 && mNum <= 12) {
+                    let day = parts[1].padStart(2, '0');
+                    let month = parts[2].padStart(2, '0');
+                    let year = parts[3];
+                    if (year.length === 2) year = "20" + year;
+                    r.date = `${day}/${month}/${year}`;
+                }
+            } else {
+                const globalMonthMap = { "januari": "01", "january": "01", "februari": "02", "february": "02", "maart": "03", "march": "03", "april": "04", "mei": "05", "may": "05", "juni": "06", "june": "06", "juli": "07", "july": "07", "augustus": "08", "august": "08", "september": "09", "sep": "09", "oktober": "10", "october": "10", "november": "11", "december": "12" };
+                const textDateRegex = new RegExp(`\\b(\\d{1,2})\\s+(${Object.keys(globalMonthMap).join('|')})\\s+(\\d{4})\\b`, 'i');
+                const textMatch = r.date.match(textDateRegex);
+                if (textMatch) {
+                    const day = textMatch[1].padStart(2, '0');
+                    const month = globalMonthMap[textMatch[2].toLowerCase()];
+                    const year = textMatch[3];
+                    r.date = `${day}/${month}/${year}`;
+                }
+            }
+        }
+    });
 
     console.log("Geocoding races...");
     for (const race of verified_races) {
