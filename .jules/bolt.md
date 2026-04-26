@@ -9,3 +9,6 @@
 ## 2024-05-15 - Array Sort Memoization
 **Learning:** React re-renders or sorting operations that rely on expensive parsing (like date string regex parsing in `parseStandardDate` or numeric parsing in `parseDistanceForSort`) inside `.sort()` callbacks scale poorly, repeating O(N log N) times.
 **Action:** When filtering/sorting a list dynamically, module-level memoization of computed keys using `new globalThis.Map()` significantly prevents redundant object creation and string parsing.
+## 2024-04-25 - Fast-fail optimization in data filtering loops
+**Learning:** In frontend performance, when filtering large arrays (e.g., in `useMemo` hooks), performing expensive operations (like regex parsing strings into Date objects) on every iteration causes high CPU usage and garbage collection pressure, leading to UI thread blocking.
+**Action:** Always implement a "fast-fail" (short-circuiting) pattern. Reorder conditionals so that cheap checks (string parsing, boolean checks) execute first. Defer expensive regex/instantiation operations until absolutely necessary. Hoist invariant object creations (e.g., `new Date()`) outside the loop and use integer math (`.getTime()`) for rapid comparisons.
