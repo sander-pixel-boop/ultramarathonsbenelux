@@ -746,8 +746,48 @@ async function main() {
         }
     }
 
-    const filtered_races = verified_races.filter(race => {
+
+    const valid_races = verified_races.filter(race => {
         return race.date && race.date !== 'TBD' && race.distance && race.distance !== 'Ultra';
+    });
+
+    const prefixRegex = /^\d+(?:[eè]me|ère|er|nd|rd|th|st|e|°|\.)?\s+(?!(?:km|h|hour|uur|miles|mi)\b)/i;
+
+    const filtered_races = [];
+    valid_races.forEach(race => {
+        if (race.name) {
+            race.name = race.name.replace(prefixRegex, '').trim();
+        }
+
+        let distStr = race.distance ? race.distance.replace(/[^\d.]/g, '') : '0';
+        let distVal = parseFloat(distStr) || 0;
+
+        let isDuplicate = false;
+        for (let i = 0; i < filtered_races.length; i++) {
+            let existing = filtered_races[i];
+            if (existing.name === race.name && existing.date === race.date) {
+                let existingDistStr = existing.distance ? existing.distance.replace(/[^\d.]/g, '') : '0';
+                let existingDistVal = parseFloat(existingDistStr) || 0;
+
+                // If distance is within 5km, consider it a duplicate
+                if (Math.abs(existingDistVal - distVal) <= 5) {
+                    isDuplicate = true;
+
+                    // Prefer distance format with 'km' if missing
+                    if (!existing.distance.includes('km') && race.distance.includes('km')) {
+                        existing.distance = race.distance;
+                    }
+                    if (!existing.url && race.url) {
+                        existing.url = race.url;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (!isDuplicate) {
+            filtered_races.push(race);
+        }
     });
 
     function generateSlug(name, dateStr) {
