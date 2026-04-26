@@ -748,7 +748,26 @@ async function main() {
 
 
     const valid_races = verified_races.filter(race => {
-        return race.date && race.date !== 'TBD' && race.distance && race.distance !== 'Ultra';
+        if (!race.date || race.date === 'TBD' || !race.distance || race.distance === 'Ultra') {
+            return false;
+        }
+
+        const lower = race.distance.toLowerCase();
+        let isMiles = /\b(mi|miles|mile)\b/i.test(lower);
+        let isHours = /\b(h|hour|hours|uur)\b/i.test(lower) || /\d+h\b/i.test(lower);
+
+        let numbers = race.distance.replace(',', '.').match(/\d+(\.\d+)?/g);
+        if (!numbers) return false;
+
+        let maxNum = Math.max(...numbers.map(n => parseFloat(n)));
+
+        if (isHours) {
+            return maxNum >= 6;
+        } else if (isMiles) {
+            return maxNum > 26.2;
+        } else {
+            return maxNum > 42;
+        }
     });
 
     const prefixRegex = /^\d+(?:[eè]me|ère|er|nd|rd|th|st|e|°|\.)?\s+(?!(?:km|h|hour|uur|miles|mi)\b)/i;
