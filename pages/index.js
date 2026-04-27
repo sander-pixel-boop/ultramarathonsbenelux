@@ -530,7 +530,7 @@ export default function Home({ initialRaces }) {
 
                         return (
                             <div key={idx} className="race-card" tabIndex={0} role="button" onClick={() => setSelectedRace({ ...race, formattedRace, locationStr })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedRace({ ...race, formattedRace, locationStr }); } }}>
-                                <h2>{formattedRace.name}</h2>
+                                <h2>{race.organizer_name ? `${race.organizer_name} - ` : ''}{formattedRace.name} {new Date(race.date_iso || race.date).getFullYear()}</h2>
                                 <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {formattedRace.type}</p>
                                 <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {locationStr}</p>
                                 <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {race.distance}</p>
@@ -586,7 +586,7 @@ export default function Home({ initialRaces }) {
                 <div className="modal-overlay" onClick={() => setSelectedRace(null)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <button className="modal-close" aria-label="Close" onClick={() => setSelectedRace(null)}>&times;</button>
-                        <h2>{selectedRace.formattedRace.name}</h2>
+                        <h2>{selectedRace.organizer_name ? `${selectedRace.organizer_name} - ` : ''}{selectedRace.formattedRace.name} {new Date(selectedRace.date_iso || selectedRace.date).getFullYear()}</h2>
                         <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {selectedRace.formattedRace.type}</p>
                         <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {selectedRace.locationStr}</p>
                         <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {selectedRace.distance}</p>
