@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { getUserCountry, getAffiliateLinks } from '../utils/geoAffiliate';
+import { parseDistance } from '../utils/distance';
 
 export default function PackYourBag({ race, t }) {
     const [checkedItems, setCheckedItems] = useState({});
@@ -12,18 +13,10 @@ export default function PackYourBag({ race, t }) {
     const items = useMemo(() => {
         if (!race || !race.distance) return [];
 
-        let d2 = 0;
+        const d2 = parseDistance(race.distance);
         const distStr = String(race.distance).toLowerCase();
-        if (distStr.includes('km')) {
-            d2 = parseFloat(distStr.replace(/[^0-9.]/g, ''));
-        } else if (distStr.includes('mi')) {
-            d2 = parseFloat(distStr.replace(/[^0-9.]/g, '')) * 1.60934;
-        } else if (distStr.includes('h')) {
-            // For timed events, assume distance is > 0
-            d2 = 1;
-        }
 
-        if (isNaN(d2) || d2 <= 0) return [];
+        if (d2 <= 0) return [];
 
         const gear = [];
 
