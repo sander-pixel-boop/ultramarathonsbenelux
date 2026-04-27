@@ -1,4 +1,5 @@
 import Script from 'next/script';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function RootLayout({ children }) {
     return (
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
                 <footer style={{ padding: '20px', backgroundColor: '#343a40', color: '#fff', textAlign: 'center' }}>
                     <p>We earn a commission from links on this site at no extra cost to you.</p>
                 </footer>
+                <SpeedInsights />
             </body>
         </html>
     );
