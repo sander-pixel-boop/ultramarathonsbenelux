@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import AffiliateGearBlock from '../../../components/AffiliateGearBlock';
 import BookingWidget from '../../../components/BookingWidget';
+import { sanitizeUrl } from '../../../utils/sanitizeUrl';
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'races.json');
 
@@ -71,7 +72,7 @@ export default async function RacePage({ params }) {
             <p><strong>Difficulty Score:</strong> {race.difficulty_score}</p>
             <p><strong>Effort KM:</strong> {race.effort_km} KM</p>
 
-            <a href={race.registration_url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: '10px', padding: '10px 20px', backgroundColor: '#2e7d32', color: 'white', textDecoration: 'none', borderRadius: '5px' }}>
+            <a href={sanitizeUrl(race.registration_url)} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: '10px', padding: '10px 20px', backgroundColor: '#2e7d32', color: 'white', textDecoration: 'none', borderRadius: '5px' }}>
                 View Registration Details
             </a>
 

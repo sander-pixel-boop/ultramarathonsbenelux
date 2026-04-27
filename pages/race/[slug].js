@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import fs from 'fs';
 import path from 'path';
+import { sanitizeUrl } from '../../utils/sanitizeUrl';
 
 export default function RacePage({ race }) {
   if (!race) return <div>Race not found</div>;
@@ -48,7 +49,7 @@ export default function RacePage({ race }) {
         <p><strong>Date:</strong> {race.date}</p>
         <p><strong>Distance:</strong> {race.distance}</p>
         <p><strong>Location:</strong> {race.city ? `${race.city}, ${race.country}` : race.country}</p>
-        <p><strong>More info:</strong> <a href={race.url} target="_blank" rel="noopener noreferrer">{race.url}</a></p>
+        <p><strong>More info:</strong> <a href={sanitizeUrl(race.url)} target="_blank" rel="noopener noreferrer">{race.url}</a></p>
       </div>
     </div>
   );
