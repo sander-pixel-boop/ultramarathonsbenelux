@@ -1,11 +1,11 @@
-Organizer,Race,KM,Date,SiteURL,RegURL
-"","Maasduinen Ultra",50,2027-02-27,"https://www.trail-running.eu/en/events/maasduinen-ultra/","https://www.trail-running.eu/en/events/maasduinen-ultra/"
-"","Austerlitz Ultra",50,2026-08-30,"https://www.trail-running.eu/en/events/austerlitz-ultra/","https://www.trail-running.eu/en/events/austerlitz-ultra/"
-"","Lage Vuursche Ultra",50,2026-10-31,"https://www.trail-running.eu/en/events/lage-vuursche-ultra/","https://www.trail-running.eu/en/events/lage-vuursche-ultra/"
-"","Gelderse Poort Ultra",50,2026-09-26,"https://www.trail-running.eu/en/events/gelderse-poort-ultra/","https://www.trail-running.eu/en/events/gelderse-poort-ultra/"
-"","Hollands Duin Ultra",50,2026-12-19,"https://www.trail-running.eu/en/events/hollands-duin-ultra/","https://www.trail-running.eu/en/events/hollands-duin-ultra/"
-"","UHUT100 Winter",100,2026-11-29,"https://www.trail-running.eu/en/events/uhut100-winter/","https://www.trail-running.eu/en/events/uhut100-winter/"
-"","Leersumse Veld Ultra",50,2027-01-30,"https://www.trail-running.eu/en/events/leersumse-veld-ultra/","https://www.trail-running.eu/en/events/leersumse-veld-ultra/"
-"","Veluwse Ultra Trail (VUT100)",100,2026-07-25,"https://www.trail-running.eu/en/events/veluwse-ultra-trail-vut100/","https://www.trail-running.eu/en/events/veluwse-ultra-trail-vut100/"
-"","Utrechtse Heuvelrug Ultra Trail (UHUT100)",100,2026-05-31,"https://www.trail-running.eu/en/events/utrechtse-heuvelrug-ultra-trail-uhut100/","https://www.trail-running.eu/en/events/utrechtse-heuvelrug-ultra-trail-uhut100/"
-"","Brabantse Ultra Trail (BUT100)",100,2026-06-28,"https://www.trail-running.eu/en/events/brabantse-ultra-trail-but100/","https://www.trail-running.eu/en/events/brabantse-ultra-trail-but100/"
+Status,Organizer,Race Name,Nominal KM,Actual KM,Date,Reg URL,Site URL,Correction?
+UPDATED,"Legends Trails","Maasduinen Ultra",50,55,2027-02-27,"https://www.trail-running.eu/en/events/maasduinen-ultra/","https://www.trail-running.eu/en/events/maasduinen-ultra/",
+UPDATED,"","Austerlitz Ultra",50,50,2026-08-30,"https://www.trail-running.eu/en/events/austerlitz-ultra/","https://www.trail-running.eu/en/events/austerlitz-ultra/",
+UPDATED,"","Lage Vuursche Ultra",50,50,2026-10-31,"https://www.trail-running.eu/en/events/lage-vuursche-ultra/","https://www.trail-running.eu/en/events/lage-vuursche-ultra/",
+UPDATED,"","Gelderse Poort Ultra",50,50,2026-09-26,"https://www.trail-running.eu/en/events/gelderse-poort-ultra/","https://www.trail-running.eu/en/events/gelderse-poort-ultra/",
+UPDATED,"","Hollands Duin Ultra",50,50,2026-12-19,"https://www.trail-running.eu/en/events/hollands-duin-ultra/","https://www.trail-running.eu/en/events/hollands-duin-ultra/",
+UPDATED,"","UHUT100 Winter",100,100,2026-11-29,"https://www.trail-running.eu/en/events/uhut100-winter/","https://www.trail-running.eu/en/events/uhut100-winter/",
+UPDATED,"","Leersumse Veld Ultra",50,50,2027-01-30,"https://www.trail-running.eu/en/events/leersumse-veld-ultra/","https://www.trail-running.eu/en/events/leersumse-veld-ultra/",
+UPDATED,"","Veluwse Ultra Trail (VUT100)",100,100,2026-07-25,"https://www.trail-running.eu/en/events/veluwse-ultra-trail-vut100/","https://www.trail-running.eu/en/events/veluwse-ultra-trail-vut100/",
+UPDATED,"","Utrechtse Heuvelrug Ultra Trail (UHUT100)",100,100,2026-05-31,"https://www.trail-running.eu/en/events/utrechtse-heuvelrug-ultra-trail-uhut100/","https://www.trail-running.eu/en/events/utrechtse-heuvelrug-ultra-trail-uhut100/",
+UPDATED,"","Brabantse Ultra Trail (BUT100)",100,100,2026-06-28,"https://www.trail-running.eu/en/events/brabantse-ultra-trail-but100/","https://www.trail-running.eu/en/events/brabantse-ultra-trail-but100/",

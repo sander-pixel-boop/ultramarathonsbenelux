@@ -5,10 +5,16 @@
     "date_iso": "2027-02-27",
     "city": "DEV-Arcen",
     "country": "NL",
-    "dist_km": 50,
+    "dist_km": 55,
+    "advertised_dist_km": 50,
     "elev_m": 100,
     "surface_trail_pct": 80,
-    "organizer_name": "",
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
+    "organizer_name": "Legends Trails",
     "registration_page": "https://www.trail-running.eu/en/events/maasduinen-ultra/",
     "event_homepage": "https://www.trail-running.eu/en/events/maasduinen-ultra/",
     "registration_url": "https://www.trail-running.eu/en/events/maasduinen-ultra/",
@@ -16,7 +22,8 @@
     "slug": "maasduinen-ultra-2027",
     "difficulty_score": 2,
     "effort_km": 51,
-    "verified_at": "2026-04-27T05:53:44.792Z"
+    "verified_at": "2026-04-27T20:51:37.323Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "QXVzdGVybGl0eiBVbHRyYS0yMDI2LTUw",
@@ -25,8 +32,14 @@
     "city": "KNVB Campus",
     "country": "NL",
     "dist_km": 50,
+    "advertised_dist_km": 50,
     "elev_m": 0,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/austerlitz-ultra/",
     "event_homepage": "https://www.trail-running.eu/en/events/austerlitz-ultra/",
@@ -35,7 +48,8 @@
     "slug": "austerlitz-ultra-2026",
     "difficulty_score": 0,
     "effort_km": 50,
-    "verified_at": "2026-04-27T05:53:44.792Z"
+    "verified_at": "2026-04-27T20:51:37.323Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "TGFnZSBWdXVyc2NoZSBVbHRyYS0yMDI2LTUw",
@@ -44,8 +58,14 @@
     "city": "Natuurcamping De Zeven Linden",
     "country": "NL",
     "dist_km": 50,
+    "advertised_dist_km": 50,
     "elev_m": 150,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/lage-vuursche-ultra/",
     "event_homepage": "https://www.trail-running.eu/en/events/lage-vuursche-ultra/",
@@ -54,7 +74,8 @@
     "slug": "lage-vuursche-ultra-2026",
     "difficulty_score": 3,
     "effort_km": 51.5,
-    "verified_at": "2026-04-27T05:53:44.792Z"
+    "verified_at": "2026-04-27T20:51:37.323Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "R2VsZGVyc2UgUG9vcnQgVWx0cmEtMjAyNi01MA==",
@@ -63,8 +84,14 @@
     "city": "Berg en Dal",
     "country": "NL",
     "dist_km": 50,
+    "advertised_dist_km": 50,
     "elev_m": 850,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/gelderse-poort-ultra/",
     "event_homepage": "https://www.trail-running.eu/en/events/gelderse-poort-ultra/",
@@ -73,7 +100,8 @@
     "slug": "gelderse-poort-ultra-2026",
     "difficulty_score": 17,
     "effort_km": 58.5,
-    "verified_at": "2026-04-27T05:53:44.792Z"
+    "verified_at": "2026-04-27T20:51:37.323Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "SG9sbGFuZHMgRHVpbiBVbHRyYS0yMDI2LTUw",
@@ -82,8 +110,14 @@
     "city": "Vrijstaat Nederzandt - Noordwijk",
     "country": "NL",
     "dist_km": 50,
+    "advertised_dist_km": 50,
     "elev_m": 650,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/hollands-duin-ultra/",
     "event_homepage": "https://www.trail-running.eu/en/events/hollands-duin-ultra/",
@@ -92,7 +126,8 @@
     "slug": "hollands-duin-ultra-2026",
     "difficulty_score": 13,
     "effort_km": 56.5,
-    "verified_at": "2026-04-27T05:53:44.792Z"
+    "verified_at": "2026-04-27T20:51:37.323Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "VUhVVDEwMCBXaW50ZXItMjAyNi0xMDA=",
@@ -101,8 +136,14 @@
     "city": "Molecaten Landgoed Ginkelduin - Leersum",
     "country": "NL",
     "dist_km": 100,
+    "advertised_dist_km": 100,
     "elev_m": 1100,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/uhut100-winter/",
     "event_homepage": "https://www.trail-running.eu/en/events/uhut100-winter/",
@@ -111,7 +152,8 @@
     "slug": "uhut100-winter-2026",
     "difficulty_score": 11,
     "effort_km": 111,
-    "verified_at": "2026-04-27T05:53:44.793Z"
+    "verified_at": "2026-04-27T20:51:37.324Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "TGVlcnN1bXNlIFZlbGQgVWx0cmEtMjAyNy01MA==",
@@ -120,8 +162,14 @@
     "city": "Landgoed Ginkelduin - Leersum",
     "country": "NL",
     "dist_km": 50,
+    "advertised_dist_km": 50,
     "elev_m": 550,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/leersumse-veld-ultra/",
     "event_homepage": "https://www.trail-running.eu/en/events/leersumse-veld-ultra/",
@@ -130,7 +178,8 @@
     "slug": "leersumse-veld-ultra-2027",
     "difficulty_score": 11,
     "effort_km": 55.5,
-    "verified_at": "2026-04-27T05:53:44.793Z"
+    "verified_at": "2026-04-27T20:51:37.324Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "VmVsdXdzZSBVbHRyYSBUcmFpbCAoVlVUMTAwKS0yMDI2LTEwMA==",
@@ -139,8 +188,14 @@
     "city": "Landgoed Stakenberg",
     "country": "NL",
     "dist_km": 100,
+    "advertised_dist_km": 100,
     "elev_m": 624,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/veluwse-ultra-trail-vut100/",
     "event_homepage": "https://www.trail-running.eu/en/events/veluwse-ultra-trail-vut100/",
@@ -149,7 +204,8 @@
     "slug": "veluwse-ultra-trail-vut100-2026",
     "difficulty_score": 6.2,
     "effort_km": 106.2,
-    "verified_at": "2026-04-27T05:53:44.793Z"
+    "verified_at": "2026-04-27T20:51:37.324Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "VXRyZWNodHNlIEhldXZlbHJ1ZyBVbHRyYSBUcmFpbCAoVUhVVDEwMCktMjAyNi0xMDA=",
@@ -158,8 +214,14 @@
     "city": "Molecaten Landgoed Ginkelduin - Leersum",
     "country": "NL",
     "dist_km": 100,
+    "advertised_dist_km": 100,
     "elev_m": 806,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/utrechtse-heuvelrug-ultra-trail-uhut100/",
     "event_homepage": "https://www.trail-running.eu/en/events/utrechtse-heuvelrug-ultra-trail-uhut100/",
@@ -168,7 +230,8 @@
     "slug": "utrechtse-heuvelrug-ultra-trail-uhut100-2026",
     "difficulty_score": 8.1,
     "effort_km": 108.1,
-    "verified_at": "2026-04-27T05:53:44.793Z"
+    "verified_at": "2026-04-27T20:51:37.324Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "QnJhYmFudHNlIFVsdHJhIFRyYWlsIChCVVQxMDApLTIwMjYtMTAw",
@@ -177,8 +240,14 @@
     "city": "Hotel Jagerhorst - Leende",
     "country": "NL",
     "dist_km": 100,
+    "advertised_dist_km": 100,
     "elev_m": 190,
     "surface_trail_pct": 80,
+    "is_sold_out": false,
+    "price": null,
+    "mandatory_gear": [
+      "mobile phone"
+    ],
     "organizer_name": "",
     "registration_page": "https://www.trail-running.eu/en/events/brabantse-ultra-trail-but100/",
     "event_homepage": "https://www.trail-running.eu/en/events/brabantse-ultra-trail-but100/",
@@ -187,6 +256,7 @@
     "slug": "brabantse-ultra-trail-but100-2026",
     "difficulty_score": 1.9,
     "effort_km": 101.9,
-    "verified_at": "2026-04-27T05:53:44.793Z"
+    "verified_at": "2026-04-27T20:51:37.324Z",
+    "status": "UPDATED"
   }
 ]
