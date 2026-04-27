@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
 import { parseStandardDate } from '../utils/date';
+import { parseDistance, parseElevation } from '../utils/distance';
 import { sanitizeUrl } from '../utils/sanitizeUrl';
 import dynamic from 'next/dynamic';
 
@@ -219,25 +220,16 @@ function formatDateDisplay(dateStr, t) {
 function getFlatEquivalent(race) {
     if (!race) return null;
 
-    let distNum = 0;
     const distStr = String(race.distance || '').toLowerCase();
     if (distStr.includes('h')) return null; // timed event
 
-    if (distStr.includes('km')) {
-        distNum = parseFloat(distStr.replace(/[^0-9.]/g, ''));
-    } else if (distStr.includes('mi')) {
-        distNum = parseFloat(distStr.replace(/[^0-9.]/g, '')) * 1.60934;
-    } else {
-        distNum = parseFloat(distStr.replace(/[^0-9.]/g, ''));
-    }
+    const distNum = parseDistance(race.distance);
 
-    if (!distNum || isNaN(distNum)) return null;
+    if (!distNum || distNum <= 0) return null;
 
     let totalElevation = 0;
     if (race.elevation) {
-        const elevStr = String(race.elevation).toLowerCase();
-        const elevMeters = parseFloat(elevStr.replace(/[^0-9.]/g, ''));
-        if (!isNaN(elevMeters)) totalElevation = elevMeters;
+        totalElevation = parseElevation(race.elevation);
     } else if (race.elevation_points && race.elevation_points.length > 0) {
         let ascent = 0;
         const pts = race.elevation_points;
@@ -258,25 +250,8 @@ function getFlatEquivalent(race) {
 // ⚡ Bolt Performance Optimization:
 // Why: Sorting executes O(N log N) times. Parsing strings with Regex repeatedly causes high CPU usage.
 // Impact: Reduces distance sorting time by ~80% (e.g. from ~2000ms to ~380ms for 1000 iterations).
-const parseDistanceForSortMemo = new globalThis.Map();
 function parseDistanceForSort(distStr) {
-    if (!distStr) return 0;
-    if (parseDistanceForSortMemo.has(distStr)) return parseDistanceForSortMemo.get(distStr);
-    let distStrLower = distStr.toLowerCase();
-    let num = parseFloat(distStrLower.replace(/[^0-9.]/g, ''));
-    if (isNaN(num)) {
-        if (parseDistanceForSortMemo.size >= MAX_MEMO_SIZE) parseDistanceForSortMemo.clear();
-        parseDistanceForSortMemo.set(distStr, 0);
-        return 0;
-    }
-    if (distStrLower.includes("mi")) {
-        num = num * 1.60934;
-    } else if (distStrLower.includes("h")) {
-        num = num * 10;
-    }
-    if (parseDistanceForSortMemo.size >= MAX_MEMO_SIZE) parseDistanceForSortMemo.clear();
-    parseDistanceForSortMemo.set(distStr, num);
-    return num;
+    return parseDistance(distStr);
 }
 
 // Map Component - loaded dynamically without SSR
@@ -346,15 +321,13 @@ export default function Home({ initialRaces }) {
                 const distStr = r.distance ? r.distance.toLowerCase() : "";
                 if (distanceFilter === "timed") {
                     if (!distStr.includes("h")) return false;
-                } else if (distStr.includes("km") || distStr.includes("mi")) {
-                    let num = parseFloat(distStr.replace(/[^0-9.]/g, ''));
-                    if (distStr.includes("mi")) num = num * 1.60934;
+                } else {
+                    const num = parseDistance(r.distance);
+                    if (num <= 0) return false;
 
                     if (distanceFilter === "<60km" && num >= 60) return false;
                     if (distanceFilter === "60-99km" && (num < 60 || num >= 100)) return false;
                     if (distanceFilter === "100km+" && num < 100) return false;
-                } else {
-                    return false;
                 }
             }
 
