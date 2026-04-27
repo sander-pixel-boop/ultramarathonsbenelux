@@ -6,3 +6,7 @@
 **Vulnerability:** Cross-Site Scripting (XSS) via dangerouslySetInnerHTML in pages/blog/[slug].js
 **Learning:** Rendering raw HTML from JSON files directly into the DOM using dangerouslySetInnerHTML exposes the application to XSS attacks if the JSON data is ever modified or compromised.
 **Prevention:** Always sanitize HTML before rendering it using a library like DOMPurify, even if the data comes from a local file, to ensure defense in depth.
+## 2026-05-20 - [XSS via Unsanitized External URLs in Links]
+**Vulnerability:** Cross-Site Scripting (XSS) via `javascript:` URIs passed to `href` attributes in `<a>` tags.
+**Learning:** React escapes text in curly braces but does NOT validate URLs. Rendering un-sanitized scraped URLs directly into `href` properties (e.g., `href={race.url}`) exposes the application to XSS attacks if the scraped string begins with `javascript:`, `vbscript:`, or `data:text/html`.
+**Prevention:** Use a utility function to validate and sanitize dynamic URLs (e.g., allowing only `http:`, `https:`, `mailto:`, and `tel:`) before passing them to the `href` attribute.
