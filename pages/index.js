@@ -299,6 +299,18 @@ export default function Home({ initialRaces }) {
         const [selectedRace, setSelectedRace] = useState(null);
     const [showQuiz, setShowQuiz] = useState(false);
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                setSelectedRace(null);
+                setShowQuiz(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
+
     const t = i18n[lang];
 
     const filteredRaces = useMemo(() => {
