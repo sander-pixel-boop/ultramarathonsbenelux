@@ -3,6 +3,7 @@ import path from 'path';
 import AffiliateGearBlock from '../../../components/AffiliateGearBlock';
 import BookingWidget from '../../../components/BookingWidget';
 import { sanitizeUrl } from '../../../utils/sanitizeUrl';
+import { safeJsonLd } from '../../../utils/jsonLd';
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'races.json');
 
@@ -61,7 +62,7 @@ export default async function RacePage({ params }) {
         <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
             />
 
             <h1>{race.name}</h1>
