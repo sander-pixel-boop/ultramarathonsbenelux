@@ -115,17 +115,9 @@ const typePatterns = [
 ];
 const compoundPatterns = ["trailmarathon", "ultramarathon", "ultratrail"];
 
-const compiledTypeRegexes = typePatterns.map(t => ({
-    type: t,
-    testRegex: new RegExp(`\\b${t}\\b`, "i"),
-    replaceRegex: new RegExp(`\\b${t}\\b`, "ig")
-}));
-
-const compiledCompoundRegexes = compoundPatterns.map(c => ({
-    compound: c,
-    testRegex: new RegExp(`\\b${c}\\b`, "i"),
-    replaceRegex: new RegExp(`\\b${c}\\b`, "ig")
-}));
+const combinedTypeRegex = new RegExp(`\\b(${typePatterns.join('|')})\\b`, 'ig');
+const combinedCompoundRegex = new RegExp(`\\b(${compoundPatterns.join('|')})\\b`, 'ig');
+const typePatternsLower = typePatterns.map(t => t.toLowerCase());
 
 const formatRaceNameMemo = new globalThis.Map();
 
@@ -137,29 +129,39 @@ function formatRaceName(name) {
     let raceTypes = [];
     let cleanName = name;
 
-    for (const { type, testRegex, replaceRegex } of compiledTypeRegexes) {
-        if (testRegex.test(cleanName)) {
-            if (!raceTypes.includes(type)) {
-                raceTypes.push(type);
-            }
-            cleanName = cleanName.replace(replaceRegex, "");
+    const typeMatches = cleanName.match(combinedTypeRegex);
+    if (typeMatches) {
+        const found = new globalThis.Set();
+        for (let i = 0; i < typeMatches.length; i++) {
+            found.add(typeMatches[i].toLowerCase());
         }
+        for (let i = 0; i < typePatterns.length; i++) {
+            if (found.has(typePatternsLower[i])) {
+                raceTypes.push(typePatterns[i]);
+            }
+        }
+        cleanName = cleanName.replace(combinedTypeRegex, "");
     }
 
-    for (const { compound, testRegex, replaceRegex } of compiledCompoundRegexes) {
-        if (testRegex.test(cleanName)) {
-            if (compound === "trailmarathon") {
-                if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
-                if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
-            } else if (compound === "ultramarathon") {
-                if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
-                if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
-            } else if (compound === "ultratrail") {
-                if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
-                if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
-            }
-            cleanName = cleanName.replace(replaceRegex, "");
+    const compoundMatches = cleanName.match(combinedCompoundRegex);
+    if (compoundMatches) {
+        const found = new globalThis.Set();
+        for (let i = 0; i < compoundMatches.length; i++) {
+            found.add(compoundMatches[i].toLowerCase());
         }
+        if (found.has("trailmarathon")) {
+            if (!raceTypes.includes("Trail")) raceTypes.push("Trail");
+            if (!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
+        }
+        if (found.has("ultramarathon")) {
+            if (!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
+            if (!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
+        }
+        if (found.has("ultratrail")) {
+            if (!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
+            if (!raceTypes.includes("Trail")) raceTypes.push("Trail");
+        }
+        cleanName = cleanName.replace(combinedCompoundRegex, "");
     }
 
     cleanName = cleanName.replace(/\(\s*\)/g, '');
@@ -181,6 +183,7 @@ function formatRaceName(name) {
 
     let displayType = raceTypes.length > 0 ? raceTypes.join(", ") : "Race";
     const result = { name: cleanName, type: displayType };
+    if (formatRaceNameMemo.size >= MAX_MEMO_SIZE) formatRaceNameMemo.clear();
     formatRaceNameMemo.set(name, result);
     return result;
 }
