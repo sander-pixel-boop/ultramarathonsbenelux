@@ -1,19 +1,19 @@
 const MAX_MEMO_SIZE = 5000;
 const parseStandardDateMemo = new globalThis.Map();
 
-const monthNamesEn = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-const monthNamesShort = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-
 export function parseStandardDate(dateStr) {
     if (!dateStr) return null;
     const str = String(dateStr).trim();
 
     if (parseStandardDateMemo.has(str)) {
-        const cached = parseStandardDateMemo.get(str);
-        return cached ? { ...cached } : null;
+        return parseStandardDateMemo.get(str);
     }
 
     let result = null;
+
+    // Check for DD Month YYYY
+    const monthNamesEn = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+    const monthNamesShort = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
     // YYYY-MM-DD or YYYY.MM.DD or YYYY/MM/DD
     let match = str.match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})$/);
@@ -53,7 +53,7 @@ export function parseStandardDate(dateStr) {
     if (parseStandardDateMemo.size >= MAX_MEMO_SIZE) {
         parseStandardDateMemo.clear();
     }
-    parseStandardDateMemo.set(str, result ? Object.freeze(result) : null);
+    parseStandardDateMemo.set(str, result);
 
-    return result ? { ...result } : null;
+    return result;
 }
