@@ -1,18 +1,5 @@
 import React, { useState } from 'react';
-
-function parseDistance(distStr) {
-    if (!distStr) return 0;
-    distStr = distStr.toLowerCase();
-    let num = parseFloat(distStr.replace(/[^0-9.]/g, ''));
-    if (isNaN(num)) return 0;
-    if (distStr.includes("mi")) {
-        num = num * 1.60934;
-    } else if (distStr.includes("h")) {
-        // approximate distance for hours, e.g. 10km/h
-        num = num * 10;
-    }
-    return num;
-}
+import { parseDistance } from '../utils/distance';
 
 export default function Quiz({ races, onClose, onSelectRace, t }) {
     const [step, setStep] = useState(0);
