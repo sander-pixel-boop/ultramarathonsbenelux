@@ -44,13 +44,12 @@ async function scrapeTrailRunningEu() {
 
             const name = item.title;
             const year = eventDate.getFullYear();
-            const race_id = Buffer.from(`${name}-${year}`).toString('base64');
-
             // Distances is an array usually
             const maxDist = item.distances ? Math.max(...item.distances) : 0;
             const dist_km = parseFloat(maxDist || 0);
+            const race_id = Buffer.from(`${name}-${year}-${dist_km}`).toString('base64');
 
-            if (dist_km <= 42.195) continue;
+                        if (dist_km <= 42.195) continue;
 
             const maxElev = item.heights ? Math.max(...item.heights) : 0;
             const elev_m = parseFloat(maxElev || 0);
@@ -68,6 +67,9 @@ async function scrapeTrailRunningEu() {
                 dist_km,
                 elev_m,
                 surface_trail_pct: 80, // Default guess
+                organizer_name: "",
+                registration_page: item.permalink || "",
+                event_homepage: item.permalink || "",
                 registration_url: item.permalink || "",
                 official_site_url: item.permalink || "",
                 slug: createSlug(name, year),
@@ -85,6 +87,22 @@ async function scrapeTrailRunningEu() {
 // Since betrail and ITRA are heavily protected or returning 404/Cloudflare,
 // we'll rely on trail-running.eu and a dummy placeholder to demonstrate the architecture
 // while avoiding failing pipeline. Puppeteer isn't penetrating Cloudflare 403 easily.
+
+
+function exportAuditLogCSV(races) {
+    const csvLines = ["Organizer,Race,KM,Date,SiteURL,RegURL"];
+    races.forEach(r => {
+        const org = `"${r.organizer_name || ''}"`;
+        const race = `"${r.name || ''}"`;
+        const km = r.dist_km;
+        const date = r.date_iso;
+        const site = `"${r.event_homepage || ''}"`;
+        const reg = `"${r.registration_page || ''}"`;
+        csvLines.push(`${org},${race},${km},${date},${site},${reg}`);
+    });
+    fs.writeFileSync(path.join(__dirname, 'audit_log.csv'), csvLines.join('\n'));
+    console.log("Saved audit log to scripts/audit_log.csv");
+}
 
 async function runScraper() {
     console.log("Starting 12-Month pSEO Ultra Engine Scraper...");
@@ -114,6 +132,7 @@ async function runScraper() {
     const finalRaces = Array.from(raceMap.values());
     fs.writeFileSync(DATA_FILE, JSON.stringify(finalRaces, null, 2));
     console.log(`Saved ${finalRaces.length} races to ${DATA_FILE}.`);
+    exportAuditLogCSV(finalRaces);
 }
 
 runScraper().catch(console.error);
