@@ -7,9 +7,12 @@ export default function CourseProfile({ race, t }) {
         }
 
         const points = race.elevation_points;
-        const maxDist = Math.max(...points.map(p => p.d));
-        const maxElev = Math.max(...points.map(p => p.e));
-        const minElev = Math.min(...points.map(p => p.e));
+        const { maxDist, maxElev, minElev } = points.reduce((acc, p) => {
+            if (p.d > acc.maxDist) acc.maxDist = p.d;
+            if (p.e > acc.maxElev) acc.maxElev = p.e;
+            if (p.e < acc.minElev) acc.minElev = p.e;
+            return acc;
+        }, { maxDist: points[0].d, maxElev: points[0].e, minElev: points[0].e });
         const elevRange = maxElev - minElev || 100;
 
         const width = 600;
