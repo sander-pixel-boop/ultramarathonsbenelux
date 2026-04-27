@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert';
+import { sanitizeUrl } from './sanitizeUrl.js';
+
+test('sanitizeUrl', async (t) => {
+    await t.test('returns # for empty, null, or undefined input', () => {
+        assert.strictEqual(sanitizeUrl(''), '#');
+        assert.strictEqual(sanitizeUrl(null), '#');
+        assert.strictEqual(sanitizeUrl(undefined), '#');
+    });
+
+    await t.test('returns the original URL for allowed protocols', () => {
+        assert.strictEqual(sanitizeUrl('http://example.com'), 'http://example.com');
+        assert.strictEqual(sanitizeUrl('https://example.com'), 'https://example.com');
+        assert.strictEqual(sanitizeUrl('mailto:test@example.com'), 'mailto:test@example.com');
+        assert.strictEqual(sanitizeUrl('tel:+123456789'), 'tel:+123456789');
+    });
+
+    await t.test('returns original URL for relative paths', () => {
+        assert.strictEqual(sanitizeUrl('/path/to/resource'), '/path/to/resource');
+        assert.strictEqual(sanitizeUrl('path/to/resource'), 'path/to/resource');
+    });
+
+    await t.test('returns # for unsafe protocols', () => {
+        assert.strictEqual(sanitizeUrl('javascript:alert(1)'), '#');
+        assert.strictEqual(sanitizeUrl('data:text/html,<html></html>'), '#');
+    });
+
+    await t.test('returns # for malformed URLs that cause URL constructor to throw', () => {
+        // A URL that is invalid even with a base
+        assert.strictEqual(sanitizeUrl('http://example.com:80:80'), '#');
+    });
+});

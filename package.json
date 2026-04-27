@@ -3,7 +3,8 @@
     "dev": "next dev",
     "build": "node scripts/scraper.js && next build",
     "scrape": "node scripts/scraper.js",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --test utils/*.test.js"
   },
   "dependencies": {
     "@vercel/speed-insights": "^2.0.0",
