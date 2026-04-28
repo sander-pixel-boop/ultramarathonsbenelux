@@ -86,6 +86,7 @@ export default function FinishTimeCalculator({ race, t }) {
             </h3>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
                 <select
+                    aria-label="Personal Best Distance"
                     value={pbType}
                     onChange={e => setPbType(e.target.value)}
                     style={{ padding: '6px', borderRadius: '4px', border: '1px solid #cbd5e1', backgroundColor: 'white', flex: 1, minWidth: '100px' }}
@@ -94,6 +95,7 @@ export default function FinishTimeCalculator({ race, t }) {
                     <option value="marathon">Marathon PB</option>
                 </select>
                 <input
+                    aria-label={txt.pbLabel}
                     type="text"
                     placeholder="e.g. 00:45 or 03:30"
                     value={pbTimeStr}
