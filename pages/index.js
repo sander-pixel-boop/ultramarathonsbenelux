@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { parseStandardDate } from '../utils/date';
 import { parseDistance, parseElevation } from '../utils/distance';
 import { sanitizeUrl } from '../utils/sanitizeUrl';
+import { getTranslatedCountry, formatLocationStr } from '../utils/country';
 import dynamic from 'next/dynamic';
 
 const i18n = {
@@ -492,15 +493,8 @@ export default function Home({ initialRaces }) {
                             </button>
                         </div>
                     ) : filteredRaces.map((race, idx) => {
-                        let translatedCountry = race.country;
-                        if (race.country && race.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
-                        if (race.country && race.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
-                        if (race.country && race.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
-
-                        let locationStr = translatedCountry;
-                        if (race.city) {
-                            locationStr = `${race.city}, ${translatedCountry}`;
-                        }
+                        const translatedCountry = getTranslatedCountry(race.country, t);
+                        const locationStr = formatLocationStr(race.city, translatedCountry);
 
                         const formattedRace = formatRaceName(race.name);
 
@@ -514,15 +508,8 @@ export default function Home({ initialRaces }) {
                                 {/* Added hidden link for SEO crawlability */}
                                 <Link href={`/race/${race.slug}`} style={{ display: "none" }}>{race.name} Details</Link>
                                 <FOMO race={race} allRaces={filteredRaces} onSelectRace={(r) => {
-                                    let translatedCountry = r.country;
-                                    if (r.country && r.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
-                                    if (r.country && r.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
-                                    if (r.country && r.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
-
-                                    let rLocationStr = translatedCountry;
-                                    if (r.city) {
-                                        rLocationStr = `${r.city}, ${translatedCountry}`;
-                                    }
+                                    const translatedCountry = getTranslatedCountry(r.country, t);
+                                    const rLocationStr = formatLocationStr(r.city, translatedCountry);
                                     const rFormattedRace = formatRaceName(r.name);
                                     setSelectedRace({ ...r, formattedRace: rFormattedRace, locationStr: rLocationStr });
                                 }} />
@@ -540,15 +527,8 @@ export default function Home({ initialRaces }) {
                             onClose={() => setShowQuiz(false)}
                             onSelectRace={(race) => {
                                 setShowQuiz(false);
-                                let translatedCountry = race.country;
-                                if (race.country && race.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
-                                if (race.country && race.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
-                                if (race.country && race.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
-
-                                let locationStr = translatedCountry;
-                                if (race.city) {
-                                    locationStr = `${race.city}, ${translatedCountry}`;
-                                }
+                                const translatedCountry = getTranslatedCountry(race.country, t);
+                                const locationStr = formatLocationStr(race.city, translatedCountry);
                                 const formattedRace = formatRaceName(race.name);
                                 setSelectedRace({ ...race, formattedRace, locationStr });
                             }}
@@ -576,7 +556,7 @@ export default function Home({ initialRaces }) {
                         <FinishTimeCalculator race={selectedRace} t={t} />
                         <PackYourBag race={selectedRace} t={t} />
                         <CourseProfile race={selectedRace} t={t} />
-                        <FOMO race={selectedRace} allRaces={filteredRaces} onSelectRace={(r) => { let locationStr = r.country; if (r.country && r.country.toLowerCase() === "belgium") locationStr = t.belgium; if (r.country && r.country.toLowerCase() === "netherlands") locationStr = t.netherlands; if (r.country && r.country.toLowerCase() === "luxembourg") locationStr = t.luxembourg; if (r.city) { locationStr = `${r.city}, ${locationStr}`; } setSelectedRace({ ...r, formattedRace: formatRaceName(r.name), locationStr }); }} />
+                        <FOMO race={selectedRace} allRaces={filteredRaces} onSelectRace={(r) => { const translatedCountry = getTranslatedCountry(r.country, t); const locationStr = formatLocationStr(r.city, translatedCountry); setSelectedRace({ ...r, formattedRace: formatRaceName(r.name), locationStr }); }} />
 
                         <a href={sanitizeUrl(selectedRace.url)} target="_blank" rel="noopener noreferrer" className="subscribe-btn" style={{ marginTop: '20px', width: '100%', boxSizing: 'border-box' }}>
                             {t.subscribe} <i className="fas fa-arrow-right"></i>
