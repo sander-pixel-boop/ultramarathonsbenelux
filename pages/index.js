@@ -312,18 +312,17 @@ export default function Home({ initialRaces }) {
 
         const filtered = initialRaces.filter(r => {
             // Fast fail: Search string matching
-            const matchesSearch = r.name.toLowerCase().includes(query) || (r.distance && r.distance.toLowerCase().includes(query));
+            const matchesSearch = r._lowerName.includes(query) || r._lowerDistance.includes(query);
             if (!matchesSearch) return false;
 
             // Fast fail: Country
-            const matchesCountry = countryF === "" || (r.country && r.country.toLowerCase() === countryF);
+            const matchesCountry = countryF === "" || r._lowerCountry === countryF;
             if (!matchesCountry) return false;
 
             // Fast fail: Distance calculation
             if (distanceFilter !== "") {
-                const distStr = r.distance ? r.distance.toLowerCase() : "";
                 if (distanceFilter === "timed") {
-                    if (!distStr.includes("h")) return false;
+                    if (!r._lowerDistance.includes("h")) return false;
                 } else {
                     const num = parseDistance(r.distance);
                     if (num <= 0) return false;
@@ -606,7 +605,7 @@ export async function getStaticProps() {
         const path = require('path');
         const filePath = path.join(process.cwd(), 'races.json');
         const jsonData = fs.readFileSync(filePath, 'utf8');
-        races = JSON.parse(jsonData);
+        races = JSON.parse(jsonData).map(r => ({ ...r, _lowerName: r.name ? r.name.toLowerCase() : "", _lowerDistance: r.distance ? r.distance.toLowerCase() : "", _lowerCountry: r.country ? r.country.toLowerCase() : "" }));
     } catch (e) {
         console.error("Error reading races.json during build:", e);
     }
