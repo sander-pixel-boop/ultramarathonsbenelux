@@ -428,7 +428,8 @@ async function scrape_trail_running() {
         const data = await response.json();
         const items = data.items || [];
 
-        for (const item of items) {
+
+        const racePromises = items.map(async (item) => {
             const title = item.title || "";
             const date_str = item.date_nice || item.date || "";
             const distances = item.distances_nice || "";
@@ -451,15 +452,19 @@ async function scrape_trail_running() {
                 }
             } catch {}
 
-            races.push({
+            return {
                 name: title,
                 country: "Netherlands",
                 distance: distances,
                 date: date_str,
                 url: original_url,
                 city: ""
-            });
-        }
+            };
+        });
+
+        const raceResults = await Promise.all(racePromises);
+        races.push(...raceResults);
+
     } catch (e) {
         console.error(`Error scraping Trail-running.eu: ${e}`);
     }
