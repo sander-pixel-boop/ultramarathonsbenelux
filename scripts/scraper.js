@@ -141,6 +141,39 @@ async function scrapeTrailRunningEu() {
 
 
 function exportAuditLogCSV(races) {
+    try {
+        let all = JSON.parse(fs.readFileSync(require('path').join(__dirname, '../data/races.json'), 'utf8'));
+        if (Array.isArray(all) && all.length > races.length) races = all;
+    } catch(e) {}
+    try {
+        let root = JSON.parse(fs.readFileSync(require('path').join(__dirname, '../races.json'), 'utf8'));
+        if (Array.isArray(root) && root.length > races.length) {
+            const converted = root.map(rr => {
+                const year = new Date(rr.date.split('/').reverse().join('-')).getFullYear() || new Date().getFullYear();
+                const dist = parseFloat((rr.distance || '0').replace(/[^0-9.]/g, ''));
+                return {
+                    status: 'OLD',
+                    organizer_name: '',
+                    name: rr.name,
+                    dist_km: dist,
+                    advertised_dist_km: dist,
+                    date_iso: rr.date ? rr.date.split('/').reverse().join('-') : '',
+                    registration_url: rr.url,
+                    official_site_url: rr.url
+                }
+            });
+
+            // let's merge with the existing scraped
+            const seen = new Set(races.map(r => r.name));
+            converted.forEach(r => {
+                if (!seen.has(r.name)) {
+                    races.push(r);
+                    seen.add(r.name);
+                }
+            });
+        }
+    } catch(e) {}
+
     const csvLines = ["Status,Organizer,Race Name,Nominal KM,Actual KM,Date,Reg URL,Site URL,Correction?"];
     races.forEach(r => {
         const status = r.status || '';
