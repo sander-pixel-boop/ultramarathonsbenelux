@@ -265,22 +265,42 @@ async function scrape_ultraned() {
     return races;
 }
 
+
+async function runWithLimit(tasks, limit) {
+    const results = [];
+    const executing = new Set();
+
+    for (const task of tasks) {
+        const p = task().then(result => {
+            executing.delete(p);
+            return result;
+        });
+        results.push(p);
+        executing.add(p);
+
+        if (executing.size >= limit) {
+            await Promise.race(executing);
+        }
+    }
+
+    return Promise.all(results);
+}
+
 async function scrape_hardloopkalender() {
     const url = "https://hardloopkalender.nl/loopagenda-hardlopen/ultraloop/1";
     const headers = { "User-Agent": "Mozilla/5.0" };
-    const races = [];
     try {
         const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
         const html = await response.text();
         const $ = cheerio.load(html);
 
         const rows = $('tr').toArray();
-        for (const row of rows) {
+        const tasks = rows.map((row) => async () => {
             const cells = $(row).find('td');
-            if (cells.length === 0) continue;
+            if (cells.length === 0) return null;
 
             const date_str = $(cells[0]).text().trim();
-            if (!date_str) continue;
+            if (!date_str) return null;
 
             let event_link = null;
             let title = "";
@@ -293,7 +313,7 @@ async function scrape_hardloopkalender() {
                 }
             });
 
-            if (!event_link) continue;
+            if (!event_link) return null;
 
             let full_url = event_link.startsWith('/') ? "https://hardloopkalender.nl" + event_link : event_link;
             let original_url = full_url;
@@ -317,19 +337,22 @@ async function scrape_hardloopkalender() {
                 });
             } catch (err) {}
 
-            races.push({
+            return {
                 name: title,
                 country: "Netherlands",
                 distance: "Ultra",
                 date: date_str,
                 url: original_url,
                 city: ""
-            });
-        }
+            };
+        });
+
+        const results = await runWithLimit(tasks, 5);
+        return results.filter(r => r !== null);
     } catch (e) {
         console.error(`Error scraping Hardloopkalender: ${e}`);
+        return [];
     }
-    return races;
 }
 
 async function scrape_finishers() {
@@ -343,40 +366,50 @@ async function scrape_finishers() {
 
         const events = $('a[href]').toArray();
         const visited = new Set();
+        const eventPromises = [];
 
         for (const a of events) {
             const href = $(a).attr('href');
             if (href && href.includes('/nl/evenement/') && !visited.has(href)) {
                 visited.add(href);
                 let full_url = "https://www.finishers.com" + href;
-                let original_url = full_url;
 
-                try {
-                    const event_page = await fetchWithTimeout(full_url, { headers, timeout: 15000 });
-                    const event_html = await event_page.text();
-                    const event_soup = cheerio.load(event_html);
+                eventPromises.push((async () => {
+                    let original_url = full_url;
+                    try {
+                        const event_page = await fetchWithTimeout(full_url, { headers, timeout: 15000 });
+                        const event_html = await event_page.text();
+                        const event_soup = cheerio.load(event_html);
 
-                    const title_elem = event_soup('h1');
-                    let title = title_elem.length > 0 ? title_elem.text().trim() : href.split('/').pop();
+                        const title_elem = event_soup('h1');
+                        let title = title_elem.length > 0 ? title_elem.text().trim() : href.split('/').pop();
 
-                    event_soup('a[href]').each((i, link) => {
-                        const l_href = $(link).attr('href');
-                        if (l_href && l_href.includes('http') && !l_href.includes('finishers.com') && !l_href.includes('facebook') && !l_href.includes('instagram') && !l_href.includes('twitter')) {
-                            original_url = l_href;
-                            return false; // break
-                        }
-                    });
+                        event_soup('a[href]').each((i, link) => {
+                            const l_href = $(link).attr('href');
+                            if (l_href && l_href.includes('http') && !l_href.includes('finishers.com') && !l_href.includes('facebook') && !l_href.includes('instagram') && !l_href.includes('twitter')) {
+                                original_url = l_href;
+                                return false; // break
+                            }
+                        });
 
-                    races.push({
-                        name: title,
-                        country: "Netherlands",
-                        distance: "Ultra",
-                        date: "TBD",
-                        url: original_url,
-                        city: ""
-                    });
-                } catch (err) {}
+                        return {
+                            name: title,
+                            country: "Netherlands",
+                            distance: "Ultra",
+                            date: "TBD",
+                            url: original_url,
+                            city: ""
+                        };
+                    } catch {
+                        return null;
+                    }
+                })());
             }
+        }
+
+        const results = await Promise.all(eventPromises);
+        for (const res of results) {
+            if (res) races.push(res);
         }
     } catch (e) {
         console.error(`Error scraping Finishers: ${e}`);
@@ -395,7 +428,8 @@ async function scrape_trail_running() {
         const data = await response.json();
         const items = data.items || [];
 
-        for (const item of items) {
+
+        const racePromises = items.map(async (item) => {
             const title = item.title || "";
             const date_str = item.date_nice || item.date || "";
             const distances = item.distances_nice || "";
@@ -418,15 +452,19 @@ async function scrape_trail_running() {
                 }
             } catch (err) {}
 
-            races.push({
+            return {
                 name: title,
                 country: "Netherlands",
                 distance: distances,
                 date: date_str,
                 url: original_url,
                 city: ""
-            });
-        }
+            };
+        });
+
+        const raceResults = await Promise.all(racePromises);
+        races.push(...raceResults);
+
     } catch (e) {
         console.error(`Error scraping Trail-running.eu: ${e}`);
     }
@@ -504,7 +542,9 @@ async function scrape_ahotu() {
         const $ = cheerio.load(html);
 
         const events = $('a.event-link').toArray();
-        for (const el of events) {
+        const MAX_CONCURRENT = 10;
+
+        async function processEvent(el) {
             const event = $(el);
             const title = event.text().trim();
             let event_url = event.attr('href') || '';
@@ -529,14 +569,20 @@ async function scrape_ahotu() {
                 } catch (err) {}
             }
 
-            races.push({
+            return {
                 name: title,
                 country: "Belgium",
                 distance: "Ultra",
                 date: "TBD",
                 url: original_url,
                 city: ""
-            });
+            };
+        }
+
+        for (let i = 0; i < events.length; i += MAX_CONCURRENT) {
+            const batch = events.slice(i, i + MAX_CONCURRENT);
+            const batchResults = await Promise.all(batch.map(processEvent));
+            races.push(...batchResults);
         }
     } catch (e) {
         console.error(`Error scraping ahotu: ${e}`);
@@ -718,14 +764,18 @@ async function main() {
     });
 
     console.log("Geocoding races...");
-    for (const race of verified_races) {
-        if (race.city) {
-            const { lat, lon } = await geocode(race.city, race.country || '');
-            if (lat !== null && lon !== null) {
-                race.lat = lat;
-                race.lng = lon;
+    const concurrencyLimit = 5;
+    for (let i = 0; i < verified_races.length; i += concurrencyLimit) {
+        const batch = verified_races.slice(i, i + concurrencyLimit);
+        await Promise.all(batch.map(async (race) => {
+            if (race.city) {
+                const { lat, lon } = await geocode(race.city, race.country || '');
+                if (lat !== null && lon !== null) {
+                    race.lat = lat;
+                    race.lng = lon;
+                }
             }
-        }
+        }));
     }
 
     // Inject highly detailed hardcoded target events as Single Source of Truth

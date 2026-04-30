@@ -13,7 +13,8 @@
     "slug": "maasduinen-ultra-2027",
     "difficulty_score": 2,
     "effort_km": 51,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.482Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "QXVzdGVybGl0eiBVbHRyYS0yMDI2",
@@ -29,7 +30,8 @@
     "slug": "austerlitz-ultra-2026",
     "difficulty_score": 0,
     "effort_km": 50,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.484Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "TGFnZSBWdXVyc2NoZSBVbHRyYS0yMDI2",
@@ -45,7 +47,8 @@
     "slug": "lage-vuursche-ultra-2026",
     "difficulty_score": 3,
     "effort_km": 51.5,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.485Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "R2VsZGVyc2UgUG9vcnQgVWx0cmEtMjAyNg==",
@@ -61,7 +64,8 @@
     "slug": "gelderse-poort-ultra-2026",
     "difficulty_score": 17,
     "effort_km": 58.5,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.485Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "SG9sbGFuZHMgRHVpbiBVbHRyYS0yMDI2",
@@ -77,7 +81,8 @@
     "slug": "hollands-duin-ultra-2026",
     "difficulty_score": 13,
     "effort_km": 56.5,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.485Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "VUhVVDEwMCBXaW50ZXItMjAyNg==",
@@ -93,7 +98,8 @@
     "slug": "uhut100-winter-2026",
     "difficulty_score": 11,
     "effort_km": 111,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.486Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "TGVlcnN1bXNlIFZlbGQgVWx0cmEtMjAyNw==",
@@ -109,7 +115,8 @@
     "slug": "leersumse-veld-ultra-2027",
     "difficulty_score": 11,
     "effort_km": 55.5,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.488Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "VmVsdXdzZSBVbHRyYSBUcmFpbCAoVlVUMTAwKS0yMDI2",
@@ -125,7 +132,8 @@
     "slug": "veluwse-ultra-trail-vut100-2026",
     "difficulty_score": 6.2,
     "effort_km": 106.2,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.488Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "VXRyZWNodHNlIEhldXZlbHJ1ZyBVbHRyYSBUcmFpbCAoVUhVVDEwMCktMjAyNg==",
@@ -141,7 +149,8 @@
     "slug": "utrechtse-heuvelrug-ultra-trail-uhut100-2026",
     "difficulty_score": 8.1,
     "effort_km": 108.1,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.489Z",
+    "status": "UPDATED"
   },
   {
     "race_id": "QnJhYmFudHNlIFVsdHJhIFRyYWlsIChCVVQxMDApLTIwMjY=",
@@ -157,6 +166,7 @@
     "slug": "brabantse-ultra-trail-but100-2026",
     "difficulty_score": 1.9,
     "effort_km": 101.9,
-    "verified_at": "2026-04-30T14:19:19.344Z"
+    "verified_at": "2026-04-30T12:31:37.489Z",
+    "status": "UPDATED"
   }
 ]

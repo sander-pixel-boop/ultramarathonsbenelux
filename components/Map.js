@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import L from 'leaflet';
+import { getTranslatedCountry } from '../utils/country';
 
 export default function Map({ races, t, formatRaceName, lang }) {
     const mapRef = useRef(null);
@@ -33,10 +34,7 @@ export default function Map({ races, t, formatRaceName, lang }) {
 
             races.forEach(race => {
                 if (race.lat && race.lng) {
-                    let translatedCountry = race.country;
-                    if (race.country && race.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
-                    if (race.country && race.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
-                    if (race.country && race.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
+                    const translatedCountry = getTranslatedCountry(race.country, t);
 
                     const formattedRace = formatRaceName(race.name);
                     const marker = L.marker([race.lat, race.lng]);
