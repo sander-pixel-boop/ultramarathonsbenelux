@@ -718,14 +718,18 @@ async function main() {
     });
 
     console.log("Geocoding races...");
-    for (const race of verified_races) {
-        if (race.city) {
-            const { lat, lon } = await geocode(race.city, race.country || '');
-            if (lat !== null && lon !== null) {
-                race.lat = lat;
-                race.lng = lon;
+    const concurrencyLimit = 5;
+    for (let i = 0; i < verified_races.length; i += concurrencyLimit) {
+        const batch = verified_races.slice(i, i + concurrencyLimit);
+        await Promise.all(batch.map(async (race) => {
+            if (race.city) {
+                const { lat, lon } = await geocode(race.city, race.country || '');
+                if (lat !== null && lon !== null) {
+                    race.lat = lat;
+                    race.lng = lon;
+                }
             }
-        }
+        }));
     }
 
     // Inject highly detailed hardcoded target events as Single Source of Truth
