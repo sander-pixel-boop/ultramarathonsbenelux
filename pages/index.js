@@ -602,10 +602,10 @@ export default function Home({ initialRaces }) {
 export async function getStaticProps() {
     let races = [];
     try {
-        const fs = require('fs');
+        const fs = require('fs').promises;
         const path = require('path');
-        const filePath = path.join(process.cwd(), 'races.json');
-        const jsonData = fs.readFileSync(filePath, 'utf8');
+        const filePath = path.join(process.cwd(), 'data', 'races.json');
+        const jsonData = await fs.readFile(filePath, 'utf8');
         races = JSON.parse(jsonData);
     } catch (e) {
         console.error("Error reading races.json during build:", e);
