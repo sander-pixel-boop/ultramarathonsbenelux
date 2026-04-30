@@ -265,22 +265,42 @@ async function scrape_ultraned() {
     return races;
 }
 
+
+async function runWithLimit(tasks, limit) {
+    const results = [];
+    const executing = new Set();
+
+    for (const task of tasks) {
+        const p = task().then(result => {
+            executing.delete(p);
+            return result;
+        });
+        results.push(p);
+        executing.add(p);
+
+        if (executing.size >= limit) {
+            await Promise.race(executing);
+        }
+    }
+
+    return Promise.all(results);
+}
+
 async function scrape_hardloopkalender() {
     const url = "https://hardloopkalender.nl/loopagenda-hardlopen/ultraloop/1";
     const headers = { "User-Agent": "Mozilla/5.0" };
-    const races = [];
     try {
         const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
         const html = await response.text();
         const $ = cheerio.load(html);
 
         const rows = $('tr').toArray();
-        for (const row of rows) {
+        const tasks = rows.map((row) => async () => {
             const cells = $(row).find('td');
-            if (cells.length === 0) continue;
+            if (cells.length === 0) return null;
 
             const date_str = $(cells[0]).text().trim();
-            if (!date_str) continue;
+            if (!date_str) return null;
 
             let event_link = null;
             let title = "";
@@ -293,7 +313,7 @@ async function scrape_hardloopkalender() {
                 }
             });
 
-            if (!event_link) continue;
+            if (!event_link) return null;
 
             let full_url = event_link.startsWith('/') ? "https://hardloopkalender.nl" + event_link : event_link;
             let original_url = full_url;
@@ -317,19 +337,22 @@ async function scrape_hardloopkalender() {
                 });
             } catch {}
 
-            races.push({
+            return {
                 name: title,
                 country: "Netherlands",
                 distance: "Ultra",
                 date: date_str,
                 url: original_url,
                 city: ""
-            });
-        }
+            };
+        });
+
+        const results = await runWithLimit(tasks, 5);
+        return results.filter(r => r !== null);
     } catch (e) {
         console.error(`Error scraping Hardloopkalender: ${e}`);
+        return [];
     }
-    return races;
 }
 
 async function scrape_finishers() {
@@ -726,14 +749,18 @@ async function main() {
     });
 
     console.log("Geocoding races...");
-    for (const race of verified_races) {
-        if (race.city) {
-            const { lat, lon } = await geocode(race.city, race.country || '');
-            if (lat !== null && lon !== null) {
-                race.lat = lat;
-                race.lng = lon;
+    const concurrencyLimit = 5;
+    for (let i = 0; i < verified_races.length; i += concurrencyLimit) {
+        const batch = verified_races.slice(i, i + concurrencyLimit);
+        await Promise.all(batch.map(async (race) => {
+            if (race.city) {
+                const { lat, lon } = await geocode(race.city, race.country || '');
+                if (lat !== null && lon !== null) {
+                    race.lat = lat;
+                    race.lng = lon;
+                }
             }
-        }
+        }));
     }
 
     // Inject highly detailed hardcoded target events as Single Source of Truth
