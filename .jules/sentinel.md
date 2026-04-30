@@ -14,3 +14,7 @@
 **Vulnerability:** Even if the query string logic is safely encoded via `encodeURIComponent` (like when creating `searchUrl` in `BookingWidget`), the resulting concatenated URL could theoretically be manipulated or interpreted maliciously if not wrapped in `sanitizeUrl` before being used in an `href` tag.
 **Learning:** This is a defense-in-depth measure. Relying strictly on parameter encoding for `href`s is less robust than validating the entire composed URL schema against a whitelist (e.g., `http:`, `https:`).
 **Prevention:** Wrap dynamically built external links inside React `href` attributes with `sanitizeUrl`, even if parts of the URL are URL-encoded.
+## 2024-05-01 - Raw HTML Rendering Code Smell
+**Vulnerability:** Code smell and potential XSS vulnerability vector through `dangerouslySetInnerHTML`.
+**Learning:** Even when input is properly sanitized using `DOMPurify`, the use of `dangerouslySetInnerHTML` remains a poor practice that encourages bad habits and bypasses React's native security features.
+**Prevention:** Avoid `dangerouslySetInnerHTML` entirely where possible. Instead, use a library like `html-react-parser` to safely convert raw HTML strings into native React components, providing an additional layer of security on top of sanitization.
