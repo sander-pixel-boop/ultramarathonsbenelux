@@ -17,3 +17,10 @@
 ## 2024-05-20 - SVG Elevation Chart Performance
 **Learning:** React components dealing with large datasets inside `useMemo` hooks (like generating SVG elevation profiles using `race.elevation_points` in `CourseProfile.js`) often employ chaining functional arrays (`.reduce()`, `.map()`, `.filter()`). This leads to multiple O(n) array iterations and continuous memory allocation/garbage collection spikes.
 **Action:** When working with thousands of numeric points for charting or path generation, replace functional array chaining with a single-pass primitive `for` loop. Compute min/max boundaries and string builder tasks simultaneously to minimize memory allocation overhead and prevent UI thread blocking.
+## 2024-04-30 - Added Tests for parseStandardDate
+**Learning:** Adding unit tests for core utilities, like date parsing logic (), protects the application from silent regressions—especially when refactoring or extending functionality to handle new date formats (like user-supplied or scraped formats). The test suite highlighted proper handling of empty inputs, valid/invalid formats, memoization, and immutability (as noted in prior learning).
+**Action:** Created  using Node.js native test runner and asserting with . Ensured the test suite comprehensively covers standard and reverse formats, varied delimitations, text-based months, bounding conditions (invalid months), and memoization constraints.
+
+## 2024-04-30 - Added Tests for parseStandardDate
+**Learning:** Adding unit tests for core utilities, like date parsing logic (`parseStandardDate`), protects the application from silent regressions—especially when refactoring or extending functionality to handle new date formats (like user-supplied or scraped formats). The test suite highlighted proper handling of empty inputs, valid/invalid formats, memoization, and immutability (as noted in prior learning).
+**Action:** Created `utils/date.test.js` using Node.js native test runner and asserting with `node:assert`. Ensured the test suite comprehensively covers standard and reverse formats, varied delimitations, text-based months, bounding conditions (invalid months), and memoization constraints.
