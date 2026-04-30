@@ -76,6 +76,18 @@ export default function Quiz({ races, onClose, onSelectRace, t }) {
                 <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: '#64748b' }}>&times;</button>
             </div>
 
+            {step < 3 && (
+                <div style={{ marginBottom: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', color: '#64748b', marginBottom: '8px' }}>
+                        <span>Step {step + 1} of 3</span>
+                        <span>{Math.round((step / 3) * 100)}%</span>
+                    </div>
+                    <div role="progressbar" aria-valuenow={step} aria-valuemin="0" aria-valuemax="3" style={{ height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
+                        <div style={{ width: `${(step / 3) * 100}%`, height: '100%', backgroundColor: '#3b82f6', transition: 'width 0.3s ease' }}></div>
+                    </div>
+                </div>
+            )}
+
             {step === 0 && (
                 <div>
                     <h3 style={{ color: '#334155' }}>1. What is your current longest run?</h3>
@@ -141,11 +153,15 @@ export default function Quiz({ races, onClose, onSelectRace, t }) {
                     border-radius: 8px;
                     font-size: 1rem;
                     cursor: pointer;
-                    transition: background-color 0.2s;
+                    transition: all 0.2s;
                     text-align: left;
                 }
-                .quiz-btn:hover {
+                .quiz-btn:hover:not(:disabled) {
                     background-color: #2563eb;
+                }
+                .quiz-btn:focus-visible {
+                    outline: 2px solid #2563eb;
+                    outline-offset: 2px;
                 }
             `}</style>
         </div>
