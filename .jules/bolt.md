@@ -18,6 +18,11 @@
 **Learning:** React components dealing with large datasets inside `useMemo` hooks (like generating SVG elevation profiles using `race.elevation_points` in `CourseProfile.js`) often employ chaining functional arrays (`.reduce()`, `.map()`, `.filter()`). This leads to multiple O(n) array iterations and continuous memory allocation/garbage collection spikes.
 **Action:** When working with thousands of numeric points for charting or path generation, replace functional array chaining with a single-pass primitive `for` loop. Compute min/max boundaries and string builder tasks simultaneously to minimize memory allocation overhead and prevent UI thread blocking.
 
+## 2026-04-30 - [Performance Logging Requirement]\n**Learning:** Learned that performance optimizations need to be logged in .jules/bolt.md.\n**Action:** Logged.
+## 2026-04-30 - Scraper Async Concurrency Optimization
+**Learning:** Found that sequential looping in scraper scripts (e.g., \`for (const el of events) { await processEvent(el) }\`) creates a significant N+1 Async I/O bottleneck, heavily delaying data extraction.
+**Action:** Replaced sequential looping with concurrency-controlled \`Promise.all\` batches using \`MAX_CONCURRENT\` when performing network I/O operations (like fetching event details) to dramatically improve scraper performance while avoiding overwhelming target servers.
+
 ## 2025-05-01 - Concurrency Limits for Async I/O
 **Learning:** Sequential await calls for I/O operations (like fetching web pages in a loop) cause significant performance bottlenecks due to lack of concurrency.
 **Action:** Implemented a lightweight `runWithLimit` concurrency control function to manage parallel async requests and refactored the sequential `for` loop in `scrape_hardloopkalender` to map into task functions executed concurrently, improving execution time from ~7.7s down to ~1.6s.

@@ -527,7 +527,9 @@ async function scrape_ahotu() {
         const $ = cheerio.load(html);
 
         const events = $('a.event-link').toArray();
-        for (const el of events) {
+        const MAX_CONCURRENT = 10;
+
+        async function processEvent(el) {
             const event = $(el);
             const title = event.text().trim();
             let event_url = event.attr('href') || '';
@@ -552,14 +554,20 @@ async function scrape_ahotu() {
                 } catch {}
             }
 
-            races.push({
+            return {
                 name: title,
                 country: "Belgium",
                 distance: "Ultra",
                 date: "TBD",
                 url: original_url,
                 city: ""
-            });
+            };
+        }
+
+        for (let i = 0; i < events.length; i += MAX_CONCURRENT) {
+            const batch = events.slice(i, i + MAX_CONCURRENT);
+            const batchResults = await Promise.all(batch.map(processEvent));
+            races.push(...batchResults);
         }
     } catch (e) {
         console.error(`Error scraping ahotu: ${e}`);
