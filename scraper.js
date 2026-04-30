@@ -248,7 +248,7 @@ async function scrape_ultraned() {
                         });
                     }
                 }
-            } catch {}
+            } catch (err) {}
 
             races.push({
                 name: title,
@@ -335,7 +335,7 @@ async function scrape_hardloopkalender() {
                         }
                     }
                 });
-            } catch {}
+            } catch (err) {}
 
             return {
                 name: title,
@@ -450,7 +450,7 @@ async function scrape_trail_running() {
                         }
                     });
                 }
-            } catch {}
+            } catch (err) {}
 
             return {
                 name: title,
@@ -510,7 +510,7 @@ async function scrape_ultraracecalendar() {
                             return false; // break
                         }
                     });
-                } catch {}
+                } catch (err) {}
             }
 
             races.push({
@@ -566,7 +566,7 @@ async function scrape_ahotu() {
                             return false; // break
                         }
                     });
-                } catch {}
+                } catch (err) {}
             }
 
             return {

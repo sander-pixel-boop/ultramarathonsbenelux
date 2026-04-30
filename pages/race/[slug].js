@@ -3,7 +3,6 @@ import Link from 'next/link';
 import fs from 'fs';
 import path from 'path';
 import { sanitizeUrl } from '../../utils/sanitizeUrl';
-import { safeJsonLd } from '../../utils/jsonLd';
 
 export default function RacePage({ race }) {
   if (!race) return <div>Race not found</div>;
@@ -20,7 +19,7 @@ export default function RacePage({ race }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: safeJsonLd({
+            __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Event",
               "name": race.name,
