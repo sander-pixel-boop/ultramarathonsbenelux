@@ -7,13 +7,18 @@ import { safeJsonLd } from '../../../utils/jsonLd';
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'races.json');
 
-function getRaces() {
-    if(!fs.existsSync(DATA_FILE)) return [];
-    return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+async function getRaces() {
+    try {
+        const data = await fs.promises.readFile(DATA_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        if (err.code === 'ENOENT') return [];
+        throw err;
+    }
 }
 
 export async function generateStaticParams() {
-    const races = getRaces();
+    const races = await getRaces();
     return races.map((race) => ({
         slug: race.slug,
     }));
@@ -21,7 +26,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
     const { slug } = await params;
-    const races = getRaces();
+    const races = await getRaces();
     const race = races.find(r => r.slug === slug);
 
     if (!race) {
@@ -40,7 +45,7 @@ export async function generateMetadata({ params }) {
 
 export default async function RacePage({ params }) {
     const { slug } = await params;
-    const races = getRaces();
+    const races = await getRaces();
     const race = races.find(r => r.slug === slug);
 
     if (!race) {
