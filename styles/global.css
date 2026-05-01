@@ -85,6 +85,11 @@ input:focus, select:focus {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     background-color: white;
 }
+
+.race-card:focus-visible, .language-flags .flag:focus-visible, .subscribe-btn:focus-visible, .modal-close:focus-visible, button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
 select {
     cursor: pointer;
     appearance: none;
