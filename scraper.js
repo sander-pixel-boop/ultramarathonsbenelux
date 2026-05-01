@@ -64,25 +64,10 @@ async function geocode(city, country) {
 }
 
 async function verify_and_correct_race(race) {
-    const url = race.url || '';
-    if (!url || !url.startsWith('http')) {
-        return race;
-    }
-
     try {
-        const response = await fetchWithTimeout(url, {
-            headers: { "User-Agent": "Mozilla/5.0" },
-            timeout: 5000
-        });
-
-        if (!response.ok) throw new Error("Unreachable");
-
-        const html = await response.text();
-        const $ = cheerio.load(html);
-
-        // Remove scripts and styles before extracting text to mirror BeautifulSoup's get_text somewhat
-        $('script, style').remove();
-        const text = $('body').text().replace(/\s+/g, ' ').trim();
+        // User requested not to cross-reference the actual race website
+        // We will process the text we already have from the aggregator instead
+        const text = `${race.name || ''} ${race.distance || ''} ${race.date || ''}`;
 
         // Verify / Correct Date
         const currentDate = race.date || 'TBD';
@@ -187,7 +172,7 @@ async function verify_and_correct_race(race) {
         }
 
     } catch (e) {
-        // If the original website is unreachable or times out, we just keep what we have.
+        // Ignored
     }
 
     return race;
