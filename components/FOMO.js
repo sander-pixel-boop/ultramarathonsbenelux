@@ -10,7 +10,6 @@ function parseDate(dateStr) {
 }
 
 function FOMO({ race, allRaces, onSelectRace }) {
-    const [timeLeft, setTimeLeft] = useState('');
     const [isSoldOut, setIsSoldOut] = useState(false);
     const [nextRace, setNextRace] = useState(null);
 
@@ -62,27 +61,20 @@ function FOMO({ race, allRaces, onSelectRace }) {
             return candidates.length > 0 ? candidates[0] : null;
         };
 
-        const updateTimer = () => {
+        const updateStatus = () => {
             const now = new Date();
             const diff = targetDate.getTime() - now.getTime();
 
             if (diff <= 0) {
                 setIsSoldOut(true);
-                setTimeLeft('');
                 setNextRace(prevNextRace => prevNextRace || findNextRace());
             } else {
                 setIsSoldOut(false);
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
             }
         };
 
-        updateTimer();
-        const interval = setInterval(updateTimer, 1000);
-        return () => clearInterval(interval);
+        updateStatus();
+
     }, [race, allRaces]);
 
     if (isSoldOut) {
@@ -103,15 +95,6 @@ function FOMO({ race, allRaces, onSelectRace }) {
                         </button>
                     </div>
                 )}
-            </div>
-        );
-    }
-
-    if (timeLeft) {
-        return (
-            <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#fef3c7', borderRadius: '8px', border: '1px solid #fcd34d' }}>
-                <h3 style={{ color: '#d97706', margin: '0 0 10px 0', fontSize: '1.2em' }}><i className="fas fa-clock"></i> Registration closes in:</h3>
-                <div style={{ fontSize: '1.4em', fontWeight: 'bold', color: '#b45309', fontFamily: 'monospace' }}>{timeLeft}</div>
             </div>
         );
     }
