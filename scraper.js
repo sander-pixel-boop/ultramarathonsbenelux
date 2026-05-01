@@ -203,6 +203,8 @@ async function scrape_ultraned() {
         const $ = cheerio.load(html);
 
         const events = $('.type-tribe_events').toArray();
+        const eventsData = [];
+
         for (const el of events) {
             const event = $(el);
             let title = '';
@@ -227,44 +229,54 @@ async function scrape_ultraned() {
                     date_str = timeTag.text().trim();
                 }
             }
-
-            let original_url = event_url;
-            try {
-                if (event_url) {
-                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
-                    const event_html = await event_page.text();
-                    const event_soup = cheerio.load(event_html);
-
-                    const url_elem = event_soup('.tribe-events-event-url a');
-                    if (url_elem.length > 0) {
-                        original_url = url_elem.attr('href');
-                    } else {
-                        event_soup('a').each((i, aTag) => {
-                            const href = $(aTag).attr('href') || '';
-                            if (href && href.includes('http') && !href.includes('ultraned.org') && !href.includes('facebook') && !href.includes('google')) {
-                                original_url = href;
-                                return false; // break each loop
-                            }
-                        });
-                    }
-                }
-            } catch {}
-
-            races.push({
-                name: title,
-                country: "Netherlands",
-                distance: "Ultra",
-                date: date_str,
-                url: original_url,
-                city: ""
-            });
+            eventsData.push({ title, event_url, date_str });
         }
+
+        const BATCH_SIZE = 5;
+        for (let i = 0; i < eventsData.length; i += BATCH_SIZE) {
+            const batch = eventsData.slice(i, i + BATCH_SIZE);
+            const promises = batch.map(async (data) => {
+                let original_url = data.event_url;
+                try {
+                    if (data.event_url) {
+                        const event_page = await fetchWithTimeout(data.event_url, { headers, timeout: 15000 });
+                        const event_html = await event_page.text();
+                        const event_soup = cheerio.load(event_html);
+
+                        const url_elem = event_soup('.tribe-events-event-url a');
+                        if (url_elem.length > 0) {
+                            original_url = url_elem.attr('href');
+                        } else {
+                            event_soup('a').each((i, aTag) => {
+                                const href = event_soup(aTag).attr('href') || '';
+                                if (href && href.includes('http') && !href.includes('ultraned.org') && !href.includes('facebook') && !href.includes('google')) {
+                                    original_url = href;
+                                    return false; // break each loop
+                                }
+                            });
+                        }
+                    }
+                } catch {}
+
+                return {
+                    name: data.title,
+                    country: "Netherlands",
+                    distance: "Ultra",
+                    date: data.date_str,
+                    url: original_url,
+                    city: ""
+                };
+            });
+
+            const results = await Promise.all(promises);
+            races.push(...results);
+        }
+
     } catch (e) {
         console.error(`Error scraping Ultraned: ${e}`);
     }
     return races;
 }
-
 async function scrape_hardloopkalender() {
     const url = "https://hardloopkalender.nl/loopagenda-hardlopen/ultraloop/1";
     const headers = { "User-Agent": "Mozilla/5.0" };
