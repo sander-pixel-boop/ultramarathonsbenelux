@@ -2,8 +2,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
 import { parseStandardDate } from '../utils/date';
-import { parseDistance, parseElevation } from '../utils/distance';
 import { sanitizeUrl } from '../utils/sanitizeUrl';
+import { getTranslatedCountry, formatLocationStr } from '../utils/country';
 import dynamic from 'next/dynamic';
 
 const i18n = {
@@ -116,9 +116,17 @@ const typePatterns = [
 ];
 const compoundPatterns = ["trailmarathon", "ultramarathon", "ultratrail"];
 
-const combinedTypeRegex = new RegExp(`\\b(${typePatterns.join('|')})\\b`, 'ig');
-const combinedCompoundRegex = new RegExp(`\\b(${compoundPatterns.join('|')})\\b`, 'ig');
-const typePatternsLower = typePatterns.map(t => t.toLowerCase());
+const compiledTypeRegexes = typePatterns.map(t => ({
+    type: t,
+    testRegex: new RegExp(`\\b${t}\\b`, "i"),
+    replaceRegex: new RegExp(`\\b${t}\\b`, "ig")
+}));
+
+const compiledCompoundRegexes = compoundPatterns.map(c => ({
+    compound: c,
+    testRegex: new RegExp(`\\b${c}\\b`, "i"),
+    replaceRegex: new RegExp(`\\b${c}\\b`, "ig")
+}));
 
 const formatRaceNameMemo = new globalThis.Map();
 
@@ -130,39 +138,29 @@ function formatRaceName(name) {
     let raceTypes = [];
     let cleanName = name;
 
-    const typeMatches = cleanName.match(combinedTypeRegex);
-    if (typeMatches) {
-        const found = new globalThis.Set();
-        for (let i = 0; i < typeMatches.length; i++) {
-            found.add(typeMatches[i].toLowerCase());
-        }
-        for (let i = 0; i < typePatterns.length; i++) {
-            if (found.has(typePatternsLower[i])) {
-                raceTypes.push(typePatterns[i]);
+    for (const { type, testRegex, replaceRegex } of compiledTypeRegexes) {
+        if (testRegex.test(cleanName)) {
+            if (!raceTypes.includes(type)) {
+                raceTypes.push(type);
             }
+            cleanName = cleanName.replace(replaceRegex, "");
         }
-        cleanName = cleanName.replace(combinedTypeRegex, "");
     }
 
-    const compoundMatches = cleanName.match(combinedCompoundRegex);
-    if (compoundMatches) {
-        const found = new globalThis.Set();
-        for (let i = 0; i < compoundMatches.length; i++) {
-            found.add(compoundMatches[i].toLowerCase());
+    for (const { compound, testRegex, replaceRegex } of compiledCompoundRegexes) {
+        if (testRegex.test(cleanName)) {
+            if (compound === "trailmarathon") {
+                if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
+                if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
+            } else if (compound === "ultramarathon") {
+                if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
+                if(!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
+            } else if (compound === "ultratrail") {
+                if(!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
+                if(!raceTypes.includes("Trail")) raceTypes.push("Trail");
+            }
+            cleanName = cleanName.replace(replaceRegex, "");
         }
-        if (found.has("trailmarathon")) {
-            if (!raceTypes.includes("Trail")) raceTypes.push("Trail");
-            if (!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
-        }
-        if (found.has("ultramarathon")) {
-            if (!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
-            if (!raceTypes.includes("Marathon")) raceTypes.push("Marathon");
-        }
-        if (found.has("ultratrail")) {
-            if (!raceTypes.includes("Ultra")) raceTypes.push("Ultra");
-            if (!raceTypes.includes("Trail")) raceTypes.push("Trail");
-        }
-        cleanName = cleanName.replace(combinedCompoundRegex, "");
     }
 
     cleanName = cleanName.replace(/\(\s*\)/g, '');
@@ -184,7 +182,6 @@ function formatRaceName(name) {
 
     let displayType = raceTypes.length > 0 ? raceTypes.join(", ") : "Race";
     const result = { name: cleanName, type: displayType };
-    if (formatRaceNameMemo.size >= MAX_MEMO_SIZE) formatRaceNameMemo.clear();
     formatRaceNameMemo.set(name, result);
     return result;
 }
@@ -223,16 +220,25 @@ function formatDateDisplay(dateStr, t) {
 function getFlatEquivalent(race) {
     if (!race) return null;
 
+    let distNum = 0;
     const distStr = String(race.distance || '').toLowerCase();
     if (distStr.includes('h')) return null; // timed event
 
-    const distNum = parseDistance(race.distance);
+    if (distStr.includes('km')) {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+    } else if (distStr.includes('mi')) {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, '')) * 1.60934;
+    } else {
+        distNum = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+    }
 
-    if (!distNum || distNum <= 0) return null;
+    if (!distNum || isNaN(distNum)) return null;
 
     let totalElevation = 0;
     if (race.elevation) {
-        totalElevation = parseElevation(race.elevation);
+        const elevStr = String(race.elevation).toLowerCase();
+        const elevMeters = parseFloat(elevStr.replace(/[^0-9.]/g, ''));
+        if (!isNaN(elevMeters)) totalElevation = elevMeters;
     } else if (race.elevation_points && race.elevation_points.length > 0) {
         let ascent = 0;
         const pts = race.elevation_points;
@@ -253,8 +259,25 @@ function getFlatEquivalent(race) {
 // ⚡ Bolt Performance Optimization:
 // Why: Sorting executes O(N log N) times. Parsing strings with Regex repeatedly causes high CPU usage.
 // Impact: Reduces distance sorting time by ~80% (e.g. from ~2000ms to ~380ms for 1000 iterations).
+const parseDistanceForSortMemo = new globalThis.Map();
 function parseDistanceForSort(distStr) {
-    return parseDistance(distStr);
+    if (!distStr) return 0;
+    if (parseDistanceForSortMemo.has(distStr)) return parseDistanceForSortMemo.get(distStr);
+    let distStrLower = distStr.toLowerCase();
+    let num = parseFloat(distStrLower.replace(/[^0-9.]/g, ''));
+    if (isNaN(num)) {
+        if (parseDistanceForSortMemo.size >= MAX_MEMO_SIZE) parseDistanceForSortMemo.clear();
+        parseDistanceForSortMemo.set(distStr, 0);
+        return 0;
+    }
+    if (distStrLower.includes("mi")) {
+        num = num * 1.60934;
+    } else if (distStrLower.includes("h")) {
+        num = num * 10;
+    }
+    if (parseDistanceForSortMemo.size >= MAX_MEMO_SIZE) parseDistanceForSortMemo.clear();
+    parseDistanceForSortMemo.set(distStr, num);
+    return num;
 }
 
 // Map Component - loaded dynamically without SSR
@@ -312,20 +335,19 @@ export default function Home({ initialRaces }) {
 
         const filtered = initialRaces.filter(r => {
             // Fast fail: Search string matching
-            const matchesSearch = r.name.toLowerCase().includes(query) || (r.distance && r.distance.toLowerCase().includes(query));
+            const matchesSearch = (r._lowerName && r._lowerName.includes(query)) || (r._lowerDistance && r._lowerDistance.includes(query));
             if (!matchesSearch) return false;
 
             // Fast fail: Country
-            const matchesCountry = countryF === "" || (r.country && r.country.toLowerCase() === countryF);
+            const matchesCountry = countryF === "" || (r._lowerCountry && r._lowerCountry === countryF);
             if (!matchesCountry) return false;
 
             // Fast fail: Distance calculation
             if (distanceFilter !== "") {
-                const distStr = r.distance ? r.distance.toLowerCase() : "";
                 if (distanceFilter === "timed") {
-                    if (!distStr.includes("h")) return false;
+                    if (!r._lowerDistance || !r._lowerDistance.includes("h")) return false;
                 } else {
-                    const num = parseDistance(r.distance);
+                    const num = parseDistanceForSort(r.distance);
                     if (num <= 0) return false;
 
                     if (distanceFilter === "<60km" && num >= 60) return false;
@@ -492,21 +514,14 @@ export default function Home({ initialRaces }) {
                             </button>
                         </div>
                     ) : filteredRaces.map((race, idx) => {
-                        let translatedCountry = race.country;
-                        if (race.country && race.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
-                        if (race.country && race.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
-                        if (race.country && race.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
-
-                        let locationStr = translatedCountry;
-                        if (race.city) {
-                            locationStr = `${race.city}, ${translatedCountry}`;
-                        }
+                        const translatedCountry = getTranslatedCountry(race.country, t);
+                        const locationStr = formatLocationStr(race.city, translatedCountry);
 
                         const formattedRace = formatRaceName(race.name);
 
                         return (
                             <div key={idx} className="race-card" tabIndex={0} role="button" onClick={() => setSelectedRace({ ...race, formattedRace, locationStr })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedRace({ ...race, formattedRace, locationStr }); } }}>
-                                <h2>{race.organizer_name ? `${race.organizer_name} - ` : ''}{formattedRace.name} {new Date(race.date_iso || race.date).getFullYear()}</h2>
+                                <h2>{formattedRace.name}</h2>
                                 <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {formattedRace.type}</p>
                                 <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {locationStr}</p>
                                 <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {race.distance}</p>
@@ -514,15 +529,8 @@ export default function Home({ initialRaces }) {
                                 {/* Added hidden link for SEO crawlability */}
                                 <Link href={`/race/${race.slug}`} style={{ display: "none" }}>{race.name} Details</Link>
                                 <FOMO race={race} allRaces={filteredRaces} onSelectRace={(r) => {
-                                    let translatedCountry = r.country;
-                                    if (r.country && r.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
-                                    if (r.country && r.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
-                                    if (r.country && r.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
-
-                                    let rLocationStr = translatedCountry;
-                                    if (r.city) {
-                                        rLocationStr = `${r.city}, ${translatedCountry}`;
-                                    }
+                                    const translatedCountry = getTranslatedCountry(r.country, t);
+                                    const rLocationStr = formatLocationStr(r.city, translatedCountry);
                                     const rFormattedRace = formatRaceName(r.name);
                                     setSelectedRace({ ...r, formattedRace: rFormattedRace, locationStr: rLocationStr });
                                 }} />
@@ -540,15 +548,8 @@ export default function Home({ initialRaces }) {
                             onClose={() => setShowQuiz(false)}
                             onSelectRace={(race) => {
                                 setShowQuiz(false);
-                                let translatedCountry = race.country;
-                                if (race.country && race.country.toLowerCase() === 'belgium') translatedCountry = t.belgium;
-                                if (race.country && race.country.toLowerCase() === 'netherlands') translatedCountry = t.netherlands;
-                                if (race.country && race.country.toLowerCase() === 'luxembourg') translatedCountry = t.luxembourg;
-
-                                let locationStr = translatedCountry;
-                                if (race.city) {
-                                    locationStr = `${race.city}, ${translatedCountry}`;
-                                }
+                                const translatedCountry = getTranslatedCountry(race.country, t);
+                                const locationStr = formatLocationStr(race.city, translatedCountry);
                                 const formattedRace = formatRaceName(race.name);
                                 setSelectedRace({ ...race, formattedRace, locationStr });
                             }}
@@ -562,7 +563,7 @@ export default function Home({ initialRaces }) {
                 <div className="modal-overlay" onClick={() => setSelectedRace(null)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <button className="modal-close" aria-label="Close" onClick={() => setSelectedRace(null)}>&times;</button>
-                        <h2>{selectedRace.organizer_name ? `${selectedRace.organizer_name} - ` : ''}{selectedRace.formattedRace.name} {new Date(selectedRace.date_iso || selectedRace.date).getFullYear()}</h2>
+                        <h2>{selectedRace.formattedRace.name}</h2>
                         <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {selectedRace.formattedRace.type}</p>
                         <p><i className="fas fa-map-marker-alt"></i> <strong>{t.location}</strong> {selectedRace.locationStr}</p>
                         <p><i className="fas fa-route"></i> <strong>{t.distance}</strong> {selectedRace.distance}</p>
@@ -576,7 +577,7 @@ export default function Home({ initialRaces }) {
                         <FinishTimeCalculator race={selectedRace} t={t} />
                         <PackYourBag race={selectedRace} t={t} />
                         <CourseProfile race={selectedRace} t={t} />
-                        <FOMO race={selectedRace} allRaces={filteredRaces} onSelectRace={(r) => { let locationStr = r.country; if (r.country && r.country.toLowerCase() === "belgium") locationStr = t.belgium; if (r.country && r.country.toLowerCase() === "netherlands") locationStr = t.netherlands; if (r.country && r.country.toLowerCase() === "luxembourg") locationStr = t.luxembourg; if (r.city) { locationStr = `${r.city}, ${locationStr}`; } setSelectedRace({ ...r, formattedRace: formatRaceName(r.name), locationStr }); }} />
+                        <FOMO race={selectedRace} allRaces={filteredRaces} onSelectRace={(r) => { const translatedCountry = getTranslatedCountry(r.country, t); const locationStr = formatLocationStr(r.city, translatedCountry); setSelectedRace({ ...r, formattedRace: formatRaceName(r.name), locationStr }); }} />
 
                         <a href={sanitizeUrl(selectedRace.url)} target="_blank" rel="noopener noreferrer" className="subscribe-btn" style={{ marginTop: '20px', width: '100%', boxSizing: 'border-box' }}>
                             {t.subscribe} <i className="fas fa-arrow-right"></i>
@@ -602,10 +603,10 @@ export default function Home({ initialRaces }) {
 export async function getStaticProps() {
     let races = [];
     try {
-        const fs = require('fs');
+        const fs = require('fs').promises;
         const path = require('path');
-        const filePath = path.join(process.cwd(), 'races.json');
-        const jsonData = fs.readFileSync(filePath, 'utf8');
+        const filePath = path.join(process.cwd(), 'data', 'races.json');
+        const jsonData = await fs.readFile(filePath, 'utf8');
         races = JSON.parse(jsonData);
     } catch (e) {
         console.error("Error reading races.json during build:", e);

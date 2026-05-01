@@ -86,78 +86,12 @@ async function verify_and_correct_race(race) {
 
         // Verify / Correct Date
         const currentDate = race.date || 'TBD';
-
-        const monthMap = {
-            "janvier": "01", "january": "01", "januari": "01",
-            "février": "02", "february": "02", "februari": "02",
-            "mars": "03", "march": "03", "maart": "03",
-            "avril": "04", "april": "04",
-            "mai": "05", "may": "05", "mei": "05",
-            "juin": "06", "june": "06", "juni": "06",
-            "juillet": "07", "july": "07", "juli": "07",
-            "août": "08", "august": "08", "augustus": "08",
-            "septembre": "09", "september": "09",
-            "octobre": "10", "october": "10", "oktober": "10",
-            "novembre": "11", "november": "11",
-            "décembre": "12", "december": "12"
-        };
-
-        function normalizeDate(d) {
-            if (!d || d === 'TBD') return null;
-            const parts = d.match(/\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/);
-            if (parts) {
-                let dNum = parseInt(parts[1], 10);
-                let mNum = parseInt(parts[2], 10);
-                if (dNum < 1 || dNum > 31 || mNum < 1 || mNum > 12) return null;
-                let day = parts[1].padStart(2, '0');
-                let month = parts[2].padStart(2, '0');
-                let year = parts[3];
-                if (year.length === 2) year = "20" + year;
-                return `${day}/${month}/${year}`;
-            }
-            return null;
-        }
-
-        function extractDates(text) {
-            const dates = [];
-
-            const textDateRegex = new RegExp(`\\b(\\d{1,2})\\s+(${Object.keys(monthMap).join('|')})\\s+(\\d{4})\\b`, 'gi');
-            let match;
-            while ((match = textDateRegex.exec(text)) !== null) {
-                const day = match[1].padStart(2, '0');
-                const month = monthMap[match[2].toLowerCase()];
-                const year = match[3];
-                dates.push(`${day}/${month}/${year}`);
-            }
-
-            const numericDateRegex = /\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/g;
-            while ((match = numericDateRegex.exec(text)) !== null) {
-                let dNum = parseInt(match[1], 10);
-                let mNum = parseInt(match[2], 10);
-                if (dNum < 1 || dNum > 31 || mNum < 1 || mNum > 12) continue;
-                let day = match[1].padStart(2, '0');
-                let month = match[2].padStart(2, '0');
-                let year = match[3];
-                if (year.length === 2) year = "20" + year;
-                dates.push(`${day}/${month}/${year}`);
-            }
-
-            return dates;
-        }
-
-        const normCurrent = normalizeDate(currentDate);
-        const foundDates = extractDates(text);
-
         if (currentDate === 'TBD' || !currentDate) {
-            if (foundDates.length > 0) {
-                race.date = foundDates[0];
-            }
-        } else if (normCurrent && foundDates.includes(normCurrent)) {
-            // we already know this is a correct date, do nothing
-            // wait, we can standardise the format!
-            race.date = normCurrent;
-        } else if (foundDates.length > 0) {
-            race.date = foundDates[0];
+            const dateMatch = text.match(/\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b/);
+            if (dateMatch) race.date = dateMatch[0];
+        } else if (!text.includes(currentDate)) {
+            const dateMatch = text.match(/\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b/);
+            if (dateMatch) race.date = dateMatch[0];
         }
 
         // Verify / Correct Distance
@@ -168,22 +102,6 @@ async function verify_and_correct_race(race) {
         } else if (!text.includes(currentDist)) {
             const distMatch = text.match(/\b\d{2,3}\s*(km|mi|miles)\b/i);
             if (distMatch) race.distance = distMatch[0];
-        }
-
-        // Heuristic extraction for pSEO data points
-        const elevRegex = /(?:D\+|elevation\s*gain|ascent|hoogtemeters|hoogteverschil)[^\d]*(\d{2,5})\s*m?|(\d{2,5})\s*m?\s*(?:D\+|elevation\s*gain|ascent|hoogtemeters|hoogteverschil)/i;
-        const elevMatch = text.match(elevRegex);
-        if (elevMatch) {
-            race.elevation = (elevMatch[1] || elevMatch[2]) + 'm';
-        }
-
-        const terrainMatch = text.match(/\b(trail|gravel|road|asphalt|paved|track)\b/i);
-        if (terrainMatch) {
-            race.terrain = terrainMatch[1].toLowerCase();
-        }
-
-        if (/\butmb\b/i.test(text) || /\bUTMB\s*Index\b/i.test(text)) {
-            race.utmb_index = true;
         }
 
     } catch (e) {
@@ -248,7 +166,7 @@ async function scrape_ultraned() {
                         });
                     }
                 }
-            } catch {}
+            } catch (err) {}
 
             races.push({
                 name: title,
@@ -315,7 +233,7 @@ async function scrape_hardloopkalender() {
                         }
                     }
                 });
-            } catch {}
+            } catch (err) {}
 
             races.push({
                 name: title,
@@ -375,7 +293,7 @@ async function scrape_finishers() {
                         url: original_url,
                         city: ""
                     });
-                } catch {}
+                } catch (err) {}
             }
         }
     } catch (e) {
@@ -416,7 +334,7 @@ async function scrape_trail_running() {
                         }
                     });
                 }
-            } catch {}
+            } catch (err) {}
 
             races.push({
                 name: title,
@@ -447,48 +365,42 @@ async function scrape_ultraracecalendar() {
         const $ = cheerio.load(html);
 
         const events = $('.event-card').toArray();
-        const chunkSize = 5;
-        for (let i = 0; i < events.length; i += chunkSize) {
-            const chunk = events.slice(i, i + chunkSize);
-            const chunkPromises = chunk.map(async (el) => {
-                const event = $(el);
-                const title_elem = event.find('h3');
-                const title = title_elem.length > 0 ? title_elem.text().trim() : "Unknown Race";
+        for (const el of events) {
+            const event = $(el);
+            const title_elem = event.find('h3');
+            const title = title_elem.length > 0 ? title_elem.text().trim() : "Unknown Race";
 
-                const date_elem = event.find('.event-date');
-                const date_str = date_elem.length > 0 ? date_elem.text().trim() : "";
+            const date_elem = event.find('.event-date');
+            const date_str = date_elem.length > 0 ? date_elem.text().trim() : "";
 
-                const link_elem = event.find('a[href]');
-                const event_url = link_elem.length > 0 ? link_elem.attr('href') : "";
-                let original_url = event_url;
+            const link_elem = event.find('a[href]');
+            const event_url = link_elem.length > 0 ? link_elem.attr('href') : "";
+            let original_url = event_url;
 
-                if (event_url) {
-                    try {
-                        const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
-                        const event_html = await event_page.text();
-                        const event_soup = cheerio.load(event_html);
+            if (event_url) {
+                try {
+                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
+                    const event_html = await event_page.text();
+                    const event_soup = cheerio.load(event_html);
 
-                        event_soup('a[href]').each((i, link) => {
-                            const l_href = $(link).attr('href');
-                            if (l_href && l_href.includes('http') && !l_href.includes('ultraracecalendar.com') && !l_href.includes('facebook')) {
-                                original_url = l_href;
-                                return false; // break
-                            }
-                        });
-                    } catch {}
-                }
+                    event_soup('a[href]').each((i, link) => {
+                        const l_href = $(link).attr('href');
+                        if (l_href && l_href.includes('http') && !l_href.includes('ultraracecalendar.com') && !l_href.includes('facebook')) {
+                            original_url = l_href;
+                            return false; // break
+                        }
+                    });
+                } catch (err) {}
+            }
 
-                return {
-                    name: title,
-                    country: "Unknown",
-                    distance: "Ultra",
-                    date: date_str,
-                    url: original_url,
-                    city: ""
-                };
+            races.push({
+                name: title,
+                country: "Unknown",
+                distance: "Ultra",
+                date: date_str,
+                url: original_url,
+                city: ""
             });
-            const chunkResults = await Promise.all(chunkPromises);
-            races.push(...chunkResults);
         }
     } catch (e) {
         console.error(`Error scraping ultraracecalendar: ${e}`);
@@ -532,7 +444,7 @@ async function scrape_ahotu() {
                             return false; // break
                         }
                     });
-                } catch {}
+                } catch (err) {}
             }
 
             races.push({
@@ -552,92 +464,77 @@ async function scrape_ahotu() {
 
 async function scrape_duv() {
     const countries = { 'BEL': 'Belgium', 'NED': 'Netherlands', 'LUX': 'Luxembourg' };
-    let all_races = [];
+    const all_races = [];
     const headers = { "User-Agent": "Mozilla/5.0" };
-
-    const pagePromises = [];
 
     for (const [c_code, c_name] of Object.entries(countries)) {
         for (const year of ['2024', '2025', '2026', '2027']) {
-            pagePromises.push((async () => {
-                const url = `https://statistik.d-u-v.org/calendar.php?year=${year}&country=${c_code}`;
-                const page_races = [];
-                try {
-                    const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
-                    const html = await response.text();
-                    const $ = cheerio.load(html);
+            const url = `https://statistik.d-u-v.org/calendar.php?year=${year}&country=${c_code}`;
+            try {
+                const response = await fetchWithTimeout(url, { headers, timeout: 15000 });
+                const html = await response.text();
+                const $ = cheerio.load(html);
 
-                    const rows = $('tr').toArray();
-                    const rowPromises = [];
+                const rows = $('tr').toArray();
+                for (const row of rows) {
+                    const cols = $(row).find('td');
+                    // A valid event row typically has ~7 columns and first column is a date
+                    if (cols.length >= 4) {
+                        const dateText = $(cols[0]).text().trim();
+                        if ((dateText.match(/\./g) || []).length === 2) {
+                            const date = dateText;
+                            const name = $(cols[1]).text().trim();
+                            const distance = $(cols[2]).text().trim();
 
-                    for (const row of rows) {
-                        const cols = $(row).find('td');
-                        if (cols.length >= 4) {
-                            const dateText = $(cols[0]).text().trim();
-                            if ((dateText.match(/\./g) || []).length === 2) {
-                                rowPromises.push((async () => {
-                                    const date = dateText;
-                                    const name = $(cols[1]).text().trim();
-                                    const distance = $(cols[2]).text().trim();
+                            const city_raw = $(cols[3]).text().trim();
+                            const city = city_raw.replace(/\s*\([^)]*\)$/, '').trim();
 
-                                    const city_raw = $(cols[3]).text().trim();
-                                    const city = city_raw.replace(/\s*\([^)]*\)$/, '').trim();
+                            const link_tag = $(cols[1]).find('a');
+                            const link_href = link_tag.attr('href');
+                            const link = link_href ? "https://statistik.d-u-v.org/" + link_href : "";
 
-                                    const link_tag = $(cols[1]).find('a');
-                                    const link_href = link_tag.attr('href');
-                                    const link = link_href ? "https://statistik.d-u-v.org/" + link_href : "";
+                            let original_url = link;
+                            if (link) {
+                                try {
+                                    const event_response = await fetchWithTimeout(link, { headers, timeout: 15000 });
+                                    const event_html = await event_response.text();
+                                    const event_soup = cheerio.load(event_html);
 
-                                    let original_url = link;
-                                    if (link) {
-                                        try {
-                                            const event_response = await fetchWithTimeout(link, { headers, timeout: 15000 });
-                                            const event_html = await event_response.text();
-                                            const event_soup = cheerio.load(event_html);
-
-                                            let foundWebPage = false;
-                                            event_soup('b').each((i, b) => {
-                                                if ($(b).text().includes('Web page:')) {
-                                                    foundWebPage = true;
-                                                    const td_sibling = $(b).parent().next('td');
-                                                    if (td_sibling.length > 0) {
-                                                        const a_tag = td_sibling.find('a');
-                                                        if (a_tag.length > 0 && a_tag.attr('href')) {
-                                                            original_url = a_tag.attr('href');
-                                                        }
-                                                    }
-                                                    return false; // break
+                                    let foundWebPage = false;
+                                    event_soup('b').each((i, b) => {
+                                        if ($(b).text().includes('Web page:')) {
+                                            foundWebPage = true;
+                                            const td_sibling = $(b).parent().next('td');
+                                            if (td_sibling.length > 0) {
+                                                const a_tag = td_sibling.find('a');
+                                                if (a_tag.length > 0 && a_tag.attr('href')) {
+                                                    original_url = a_tag.attr('href');
                                                 }
-                                            });
-                                        } catch (err) {
-                                            console.error(`Error fetching original url for ${link}: ${err.message}`);
+                                            }
+                                            return false; // break
                                         }
-                                    }
-
-                                    page_races.push({
-                                        name: name,
-                                        country: c_name,
-                                        distance: distance,
-                                        date: date,
-                                        url: original_url,
-                                        city: city
                                     });
-                                })());
+                                } catch (err) {
+                                    console.error(`Error fetching original url for ${link}: ${err.message}`);
+                                }
                             }
+
+                            all_races.push({
+                                name: name,
+                                country: c_name,
+                                distance: distance,
+                                date: date,
+                                url: original_url,
+                                city: city
+                            });
                         }
                     }
-                    await Promise.all(rowPromises);
-                } catch (e) {
-                    console.error(`Error scraping DUV ${c_code} ${year}: ${e.message}`);
                 }
-                return page_races;
-            })());
+            } catch (e) {
+                console.error(`Error scraping DUV ${c_code} ${year}: ${e.message}`);
+            }
         }
     }
-
-    const results = await Promise.all(pagePromises);
-    results.forEach(res => {
-        all_races = all_races.concat(res);
-    });
 
     return all_races;
 }
@@ -645,85 +542,44 @@ async function scrape_duv() {
 async function main() {
     let all_races = [];
 
-    try {
-        const existingRaces = JSON.parse(await fs.readFile('./races.json', 'utf8'));
-        for (const race of existingRaces) {
-            if (race.city && race.lat && race.lng) {
-                const query = `${race.city}, ${race.country || ''}`;
-                GEO_CACHE[query] = { lat: race.lat, lon: race.lng };
-            }
-        }
-        console.log(`Preloaded ${Object.keys(GEO_CACHE).length} coordinates from existing races.json`);
-    } catch (e) {
-        console.log("No existing races.json found to preload geocache.");
-    }
-
-    console.log("Scraping DUV...");
+    console.time("DUV"); console.log("Scraping DUV...");
     const duv_races = await scrape_duv();
-    all_races = all_races.concat(duv_races);
+    all_races = all_races.concat(duv_races); console.timeEnd("DUV");
 
-    console.log("Scraping Ultraned...");
+    console.time("Ultraned"); console.log("Scraping Ultraned...");
     const ultraned_races = await scrape_ultraned();
-    all_races = all_races.concat(ultraned_races);
+    all_races = all_races.concat(ultraned_races); console.timeEnd("Ultraned");
 
-    console.log("Scraping Hardloopkalender...");
+    console.time("Hardloopkalender"); console.log("Scraping Hardloopkalender...");
     const hardloopkalender_races = await scrape_hardloopkalender();
-    all_races = all_races.concat(hardloopkalender_races);
+    all_races = all_races.concat(hardloopkalender_races); console.timeEnd("Hardloopkalender");
 
-    console.log("Scraping Finishers...");
+    console.time("Finishers"); console.log("Scraping Finishers...");
     const finishers_races = await scrape_finishers();
-    all_races = all_races.concat(finishers_races);
+    all_races = all_races.concat(finishers_races); console.timeEnd("Finishers");
 
-    console.log("Scraping Trail-running.eu...");
+    console.time("Trail"); console.log("Scraping Trail-running.eu...");
     const trail_races = await scrape_trail_running();
-    all_races = all_races.concat(trail_races);
+    all_races = all_races.concat(trail_races); console.timeEnd("Trail");
 
-    console.log("Scraping Ultraracecalendar...");
+    console.time("Ultraracecalendar"); console.log("Scraping Ultraracecalendar...");
     const ultrarace_races = await scrape_ultraracecalendar();
-    all_races = all_races.concat(ultrarace_races);
+    all_races = all_races.concat(ultrarace_races); console.timeEnd("Ultraracecalendar");
 
-    console.log("Scraping Ahotu...");
+    console.time("Ahotu"); console.log("Scraping Ahotu...");
     const ahotu_races = await scrape_ahotu();
-    all_races = all_races.concat(ahotu_races);
+    all_races = all_races.concat(ahotu_races); console.timeEnd("Ahotu");
 
-    console.log("Verifying and correcting races...");
+    console.time("Verify"); console.log("Verifying and correcting races...");
     const verified_races = [];
-    const batchSize = 50;
+    const batchSize = 20;
     for (let i = 0; i < all_races.length; i += batchSize) {
         const batch = all_races.slice(i, i + batchSize);
         const results = await Promise.all(batch.map(race => verify_and_correct_race(race)));
         verified_races.push(...results);
     }
 
-    console.log("Normalizing all dates as fallback...");
-    verified_races.forEach(r => {
-        if (r.date && r.date !== 'TBD') {
-            const parts = r.date.match(/\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/);
-            if (parts) {
-                let dNum = parseInt(parts[1], 10);
-                let mNum = parseInt(parts[2], 10);
-                if (dNum >= 1 && dNum <= 31 && mNum >= 1 && mNum <= 12) {
-                    let day = parts[1].padStart(2, '0');
-                    let month = parts[2].padStart(2, '0');
-                    let year = parts[3];
-                    if (year.length === 2) year = "20" + year;
-                    r.date = `${day}/${month}/${year}`;
-                }
-            } else {
-                const globalMonthMap = { "januari": "01", "january": "01", "februari": "02", "february": "02", "maart": "03", "march": "03", "april": "04", "mei": "05", "may": "05", "juni": "06", "june": "06", "juli": "07", "july": "07", "augustus": "08", "august": "08", "september": "09", "sep": "09", "oktober": "10", "october": "10", "november": "11", "december": "12" };
-                const textDateRegex = new RegExp(`\\b(\\d{1,2})\\s+(${Object.keys(globalMonthMap).join('|')})\\s+(\\d{4})\\b`, 'i');
-                const textMatch = r.date.match(textDateRegex);
-                if (textMatch) {
-                    const day = textMatch[1].padStart(2, '0');
-                    const month = globalMonthMap[textMatch[2].toLowerCase()];
-                    const year = textMatch[3];
-                    r.date = `${day}/${month}/${year}`;
-                }
-            }
-        }
-    });
-
-    console.log("Geocoding races...");
+    console.timeEnd("Verify"); console.time("Geocoding"); console.log("Geocoding races...");
     for (const race of verified_races) {
         if (race.city) {
             const { lat, lon } = await geocode(race.city, race.country || '');
@@ -734,100 +590,8 @@ async function main() {
         }
     }
 
-    // Inject highly detailed hardcoded target events as Single Source of Truth
-    for (const race of verified_races) {
-        if (race.name && race.name.toLowerCase().includes('bello gallico')) {
-            race.elevation_points = [
-                { d: 0, e: 100 },
-                { d: 10, e: 200 },
-                { d: 20, e: 150 },
-                { d: 30, e: 300 },
-                { d: 40, e: 250 },
-                { d: 50, e: 400 },
-                { d: 60, e: 100 },
-                { d: 70, e: 50 },
-                { d: 80, e: 100 }
-            ];
-            race.aid_stations = [15, 30, 45, 60, 75];
-        }
-    }
-
-
-    const valid_races = verified_races.filter(race => {
-        if (!race.date || race.date === 'TBD' || !race.distance || race.distance === 'Ultra') {
-            return false;
-        }
-
-        const lower = race.distance.toLowerCase();
-        let isMiles = /\b(mi|miles|mile)\b/i.test(lower);
-        let isHours = /\b(h|hour|hours|uur)\b/i.test(lower) || /\d+h\b/i.test(lower);
-
-        let numbers = race.distance.replace(',', '.').match(/\d+(\.\d+)?/g);
-        if (!numbers) return false;
-
-        let maxNum = Math.max(...numbers.map(n => parseFloat(n)));
-
-        if (isHours) {
-            return maxNum >= 6;
-        } else if (isMiles) {
-            return maxNum > 26.2;
-        } else {
-            return maxNum > 42;
-        }
-    });
-
-    const prefixRegex = /^\d+(?:[eè]me|ère|er|nd|rd|th|st|e|°|\.)?\s+(?!(?:km|h|hour|uur|miles|mi)\b)/i;
-
-    const filtered_races = [];
-    valid_races.forEach(race => {
-        if (race.name) {
-            race.name = race.name.replace(prefixRegex, '').trim();
-        }
-
-        let distStr = race.distance ? race.distance.replace(/[^\d.]/g, '') : '0';
-        let distVal = parseFloat(distStr) || 0;
-
-        let isDuplicate = false;
-        for (let i = 0; i < filtered_races.length; i++) {
-            let existing = filtered_races[i];
-            if (existing.name === race.name && existing.date === race.date) {
-                let existingDistStr = existing.distance ? existing.distance.replace(/[^\d.]/g, '') : '0';
-                let existingDistVal = parseFloat(existingDistStr) || 0;
-
-                // If distance is within 5km, consider it a duplicate
-                if (Math.abs(existingDistVal - distVal) <= 5) {
-                    isDuplicate = true;
-
-                    // Prefer distance format with 'km' if missing
-                    if (!existing.distance.includes('km') && race.distance.includes('km')) {
-                        existing.distance = race.distance;
-                    }
-                    if (!existing.url && race.url) {
-                        existing.url = race.url;
-                    }
-                    break;
-                }
-            }
-        }
-
-        if (!isDuplicate) {
-            filtered_races.push(race);
-        }
-    });
-
-    function generateSlug(name, dateStr) {
-        let slug = (name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-        let year = "";
-        if (dateStr) {
-            const match = dateStr.match(/\b(20\d{2})\b/);
-            if (match) year = `-${match[1]}`;
-        }
-        return `${slug}${year}`;
-    }
-    filtered_races.forEach(race => { race.slug = generateSlug(race.name, race.date); });
-
-    await fs.writeFile('races.json', JSON.stringify(filtered_races, null, 4));
-    console.log(`Successfully scraped and verified ${filtered_races.length} races and saved to races.json`);
+    console.timeEnd("Geocoding"); await fs.writeFile('races.json', JSON.stringify(verified_races, null, 4));
+    console.log(`Successfully scraped and verified ${verified_races.length} races and saved to races.json`);
 }
 
 main().catch(console.error);

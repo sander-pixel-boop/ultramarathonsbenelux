@@ -7,21 +7,9 @@ export default function CourseProfile({ race, t }) {
         }
 
         const points = race.elevation_points;
-
-        // ⚡ Bolt Performance Optimization:
-        // Why: Replaced .reduce() and multiple .map() array allocations with a single primitive for-loop.
-        // Impact: Eliminates redundant array creations and O(n) iterations, significantly
-        // reducing garbage collection hits for large datasets and main thread blocking during renders.
-        let maxDist = points[0].d;
-        let maxElev = points[0].e;
-        let minElev = points[0].e;
-        for (let i = 1; i < points.length; i++) {
-            const p = points[i];
-            if (p.d > maxDist) maxDist = p.d;
-            if (p.e > maxElev) maxElev = p.e;
-            if (p.e < minElev) minElev = p.e;
-        }
-
+        const maxDist = Math.max(...points.map(p => p.d));
+        const maxElev = Math.max(...points.map(p => p.e));
+        const minElev = Math.min(...points.map(p => p.e));
         const elevRange = maxElev - minElev || 100;
 
         const width = 600;
@@ -31,34 +19,21 @@ export default function CourseProfile({ race, t }) {
         const usableWidth = width - 2 * padding;
         const usableHeight = height - 2 * padding;
 
-        let pathData = '';
-        let firstX = 0;
-        let lastX = 0;
-        for (let i = 0; i < points.length; i++) {
-            const p = points[i];
-            const x = padding + (p.d / maxDist) * usableWidth;
-            const y = padding + usableHeight - ((p.e - minElev) / elevRange) * usableHeight;
+        const xCoords = points.map(p => padding + (p.d / maxDist) * usableWidth);
+        const yCoords = points.map(p => padding + usableHeight - ((p.e - minElev) / elevRange) * usableHeight);
 
-            if (i === 0) {
-                firstX = x;
-                pathData = `M ${x} ${y} `;
-            } else {
-                pathData += `L ${x} ${y} `;
-            }
-            if (i === points.length - 1) {
-                lastX = x;
-            }
+        let pathData = `M ${xCoords[0]} ${yCoords[0]} `;
+        for (let i = 1; i < points.length; i++) {
+            pathData += `L ${xCoords[i]} ${yCoords[i]} `;
         }
 
         // Close path for filling
-        const fillPathData = `${pathData} L ${lastX} ${height - padding} L ${firstX} ${height - padding} Z`;
+        const fillPathData = `${pathData} L ${xCoords[points.length - 1]} ${height - padding} L ${xCoords[0]} ${height - padding} Z`;
 
         // Aid stations
         const aidStations = race.aid_stations || [];
-        const aidMarkers = [];
-        for (let j = 0; j < aidStations.length; j++) {
-            const aidDist = aidStations[j];
-            if (aidDist < 0 || aidDist > maxDist) continue;
+        const aidMarkers = aidStations.map(aidDist => {
+            if (aidDist < 0 || aidDist > maxDist) return null;
             // Interpolate elevation at this distance
             let y = height - padding; // fallback
             for (let i = 0; i < points.length - 1; i++) {
@@ -71,8 +46,8 @@ export default function CourseProfile({ race, t }) {
             }
             const x = padding + (aidDist / maxDist) * usableWidth;
 
-            aidMarkers.push({ x, y, dist: aidDist });
-        }
+            return { x, y, dist: aidDist };
+        }).filter(Boolean);
 
         return { pathData, fillPathData, aidMarkers, maxDist, maxElev, width, height, padding };
     }, [race]);

@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import parse from 'html-react-parser';
 import DOMPurify from 'isomorphic-dompurify';
 import blogs from '../../data/blog.json';
 
@@ -21,11 +22,9 @@ export default function BlogPost({ blog }) {
       <div style={{ color: '#666', marginBottom: '20px' }}>Published on {blog.date}</div>
 
       {/* 🛡️ Sentinel: Sanitize HTML content to prevent XSS vulnerabilities, even when reading from local files */}
-      <div
-        className="blog-content"
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}
-        style={{ lineHeight: '1.6' }}
-      />
+      <div className="blog-content" style={{ lineHeight: '1.6' }}>
+        {parse(DOMPurify.sanitize(blog.content))}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { parseDistance, parseElevation } from '../utils/distance';
 
 export default function FinishTimeCalculator({ race, t }) {
     const [pbTimeStr, setPbTimeStr] = useState('');
@@ -33,20 +32,27 @@ export default function FinishTimeCalculator({ race, t }) {
         const d1 = pbType === '10k' ? 10 : 42.195;
 
         // Parse race distance
-        if (String(race.distance).toLowerCase().includes('h')) {
+        let d2 = 0;
+        const distStr = String(race.distance).toLowerCase();
+        if (distStr.includes('km')) {
+            d2 = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+        } else if (distStr.includes('mi')) {
+            d2 = parseFloat(distStr.replace(/[^0-9.]/g, '')) * 1.60934;
+        } else if (distStr.includes('h')) {
             return null; // Can't estimate for timed events
         }
-        const d2 = parseDistance(race.distance);
 
-        if (d2 <= 0) return null;
+        if (d2 <= 0 || isNaN(d2)) return null;
 
         // Riegel formula: T2 = T1 * (D2 / D1)^1.06
         let t2Hours = t1Hours * Math.pow(d2 / d1, 1.06);
 
         // Elevation adjustment
         if (race.elevation) {
-            const elevMeters = parseElevation(race.elevation);
-            if (elevMeters > 0) {
+            // Assume elevation is given in meters, parse it
+            const elevStr = String(race.elevation).toLowerCase();
+            const elevMeters = parseFloat(elevStr.replace(/[^0-9.]/g, ''));
+            if (!isNaN(elevMeters) && elevMeters > 0) {
                  // Naismith's rule adapted: +1 hour per 1000m of elevation
                  t2Hours += (elevMeters / 1000);
             }
@@ -86,7 +92,6 @@ export default function FinishTimeCalculator({ race, t }) {
             </h3>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
                 <select
-                    aria-label="Personal Best Distance"
                     value={pbType}
                     onChange={e => setPbType(e.target.value)}
                     style={{ padding: '6px', borderRadius: '4px', border: '1px solid #cbd5e1', backgroundColor: 'white', flex: 1, minWidth: '100px' }}
@@ -95,7 +100,6 @@ export default function FinishTimeCalculator({ race, t }) {
                     <option value="marathon">Marathon PB</option>
                 </select>
                 <input
-                    aria-label={txt.pbLabel}
                     type="text"
                     placeholder="e.g. 00:45 or 03:30"
                     value={pbTimeStr}
