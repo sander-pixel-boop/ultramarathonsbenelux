@@ -335,7 +335,9 @@ export default function Home({ initialRaces }) {
 
         const filtered = initialRaces.filter(r => {
             // Fast fail: Search string matching
-            const matchesSearch = r._lowerName.includes(query) || r._lowerDistance.includes(query);
+            const _lowerDistance = r._lowerDistance || '';
+            const _lowerName = r._lowerName || '';
+            const matchesSearch = _lowerName.includes(query) || _lowerDistance.includes(query);
             if (!matchesSearch) return false;
 
             // Fast fail: Country
@@ -345,7 +347,7 @@ export default function Home({ initialRaces }) {
             // Fast fail: Distance calculation
             if (distanceFilter !== "") {
                 if (distanceFilter === "timed") {
-                    if (!r._lowerDistance.includes("h")) return false;
+                    if (!_lowerDistance.includes("h")) return false;
                 } else {
                     const num = parseDistance(r.distance);
                     if (num <= 0) return false;
@@ -353,8 +355,6 @@ export default function Home({ initialRaces }) {
                     if (distanceFilter === "<60km" && num >= 60) return false;
                     if (distanceFilter === "60-99km" && (num < 60 || num >= 100)) return false;
                     if (distanceFilter === "100km+" && num < 100) return false;
-                } else {
-                    return false;
                 }
             }
 
