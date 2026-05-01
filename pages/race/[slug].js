@@ -56,7 +56,7 @@ export default function RacePage({ race }) {
 }
 
 export async function getStaticPaths() {
-  const dataPath = path.join(process.cwd(), 'races.json');
+  const dataPath = path.join(process.cwd(), 'data/races.json');
   const racesJson = fs.readFileSync(dataPath, 'utf8');
   const races = JSON.parse(racesJson);
 
@@ -72,7 +72,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const dataPath = path.join(process.cwd(), 'races.json');
+  const dataPath = path.join(process.cwd(), 'data/races.json');
   const racesJson = fs.readFileSync(dataPath, 'utf8');
   const races = JSON.parse(racesJson);
 
