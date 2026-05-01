@@ -335,26 +335,24 @@ export default function Home({ initialRaces }) {
 
         const filtered = initialRaces.filter(r => {
             // Fast fail: Search string matching
-            const matchesSearch = r._lowerName.includes(query) || r._lowerDistance.includes(query);
+            const matchesSearch = (r._lowerName && r._lowerName.includes(query)) || (r._lowerDistance && r._lowerDistance.includes(query));
             if (!matchesSearch) return false;
 
             // Fast fail: Country
-            const matchesCountry = countryF === "" || r._lowerCountry === countryF;
+            const matchesCountry = countryF === "" || (r._lowerCountry && r._lowerCountry === countryF);
             if (!matchesCountry) return false;
 
             // Fast fail: Distance calculation
             if (distanceFilter !== "") {
                 if (distanceFilter === "timed") {
-                    if (!r._lowerDistance.includes("h")) return false;
+                    if (!r._lowerDistance || !r._lowerDistance.includes("h")) return false;
                 } else {
-                    const num = parseDistance(r.distance);
+                    const num = parseDistanceForSort(r.distance);
                     if (num <= 0) return false;
 
                     if (distanceFilter === "<60km" && num >= 60) return false;
                     if (distanceFilter === "60-99km" && (num < 60 || num >= 100)) return false;
                     if (distanceFilter === "100km+" && num < 100) return false;
-                } else {
-                    return false;
                 }
             }
 
