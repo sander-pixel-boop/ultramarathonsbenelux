@@ -811,6 +811,37 @@ async function main() {
     }
     filtered_races.forEach(race => { race.slug = generateSlug(race.name, race.date); });
 
+        // Read permanent fixes
+    let permanentFixes = {};
+    try {
+        const fixesData = await fs.readFile('data/permanent_fixes.json', 'utf8');
+        permanentFixes = JSON.parse(fixesData);
+    } catch (e) {
+        // File might not exist
+    }
+
+    // Apply permanent fixes to filtered races
+    filtered_races.forEach(race => {
+        if (permanentFixes[race.slug]) {
+            if (permanentFixes[race.slug].distance) {
+                race.distance = permanentFixes[race.slug].distance;
+            }
+        }
+    });
+
+    // Write audit log
+    const auditHeaders = ['slug', 'name', 'date', 'distance', 'corrected_distance'];
+    const auditLines = [auditHeaders.join(',')];
+    filtered_races.forEach(race => {
+        // Escape quotes if present
+        const safeName = '"' + (race.name || '').replace(/"/g, '""') + '"';
+        const safeDate = '"' + (race.date || '').replace(/"/g, '""') + '"';
+        const safeDist = '"' + (race.distance || '').replace(/"/g, '""') + '"';
+        auditLines.push(`${race.slug},${safeName},${safeDate},${safeDist},`);
+    });
+
+    await fs.writeFile('data/audit_log.csv', auditLines.join('\n'));
+
     await fs.writeFile('data/races.json', JSON.stringify(filtered_races, null, 4));
     console.log(`Successfully scraped and verified ${filtered_races.length} races and saved to races.json`);
 }
