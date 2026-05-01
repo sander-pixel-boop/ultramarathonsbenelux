@@ -646,7 +646,7 @@ async function main() {
     let all_races = [];
 
     try {
-        const existingRaces = JSON.parse(await fs.readFile('./races.json', 'utf8'));
+        const existingRaces = JSON.parse(await fs.readFile('data/races.json', 'utf8'));
         for (const race of existingRaces) {
             if (race.city && race.lat && race.lng) {
                 const query = `${race.city}, ${race.country || ''}`;
@@ -826,7 +826,7 @@ async function main() {
     }
     filtered_races.forEach(race => { race.slug = generateSlug(race.name, race.date); });
 
-    await fs.writeFile('races.json', JSON.stringify(filtered_races, null, 4));
+    await fs.writeFile('data/races.json', JSON.stringify(filtered_races, null, 4));
     console.log(`Successfully scraped and verified ${filtered_races.length} races and saved to races.json`);
 }
 

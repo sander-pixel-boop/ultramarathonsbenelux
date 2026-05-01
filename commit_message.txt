@@ -1,5 +1,3 @@
-⚡ Optimize scraper with chunked Promise.all for Ultraracecalendar
+fix: Use correct races.json output path in scraper
 
-💡 What: Replaced the sequential `for (const el of events)` loop in `scrape_ultraracecalendar` with a chunked `Promise.all` approach (chunks of 5).
-🎯 Why: The original sequential `fetchWithTimeout` calls blocked execution entirely on network I/O, resulting in poor scraping performance. Batching concurrent requests significantly improves throughput.
-📊 Measured Improvement: Benchmarking with a mock test script showed loop execution dropping from 1009ms down to 51ms (a 20x speedup). This prevents the scraper from getting bogged down while still preserving logic and preventing overloading connections.
+The scraper was writing its output to `races.json` instead of `data/races.json`. This caused the main app (which reads from `data/races.json`) to use an older, truncated version containing only 10 races. This commit restores `data/races.json` from the full `races.json` output, updates `scripts/scraper.js` to correctly use `data/races.json`, and removes the incorrect root `races.json` file.
