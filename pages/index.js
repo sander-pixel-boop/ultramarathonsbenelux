@@ -333,7 +333,12 @@ export default function Home({ initialRaces }) {
         twelveMonthsFromNow.setFullYear(twelveMonthsFromNow.getFullYear() + 1);
         const twelveMonthsFromNowTime = twelveMonthsFromNow.getTime();
 
-        const filtered = initialRaces.filter(r => {
+        const filtered = initialRaces.map(r => ({
+            ...r,
+            _lowerName: r.name ? r.name.toLowerCase() : '',
+            _lowerDistance: r.distance ? String(r.distance).toLowerCase() : '',
+            _lowerCountry: r.country ? r.country.toLowerCase() : ''
+        })).filter(r => {
             // Fast fail: Search string matching
             const matchesSearch = (r._lowerName && r._lowerName.includes(query)) || (r._lowerDistance && r._lowerDistance.includes(query));
             if (!matchesSearch) return false;
@@ -607,7 +612,13 @@ export async function getStaticProps() {
         const path = require('path');
         const filePath = path.join(process.cwd(), 'data', 'races.json');
         const jsonData = await fs.readFile(filePath, 'utf8');
-        races = JSON.parse(jsonData);
+        const parsed = JSON.parse(jsonData);
+        races = parsed.map(r => ({
+            ...r,
+            date: r.date_iso || r.date,
+            distance: r.dist_km ? r.dist_km + 'km' : r.distance,
+            url: r.registration_url || r.official_site_url || r.url
+        }));
     } catch (e) {
         console.error("Error reading races.json during build:", e);
     }
