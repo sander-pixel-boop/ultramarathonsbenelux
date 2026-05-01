@@ -3,12 +3,12 @@ import assert from 'node:assert';
 import { safeJsonLd } from './jsonLd.js';
 
 test('safeJsonLd escapes dangerous characters', () => {
-  const input = {
+  const obj = {
     name: 'Test <script>alert(1)</script>',
     description: 'A & B > C',
     unicode: '\u2028 and \u2029'
   };
-  const result = safeJsonLd(input);
+  const result = safeJsonLd(obj);
 
   assert.strictEqual(result.includes('<'), false, 'Should not contain <');
   assert.strictEqual(result.includes('>'), false, 'Should not contain >');
@@ -24,5 +24,5 @@ test('safeJsonLd escapes dangerous characters', () => {
 
   // Verify it's still valid JSON (when unescaped or parsed by a JSON parser)
   const parsed = JSON.parse(result);
-  assert.deepStrictEqual(parsed, input);
+  assert.deepStrictEqual(parsed, obj);
 });

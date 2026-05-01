@@ -1,0 +1,6 @@
+🧹 [Code Health] Remove unnecessary DOM parsing abstraction in tests
+
+🎯 What: Removed the `jsdom` dependency from `package.json` and simplified `utils/jsonLd.test.js` to remove unnecessary `.replace()` string manipulations prior to `JSON.parse()`.
+💡 Why: Loading a full JSDOM environment just to verify that JSON escaping works correctly adds unnecessary overhead to the test suite and build times. Furthermore, `JSON.parse()` natively handles the unescaping of unicode sequences like `\u003c`, making the manual string replacement abstractions unnecessary.
+✅ Verification: Ran `pnpm test` and `pnpm run build` successfully to ensure tests pass and build succeeds.
+✨ Result: Cleaner, faster test suite without unnecessary `jsdom` abstraction.
