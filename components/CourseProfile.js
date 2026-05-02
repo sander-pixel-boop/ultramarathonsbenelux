@@ -7,9 +7,22 @@ export default function CourseProfile({ race, t }) {
         }
 
         const points = race.elevation_points;
-        const maxDist = Math.max(...points.map(p => p.d));
-        const maxElev = Math.max(...points.map(p => p.e));
-        const minElev = Math.min(...points.map(p => p.e));
+
+        let maxDist = -Infinity;
+        let maxElev = -Infinity;
+        let minElev = Infinity;
+
+        // ⚡ Bolt Performance Optimization: Primitive loops over array methods
+        // Replaced multiple O(n) array iterations (map) and Math.max/min spread operators
+        // (which risk call stack limits on large datasets) with primitive for-loops.
+        // This avoids memory allocations from intermediate arrays and garbage collection spikes.
+        for (let i = 0; i < points.length; i++) {
+            const p = points[i];
+            if (p.d > maxDist) maxDist = p.d;
+            if (p.e > maxElev) maxElev = p.e;
+            if (p.e < minElev) minElev = p.e;
+        }
+
         const elevRange = maxElev - minElev || 100;
 
         const width = 600;
@@ -19,16 +32,27 @@ export default function CourseProfile({ race, t }) {
         const usableWidth = width - 2 * padding;
         const usableHeight = height - 2 * padding;
 
-        const xCoords = points.map(p => padding + (p.d / maxDist) * usableWidth);
-        const yCoords = points.map(p => padding + usableHeight - ((p.e - minElev) / elevRange) * usableHeight);
+        let pathData = "";
+        let firstX = 0, lastX = 0;
 
-        let pathData = `M ${xCoords[0]} ${yCoords[0]} `;
-        for (let i = 1; i < points.length; i++) {
-            pathData += `L ${xCoords[i]} ${yCoords[i]} `;
+        for (let i = 0; i < points.length; i++) {
+            const p = points[i];
+            const x = padding + (p.d / maxDist) * usableWidth;
+            const y = padding + usableHeight - ((p.e - minElev) / elevRange) * usableHeight;
+
+            if (i === 0) {
+                pathData += `M ${x} ${y} `;
+                firstX = x;
+            } else {
+                pathData += `L ${x} ${y} `;
+            }
+            if (i === points.length - 1) {
+                lastX = x;
+            }
         }
 
         // Close path for filling
-        const fillPathData = `${pathData} L ${xCoords[points.length - 1]} ${height - padding} L ${xCoords[0]} ${height - padding} Z`;
+        const fillPathData = `${pathData} L ${lastX} ${height - padding} L ${firstX} ${height - padding} Z`;
 
         // Aid stations
         const aidStations = race.aid_stations || [];
