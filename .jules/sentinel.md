@@ -20,3 +20,7 @@
 **Vulnerability:** Code smell and potential XSS vulnerability vector through `dangerouslySetInnerHTML`.
 **Learning:** Even when input is properly sanitized using `DOMPurify`, the use of `dangerouslySetInnerHTML` remains a poor practice that encourages bad habits and bypasses React's native security features.
 **Prevention:** Avoid `dangerouslySetInnerHTML` entirely where possible. Instead, use a library like `html-react-parser` to safely convert raw HTML strings into native React components, providing an additional layer of security on top of sanitization.
+## 2026-05-02 - [XSS via JSON-LD Script Blocks]
+**Vulnerability:** Cross-Site Scripting (XSS) via unescaped characters in JSON-LD script blocks using `dangerouslySetInnerHTML`.
+**Learning:** Using `JSON.stringify()` directly inside `dangerouslySetInnerHTML` for `<script type="application/ld+json">` blocks is unsafe. Characters like `<`, `>`, and `&` are not escaped by `JSON.stringify()`, which can allow an attacker to prematurely close the `<script>` tag and inject malicious HTML or JavaScript if the data source is compromised or contains user input.
+**Prevention:** Always use a utility function (like `safeJsonLd`) to properly escape HTML-sensitive characters (`<`, `>`, `&`) and Unicode line terminators (` `, ` `) before rendering JSON data into the DOM via `dangerouslySetInnerHTML`.
