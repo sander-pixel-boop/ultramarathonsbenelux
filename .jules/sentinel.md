@@ -20,7 +20,7 @@
 **Vulnerability:** Code smell and potential XSS vulnerability vector through `dangerouslySetInnerHTML`.
 **Learning:** Even when input is properly sanitized using `DOMPurify`, the use of `dangerouslySetInnerHTML` remains a poor practice that encourages bad habits and bypasses React's native security features.
 **Prevention:** Avoid `dangerouslySetInnerHTML` entirely where possible. Instead, use a library like `html-react-parser` to safely convert raw HTML strings into native React components, providing an additional layer of security on top of sanitization.
-## 2024-05-25 - [XSS via raw JSON stringify in JSON-LD]
-**Vulnerability:** XSS attack vulnerability caused by putting `JSON.stringify()` directly into `dangerouslySetInnerHTML` for JSON-LD schema blocks without escaping characters like `<` and `>`. An attacker could close the script tag early with `</script>` and execute arbitrary code.
-**Learning:** `JSON.stringify()` does not escape HTML control characters like `<` and `>`. When its output is placed directly into a `<script>` tag using `dangerouslySetInnerHTML`, the browser interprets those characters as HTML rather than a JSON string, which allows script injection.
-**Prevention:** Always escape `<` (`\u003c`), `>` (`\u003e`), `&` (`\u0026`), `\u2028`, and `\u2029` characters when injecting JSON-LD into the DOM using a dedicated utility function like `safeJsonLd()`.
+## 2026-05-02 - [XSS via JSON-LD Script Blocks]
+**Vulnerability:** Cross-Site Scripting (XSS) via unescaped characters in JSON-LD script blocks using `dangerouslySetInnerHTML`.
+**Learning:** Using `JSON.stringify()` directly inside `dangerouslySetInnerHTML` for `<script type="application/ld+json">` blocks is unsafe. Characters like `<`, `>`, and `&` are not escaped by `JSON.stringify()`, which can allow an attacker to prematurely close the `<script>` tag and inject malicious HTML or JavaScript if the data source is compromised or contains user input.
+**Prevention:** Always use a utility function (like `safeJsonLd`) to properly escape HTML-sensitive characters (`<`, `>`, `&`) and Unicode line terminators (` `, ` `) before rendering JSON data into the DOM via `dangerouslySetInnerHTML`.
