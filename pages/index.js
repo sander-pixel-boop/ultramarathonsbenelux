@@ -392,18 +392,22 @@ export default function Home({ initialRaces }) {
             return true;
         });
 
-        filtered.sort((a, b) => {
+        if (filtered.length > 0) {
+            let sortMapped = [];
             if (sortSelect.startsWith('date')) {
-                const dateA = parseDateForSort(a.date);
-                const dateB = parseDateForSort(b.date);
-                return sortSelect === 'date-asc' ? dateA - dateB : dateB - dateA;
+                for (let i = 0; i < filtered.length; i++) {
+                    sortMapped.push({ item: filtered[i], sortKey: parseDateForSort(filtered[i].date) });
+                }
+                sortMapped.sort((a, b) => sortSelect === 'date-asc' ? a.sortKey - b.sortKey : b.sortKey - a.sortKey);
+                return sortMapped.map(x => x.item);
             } else if (sortSelect.startsWith('distance')) {
-                const distA = parseDistanceForSort(a.distance);
-                const distB = parseDistanceForSort(b.distance);
-                return sortSelect === 'distance-asc' ? distA - distB : distB - distA;
+                for (let i = 0; i < filtered.length; i++) {
+                    sortMapped.push({ item: filtered[i], sortKey: parseDistanceForSort(filtered[i].distance) });
+                }
+                sortMapped.sort((a, b) => sortSelect === 'distance-asc' ? a.sortKey - b.sortKey : b.sortKey - a.sortKey);
+                return sortMapped.map(x => x.item);
             }
-            return 0;
-        });
+        }
 
         return filtered;
     }, [initialRaces, search, countryFilter, yearFilter, monthFilter, distanceFilter, sortSelect]);
