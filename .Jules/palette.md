@@ -7,3 +7,7 @@
 ## 2024-05-19 - Added targeted focus-visible states
 **Learning:** Using broad wildcard selectors like `*:focus-visible` can cause unintended styling overrides and layout shifts. It's better to target specific interactive elements.
 **Action:** When adding focus rings for keyboard accessibility, target specific classes (like `.race-card`, `.modal-close`) and use `outline: none` with a custom `box-shadow` for a clean focus state.
+
+## 2024-05-20 - Adding focus-visible styles to custom UI components
+**Learning:** Custom interactive components, such as 'div' elements acting as selectable cards (e.g., quiz result cards), must provide explicit visual feedback when focused via keyboard navigation. Without a focused state, keyboard users cannot determine which element is currently active.
+**Action:** When implementing custom interactive elements, always ensure a corresponding `:focus-visible` CSS rule is added to explicitly display a focus ring (e.g., using `box-shadow`), maintaining accessibility and matching the project's styling conventions.

@@ -169,6 +169,10 @@ export default function Quiz({ races, onClose, onSelectRace, t }) {
                     outline: none;
                     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
                 }
+                .quiz-result-card:focus-visible {
+                    outline: none;
+                    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+                }
             `}</style>
         </div>
     );
