@@ -126,10 +126,15 @@ export default function Quiz({ races, onClose, onSelectRace, t }) {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                         {results.length > 0 ? results.map((race, idx) => (
                             <div key={idx}
-                                style={{ border: '1px solid #e2e8f0', borderRadius: '8px', padding: '15px', backgroundColor: 'white', cursor: 'pointer', transition: 'transform 0.2s' }}
+                                role="button"
+                                tabIndex={0}
+                                style={{ border: '1px solid #e2e8f0', borderRadius: '8px', padding: '15px', backgroundColor: 'white', cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }}
                                 onClick={() => onSelectRace(race)}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelectRace(race); } }}
                                 onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
                                 onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                onFocus={(e) => { e.currentTarget.style.transform = 'scale(1.02)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5)'; e.currentTarget.style.outline = 'none'; }}
+                                onBlur={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none'; }}
                             >
                                 <h4 style={{ margin: '0 0 10px 0', color: '#0f172a' }}>{race.name}</h4>
                                 <div style={{ display: 'flex', gap: '15px', fontSize: '0.9em', color: '#475569' }}>
@@ -161,6 +166,10 @@ export default function Quiz({ races, onClose, onSelectRace, t }) {
                     background-color: #2563eb;
                 }
                 .quiz-btn:focus-visible {
+                    outline: none;
+                    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+                }
+                .quiz-result-card:focus-visible {
                     outline: none;
                     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
                 }
