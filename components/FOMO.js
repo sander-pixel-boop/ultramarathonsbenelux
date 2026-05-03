@@ -52,13 +52,18 @@ function FOMO({ race, allRaces, onSelectRace }) {
                 return true;
             });
 
-            candidates.sort((a, b) => {
-                const aTime = parseDate(a.date).getTime();
-                const bTime = parseDate(b.date).getTime();
-                return aTime - bTime;
-            });
+            if (candidates.length > 0) {
+                const sortMapped = [];
+                for(let i=0; i<candidates.length; i++) {
+                    sortMapped.push({ item: candidates[i], sortKey: parseDate(candidates[i].date).getTime() });
+                }
+                sortMapped.sort((a, b) => {
+                    return a.sortKey - b.sortKey;
+                });
+                return sortMapped[0].item;
+            }
 
-            return candidates.length > 0 ? candidates[0] : null;
+            return null;
         };
 
         const updateStatus = () => {
