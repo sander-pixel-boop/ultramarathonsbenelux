@@ -50,23 +50,39 @@ async function main() {
                 entry[h] = values[index] !== undefined ? values[index] : '';
             });
 
-            // If there's a corrected_distance, we apply it
-            if (entry.corrected_distance && entry.corrected_distance !== '') {
-                const slug = entry.slug;
-                if (!slug) continue;
+            // Apply any corrected fields
+            const fieldsToCorrect = [
+                { key: 'corrected_distance', target: 'distance' },
+                { key: 'corrected_name', target: 'name' },
+                { key: 'corrected_date', target: 'date' },
+                { key: 'corrected_elevation', target: 'elevation' },
+                { key: 'corrected_city', target: 'city' },
+                { key: 'corrected_country', target: 'country' }
+            ];
 
-                // 1. Record the permanent fix
-                if (!permanentFixes[slug]) {
-                    permanentFixes[slug] = {};
+            let hasCorrections = false;
+            const slug = entry.slug;
+            if (!slug) continue;
+
+            fieldsToCorrect.forEach(field => {
+                if (entry[field.key] && entry[field.key] !== '') {
+                    hasCorrections = true;
+
+                    // 1. Record the permanent fix
+                    if (!permanentFixes[slug]) {
+                        permanentFixes[slug] = {};
+                    }
+                    permanentFixes[slug][field.target] = entry[field.key];
+
+                    // 2. Apply to races.json
+                    const raceIndex = races.findIndex(r => r.slug === slug);
+                    if (raceIndex !== -1) {
+                        races[raceIndex][field.target] = entry[field.key];
+                    }
                 }
-                permanentFixes[slug].distance = entry.corrected_distance;
+            });
 
-                // 2. Apply to races.json
-                const raceIndex = races.findIndex(r => r.slug === slug);
-                if (raceIndex !== -1) {
-                    races[raceIndex].distance = entry.corrected_distance;
-                }
-
+            if (hasCorrections) {
                 correctedRaces.push(slug);
             }
         }

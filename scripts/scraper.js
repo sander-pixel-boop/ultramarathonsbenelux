@@ -836,21 +836,32 @@ async function main() {
     // Apply permanent fixes to filtered races
     filtered_races.forEach(race => {
         if (permanentFixes[race.slug]) {
-            if (permanentFixes[race.slug].distance) {
-                race.distance = permanentFixes[race.slug].distance;
-            }
+            const fix = permanentFixes[race.slug];
+            if (fix.distance) race.distance = fix.distance;
+            if (fix.name) race.name = fix.name;
+            if (fix.date) race.date = fix.date;
+            if (fix.elevation) race.elevation = fix.elevation;
+            if (fix.city) race.city = fix.city;
+            if (fix.country) race.country = fix.country;
         }
     });
 
     // Write audit log
-    const auditHeaders = ['slug', 'name', 'date', 'distance', 'corrected_distance'];
+    const auditHeaders = [
+        'slug', 'name', 'date', 'distance', 'elevation', 'city', 'country',
+        'corrected_distance', 'corrected_name', 'corrected_date',
+        'corrected_elevation', 'corrected_city', 'corrected_country'
+    ];
     const auditLines = [auditHeaders.join(',')];
     filtered_races.forEach(race => {
         // Escape quotes if present
         const safeName = '"' + (race.name || '').replace(/"/g, '""') + '"';
         const safeDate = '"' + (race.date || '').replace(/"/g, '""') + '"';
         const safeDist = '"' + (race.distance || '').replace(/"/g, '""') + '"';
-        auditLines.push(`${race.slug},${safeName},${safeDate},${safeDist},`);
+        const safeElev = '"' + (race.elevation || '').toString().replace(/"/g, '""') + '"';
+        const safeCity = '"' + (race.city || '').replace(/"/g, '""') + '"';
+        const safeCountry = '"' + (race.country || '').replace(/"/g, '""') + '"';
+        auditLines.push(`${race.slug},${safeName},${safeDate},${safeDist},${safeElev},${safeCity},${safeCountry},,,,,,`);
     });
 
     await fs.writeFile('data/audit_log.csv', auditLines.join('\n'));
