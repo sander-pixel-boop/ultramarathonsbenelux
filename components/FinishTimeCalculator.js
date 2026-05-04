@@ -29,23 +29,22 @@ export default function FinishTimeCalculator({ race, t }) {
         const t1Hours = pbHours + pbMinutes / 60 + pbSeconds / 3600;
         if (t1Hours <= 0) return null;
 
-        const d1 = pbType === '10k' ? 10 : 42.195;
-
         // Parse race distance
-        let d2 = 0;
+        const D1 = pbType === '10k' ? 10 : 42.195;
+        let D2 = 0;
         const distStr = String(race.distance).toLowerCase();
         if (distStr.includes('km')) {
-            d2 = parseFloat(distStr.replace(/[^0-9.]/g, ''));
+            D2 = parseFloat(distStr.replace(/[^0-9.]/g, ''));
         } else if (distStr.includes('mi')) {
-            d2 = parseFloat(distStr.replace(/[^0-9.]/g, '')) * 1.60934;
+            D2 = parseFloat(distStr.replace(/[^0-9.]/g, '')) * 1.60934;
         } else if (distStr.includes('h')) {
             return null; // Can't estimate for timed events
         }
 
-        if (d2 <= 0 || isNaN(d2)) return null;
+        if (D2 <= 0 || isNaN(D2)) return null;
 
         // Riegel formula: T2 = T1 * (D2 / D1)^1.06
-        let t2Hours = t1Hours * Math.pow(d2 / d1, 1.06);
+        let t2Hours = t1Hours * Math.pow(D2 / D1, 1.06);
 
         // Elevation adjustment
         if (race.elevation) {
