@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { getUserCountry, getAffiliateLinks } from '../utils/geoAffiliate';
+import { sanitizeUrl } from '../utils/sanitizeUrl';
 
 export default function PackYourBag({ race, t }) {
     const [checkedItems, setCheckedItems] = useState({});
@@ -75,7 +76,7 @@ export default function PackYourBag({ race, t }) {
                         {!checkedItems[item.id] && (
                             <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                                 {item.affiliateLinks.map((link, i) => (
-                                    <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" style={{
+                                    <a key={i} href={sanitizeUrl(link.url)} target="_blank" rel="noopener noreferrer" style={{
                                         backgroundColor: link.store === 'Amazon' ? '#f59e0b' : '#3b82f6',
                                         color: 'white',
                                         padding: '4px 8px',
