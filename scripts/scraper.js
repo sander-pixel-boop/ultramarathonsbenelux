@@ -6,21 +6,26 @@ const GEO_CACHE = {};
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function fetchWithTimeout(resource, options = {}) {
-    const { timeout = 5000 } = options;
+    const { timeout = 30000, retries = 5, retryDelay = 2000 } = options;
 
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
 
-    try {
-        const response = await fetch(resource, {
-            ...options,
-            signal: controller.signal
-        });
-        clearTimeout(id);
-        return response;
-    } catch (error) {
-        clearTimeout(id);
-        throw error;
+        try {
+            const response = await fetch(resource, {
+                ...options,
+                signal: controller.signal
+            });
+            clearTimeout(id);
+            return response;
+        } catch (error) {
+            clearTimeout(id);
+            if (attempt === retries) {
+                throw error;
+            }
+            await sleep(retryDelay * attempt); // exponential backoff
+        }
     }
 }
 
@@ -544,7 +549,7 @@ async function scrape_duv() {
 
     for (const [c_code, c_name] of Object.entries(countries)) {
         for (const year of ['2024', '2025', '2026', '2027']) {
-            pagePromises.push((async () => {
+            pagePromises.push(async () => {
                 const url = `https://statistik.d-u-v.org/calendar.php?year=${year}&country=${c_code}`;
                 const page_races = [];
                 try {
@@ -553,14 +558,14 @@ async function scrape_duv() {
                     const $ = cheerio.load(html);
 
                     const rows = $('tr').toArray();
-                    const rowPromises = [];
+                    const rowPromises = []; const MAX_CONCURRENT = 5;
 
                     for (const row of rows) {
                         const cols = $(row).find('td');
                         if (cols.length >= 4) {
                             const dateText = $(cols[0]).text().trim();
                             if ((dateText.match(/\./g) || []).length === 2) {
-                                rowPromises.push((async () => {
+                                rowPromises.push(async () => {
                                     const date = dateText;
                                     const name = $(cols[1]).text().trim();
                                     const distance = $(cols[2]).text().trim();
@@ -606,20 +611,28 @@ async function scrape_duv() {
                                         url: original_url,
                                         city: city
                                     });
-                                })());
+                                });
                             }
                         }
                     }
-                    await Promise.all(rowPromises);
+                    for (let i = 0; i < rowPromises.length; i += MAX_CONCURRENT) {
+                        const batch = rowPromises.slice(i, i + MAX_CONCURRENT);
+                        await Promise.all(batch.map(p => p()));
+                    }
                 } catch (e) {
                     console.error(`Error scraping DUV ${c_code} ${year}: ${e.message}`);
                 }
                 return page_races;
-            })());
+            });
         }
     }
 
-    const results = await Promise.all(pagePromises);
+    const results = [];
+    for (let i = 0; i < pagePromises.length; i += 2) {
+        const batch = pagePromises.slice(i, i + 2);
+        const batchResults = await Promise.all(batch.map(p => p()));
+        results.push(...batchResults);
+    }
     results.forEach(res => {
         all_races = all_races.concat(res);
     });
