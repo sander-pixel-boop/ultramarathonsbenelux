@@ -328,7 +328,9 @@ export default function Home({ initialRaces }) {
             ...r,
             _lowerName: r.name ? r.name.toLowerCase() : '',
             _lowerDistance: r.distance ? String(r.distance).toLowerCase() : '',
-            _lowerCountry: r.country ? r.country.toLowerCase() : ''
+            _lowerCountry: r.country ? r.country.toLowerCase() : '',
+            _dateSortKey: parseDateForSort(r.date),
+            _distanceSortKey: parseDistanceForSort(r.distance)
         }));
     }, [initialRaces]);
 
@@ -363,7 +365,7 @@ export default function Home({ initialRaces }) {
                 if (distanceFilter === "timed") {
                     if (!r._lowerDistance || !r._lowerDistance.includes("h")) return false;
                 } else {
-                    const num = parseDistanceForSort(r.distance);
+                    const num = r._distanceSortKey;
                     if (num <= 0) return false;
 
                     if (distanceFilter === "<60km" && num >= 60) return false;
@@ -404,19 +406,10 @@ export default function Home({ initialRaces }) {
         });
 
         if (filtered.length > 0) {
-            let sortMapped = [];
             if (sortSelect.startsWith('date')) {
-                for (let i = 0; i < filtered.length; i++) {
-                    sortMapped.push({ item: filtered[i], sortKey: parseDateForSort(filtered[i].date) });
-                }
-                sortMapped.sort((a, b) => sortSelect === 'date-asc' ? a.sortKey - b.sortKey : b.sortKey - a.sortKey);
-                return sortMapped.map(x => x.item);
+                filtered.sort((a, b) => sortSelect === 'date-asc' ? a._dateSortKey - b._dateSortKey : b._dateSortKey - a._dateSortKey);
             } else if (sortSelect.startsWith('distance')) {
-                for (let i = 0; i < filtered.length; i++) {
-                    sortMapped.push({ item: filtered[i], sortKey: parseDistanceForSort(filtered[i].distance) });
-                }
-                sortMapped.sort((a, b) => sortSelect === 'distance-asc' ? a.sortKey - b.sortKey : b.sortKey - a.sortKey);
-                return sortMapped.map(x => x.item);
+                filtered.sort((a, b) => sortSelect === 'distance-asc' ? a._distanceSortKey - b._distanceSortKey : b._distanceSortKey - a._distanceSortKey);
             }
         }
 

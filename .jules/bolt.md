@@ -49,3 +49,7 @@
 ## 2024-05-19 - Separating invariant object map cycles from volatile state filters
 **Learning:** In a `useMemo` block used for filtering arrays, if array items need to be temporarily augmented with lowercased search string fields (e.g. `_lowerName`), performing the mapping inside the `useMemo` that also depends on highly volatile variables (like the `search` keystrokes) causes major GC churn.
 **Action:** Always extract invariant preprocessing `.map()` operations into their own `useMemo` block that only triggers when the primary data source updates, passing the preprocessed array into the volatile filter cycle.
+
+## 2026-05-04 - Pre-calculated Sort Keys
+**Learning:** For performance-critical sorting of arrays in React, pre-calculating sort keys in an initial mapping pass (preprocessing) is significantly more efficient than constructing object wrappers or re-parsing data during the sorting phase.
+**Action:** Always hoist expensive parsing logic out of sort loops and into a single-pass preprocessing step. Perform in-place sorting on the resulting filtered array to minimize allocations and CPU cycles.
