@@ -39,7 +39,8 @@ const i18n = {
         flatEquivalent: "Flat Equivalent:",
         noRacesFound: "No races found",
         tryAdjusting: "Try adjusting your search or filters to find what you're looking for.",
-        clearFilters: "Clear filters"
+        clearFilters: "Clear filters",
+        clearSearch: "Clear search"
     },
     nl: {
         title: "Benelux Ultra Race Gids",
@@ -73,7 +74,8 @@ const i18n = {
         flatEquivalent: "Vlakke Equivalent:",
         noRacesFound: "Geen races gevonden",
         tryAdjusting: "Probeer je zoekopdracht of filters aan te passen om te vinden wat je zoekt.",
-        clearFilters: "Wis filters"
+        clearFilters: "Wis filters",
+        clearSearch: "Wis zoekopdracht"
     },
     fr: {
         title: "Annuaire des Ultra Courses du Benelux",
@@ -107,7 +109,8 @@ const i18n = {
         flatEquivalent: "Équivalent Plat:",
         noRacesFound: "Aucune course trouvée",
         tryAdjusting: "Essayez de modifier votre recherche ou vos filtres pour trouver ce que vous cherchez.",
-        clearFilters: "Effacer les filtres"
+        clearFilters: "Effacer les filtres",
+        clearSearch: "Effacer la recherche"
     }
 };
 
@@ -455,7 +458,17 @@ export default function Home({ initialRaces }) {
                 <div className="controls">
                     <div className="input-group">
                         <i className="fas fa-search"></i>
-                        <input type="text" id="search" placeholder={t.searchPlaceholder} aria-label={t.searchPlaceholder} value={search} onChange={(e) => setSearch(e.target.value)} />
+                        <input type="text" id="search" placeholder={t.searchPlaceholder} aria-label={t.searchPlaceholder} value={search} onChange={(e) => setSearch(e.target.value)} style={{ paddingRight: search ? '40px' : '15px' }} />
+                        {search && (
+                            <button
+                                type="button"
+                                aria-label={t.clearSearch}
+                                onClick={() => setSearch('')}
+                                className="clear-search-btn"
+                            >
+                                <i className="fas fa-times"></i>
+                            </button>
+                        )}
                     </div>
                     <select id="country-filter" className="filter-select" aria-label="Filter by country" value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)}>
                         <option value="">{t.allCountries}</option>
