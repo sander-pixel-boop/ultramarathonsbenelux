@@ -11,3 +11,7 @@
 ## 2024-05-20 - Adding focus-visible styles to custom UI components
 **Learning:** Custom interactive components, such as 'div' elements acting as selectable cards (e.g., quiz result cards), must provide explicit visual feedback when focused via keyboard navigation. Without a focused state, keyboard users cannot determine which element is currently active.
 **Action:** When implementing custom interactive elements, always ensure a corresponding `:focus-visible` CSS rule is added to explicitly display a focus ring (e.g., using `box-shadow`), maintaining accessibility and matching the project's styling conventions.
+
+## 2024-05-21 - Accessible clear buttons for controlled search inputs
+**Learning:** When creating controlled text inputs for filtering lists (like the race search bar), users can struggle to quickly clear long queries, especially on mobile. While some browsers provide a native clear `x`, it is inconsistent across platforms.
+**Action:** When adding critical search or filter text inputs, implement a custom, cross-browser 'clear' button inside the input group. Ensure it only appears when text is present, uses `type="button"` to avoid form submission, includes an `aria-label` for screen readers, and dynamically adjusts the input's `padding-right` so text doesn't overlap the button.
