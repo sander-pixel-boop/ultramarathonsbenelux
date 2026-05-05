@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
                 )}
             </head>
             <body>
-                <header style={{ padding: '20px', backgroundColor: '#f8f9fa', borderBottom: '1px solid #ddd' }}>
+                <header style={{ padding: '10px 20px', backgroundColor: '#f8f9fa', borderBottom: '1px solid #ddd' }}>
                     <nav>
                         <a href="/" style={{ marginRight: '15px' }}>Home</a>
                         <a href="/privacy" style={{ marginRight: '15px' }}>Privacy Policy</a>
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
                     {children}
                 </main>
 
-                <footer style={{ padding: '20px', backgroundColor: '#343a40', color: '#fff', textAlign: 'center' }}>
+                <footer style={{ padding: '10px 20px', backgroundColor: '#343a40', color: '#fff', textAlign: 'center' }}>
                     <p>We earn a commission from links on this site at no extra cost to you.</p>
                 </footer>
             </body>
