@@ -15,7 +15,7 @@ export function getAffiliateLinks(itemKeyword, country) {
     const keyword = encodeURIComponent(itemKeyword);
 
     // Read tags from environment variables, fallback to placeholders
-    const amazonTag = process.env.NEXT_PUBLIC_AMAZON_TAG || 'your_amazon_tag_here';
+    const amazonTag = process.env.NEXT_PUBLIC_AMAZON_TAG || 'ultramarath00-20';
     const decathlonTag = process.env.NEXT_PUBLIC_DECATHLON_TAG || 'your_decathlon_tag_here';
     const asAdventureTag = process.env.NEXT_PUBLIC_ASADVENTURE_TAG || 'your_asadventure_tag_here';
     const futurumshopTag = process.env.NEXT_PUBLIC_FUTURUMSHOP_TAG || 'your_futurumshop_tag_here';
