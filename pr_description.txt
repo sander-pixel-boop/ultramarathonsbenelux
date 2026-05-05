@@ -1,1 +1,1 @@
-Added a new blog post in Dutch about the best medium and large sized running vests (10-15L) for trail running and ultramarathons. Included affiliate links to popular options like Salomon ADV Skin 12, CamelBak Zephyr Pro, and Osprey Duro/Dyna 15. The post is properly formatted and stored in data/blog.json.
+Everything is already properly configured
