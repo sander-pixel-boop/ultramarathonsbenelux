@@ -548,7 +548,8 @@ async function scrape_duv() {
     const pagePromises = [];
 
     for (const [c_code, c_name] of Object.entries(countries)) {
-        for (const year of ['2024', '2025', '2026', '2027']) {
+        const currentYear = new Date().getFullYear();
+        for (const year of [currentYear.toString(), (currentYear + 1).toString(), (currentYear + 2).toString()]) {
             pagePromises.push(async () => {
                 const url = `https://statistik.d-u-v.org/calendar.php?year=${year}&country=${c_code}`;
                 const page_races = [];
@@ -751,9 +752,26 @@ async function main() {
     }
 
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const valid_races = verified_races.filter(race => {
         if (!race.date || race.date === 'TBD' || !race.distance || race.distance === 'Ultra') {
             return false;
+        }
+
+        // Filter out past races
+        const dateParts = race.date.match(/\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b/);
+        if (dateParts) {
+            let day = parseInt(dateParts[1], 10);
+            let month = parseInt(dateParts[2], 10) - 1;
+            let yearStr = dateParts[3];
+            let year = yearStr.length === 2 ? parseInt("20" + yearStr, 10) : parseInt(yearStr, 10);
+
+            const raceDate = new Date(year, month, day);
+            if (raceDate < today) {
+                return false;
+            }
         }
 
         const lower = race.distance.toLowerCase();
