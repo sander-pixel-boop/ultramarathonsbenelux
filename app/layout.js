@@ -2,7 +2,7 @@ import Script from 'next/script';
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en">
+        <html lang="nl">
             <head>
                 {process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ID && (
                     <Script
