@@ -122,13 +122,13 @@ const compoundPatterns = ["trailmarathon", "ultramarathon", "ultratrail"];
 const compiledTypeRegexes = typePatterns.map(t => ({
     type: t,
     testRegex: new RegExp(`\\b${t}\\b`, "i"),
-    replaceRegex: new RegExp(`\\b${t}\\b`, "ig")
+    replaceRegex: new RegExp(`^(?:${t})\\s*[:\\-]\\s*|\\s*[:\\-]\\s*(?:${t})$`, "ig")
 }));
 
 const compiledCompoundRegexes = compoundPatterns.map(c => ({
     compound: c,
     testRegex: new RegExp(`\\b${c}\\b`, "i"),
-    replaceRegex: new RegExp(`\\b${c}\\b`, "ig")
+    replaceRegex: new RegExp(`^(?:${c})\\s*[:\\-]\\s*|\\s*[:\\-]\\s*(?:${c})$`, "ig")
 }));
 
 const formatRaceNameMemo = new globalThis.Map();
