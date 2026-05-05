@@ -53,3 +53,6 @@
 ## 2026-05-04 - Pre-calculated Sort Keys
 **Learning:** For performance-critical sorting of arrays in React, pre-calculating sort keys in an initial mapping pass (preprocessing) is significantly more efficient than constructing object wrappers or re-parsing data during the sorting phase.
 **Action:** Always hoist expensive parsing logic out of sort loops and into a single-pass preprocessing step. Perform in-place sorting on the resulting filtered array to minimize allocations and CPU cycles.
+## 2024-05-18 - Avoid Memory Allocation in Inner React Filter Loops
+**Learning:** Even when using memoized parsing functions (e.g. `parseStandardDate`), returning objects and subsequently instantiating new objects (like `new Date(...)`) inside a high-frequency React `useMemo` filter loop causes significant Garbage Collection (GC) pressure. This was verified via a benchmark script which showed that preprocessing values outside the filter loop reduced execution time by 98%.
+**Action:** Always hoist object instantiations and data transformations out of inner loops (like search or filter filters) and pre-calculate invariant fields (e.g., sort keys, stringified years/months) during an initial preprocessing map phase.

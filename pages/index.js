@@ -324,14 +324,20 @@ export default function Home({ initialRaces }) {
     // filter time by ~4x (e.g., from 51ms to 12ms for 2000 races).
     const preprocessedRaces = useMemo(() => {
         if (!initialRaces) return [];
-        return initialRaces.map(r => ({
-            ...r,
-            _lowerName: r.name ? r.name.toLowerCase() : '',
-            _lowerDistance: r.distance ? String(r.distance).toLowerCase() : '',
-            _lowerCountry: r.country ? r.country.toLowerCase() : '',
-            _dateSortKey: parseDateForSort(r.date),
-            _distanceSortKey: parseDistanceForSort(r.distance)
-        }));
+        return initialRaces.map(r => {
+            const parsedDate = r.date ? parseStandardDate(r.date) : null;
+            return {
+                ...r,
+                _lowerName: r.name ? r.name.toLowerCase() : '',
+                _lowerDistance: r.distance ? String(r.distance).toLowerCase() : '',
+                _lowerCountry: r.country ? r.country.toLowerCase() : '',
+                _dateSortKey: parseDateForSort(r.date),
+                _distanceSortKey: parseDistanceForSort(r.distance),
+                _parsedYear: parsedDate ? String(parsedDate.year) : null,
+                _parsedMonth: parsedDate ? String(parsedDate.month).padStart(2, '0') : null,
+                _raceDateTime: parsedDate ? new Date(parsedDate.year, parsedDate.month - 1, parsedDate.day).getTime() : 0
+            };
+        });
     }, [initialRaces]);
 
     const filteredRaces = useMemo(() => {
@@ -374,29 +380,19 @@ export default function Home({ initialRaces }) {
                 }
             }
 
-            // Expensive regex operations deferred until necessary, parsed only once
-            if (r.date) {
-                const parsed = parseStandardDate(r.date);
-                if (parsed) {
-                    if (yearFilter !== "" || monthFilter !== "") {
-                        const rYear = String(parsed.year);
-                        const rMonth = String(parsed.month).padStart(2, '0');
-                        if (yearFilter !== "" && rYear !== yearFilter) return false;
-                        if (monthFilter !== "" && rMonth !== monthFilter) return false;
+            // Pre-calculated dates to avoid regex and GC overhead during render loop
+            if (r._parsedYear) {
+                if (yearFilter !== "" || monthFilter !== "") {
+                    if (yearFilter !== "" && r._parsedYear !== yearFilter) return false;
+                    if (monthFilter !== "" && r._parsedMonth !== monthFilter) return false;
+                }
+
+                if (r._raceDateTime < todayTime) return false;
+
+                if (yearFilter === "" && monthFilter === "") {
+                    if (r._raceDateTime > twelveMonthsFromNowTime) {
+                        return false;
                     }
-
-                    const raceDate = new Date(parsed.year, parsed.month - 1, parsed.day);
-                    const raceDateTime = raceDate.getTime();
-
-                    if (raceDateTime < todayTime) return false;
-
-                    if (yearFilter === "" && monthFilter === "") {
-                        if (raceDateTime > twelveMonthsFromNowTime) {
-                            return false;
-                        }
-                    }
-                } else {
-                    if (yearFilter !== "" || monthFilter !== "") return false;
                 }
             } else {
                 if (yearFilter !== "" || monthFilter !== "") return false;
