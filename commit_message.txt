@@ -1,3 +1,6 @@
-fix: Use correct races.json output path in scraper
+chore: inject AdSense script into head on all pages
 
-The scraper was writing its output to `races.json` instead of `data/races.json`. This caused the main app (which reads from `data/races.json`) to use an older, truncated version containing only 10 races. This commit restores `data/races.json` from the full `races.json` output, updates `scripts/scraper.js` to correctly use `data/races.json`, and removes the incorrect root `races.json` file.
+Replaces next/script with a raw <script> tag within the <head>
+in app/layout.js and creates pages/_document.js to ensure the
+script is consistently injected into the <head> of legacy pages,
+meeting the specific requirement of the AdSense integration.
