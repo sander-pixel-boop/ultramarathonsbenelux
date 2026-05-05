@@ -158,6 +158,17 @@
         "slug": "de-wase-halve-en-ultra-marathon-2024"
     },
     {
+        "name": "6 hour Winter Challenge of Hamme",
+        "country": "Belgium",
+        "distance": "6h",
+        "date": "23/11/2024",
+        "url": "http://www.enduranceday.be",
+        "city": "Hamme",
+        "lat": 51.0977642,
+        "lng": 4.1377229,
+        "slug": "6-hour-winter-challenge-of-hamme-2024"
+    },
+    {
         "name": "Bear Trail 83 Km",
         "country": "Belgium",
         "distance": "83km",
@@ -205,17 +216,6 @@
         "slug": "bear-trail-58-km-2024"
     },
     {
-        "name": "Clash Der Titanen 60",
-        "country": "Belgium",
-        "distance": "61km",
-        "date": "05/10/2024",
-        "url": "https://www.trailrunschool.be/clash-der-titanen",
-        "city": "Wezemaal",
-        "lat": 50.9482598,
-        "lng": 4.7544622,
-        "slug": "clash-der-titanen-60-2024"
-    },
-    {
         "name": "Clash Der Titanen 110",
         "country": "Belgium",
         "distance": "115km",
@@ -225,6 +225,17 @@
         "lat": 50.9482598,
         "lng": 4.7544622,
         "slug": "clash-der-titanen-110-2024"
+    },
+    {
+        "name": "Clash Der Titanen 60",
+        "country": "Belgium",
+        "distance": "61km",
+        "date": "05/10/2024",
+        "url": "https://www.trailrunschool.be/clash-der-titanen",
+        "city": "Wezemaal",
+        "lat": 50.9482598,
+        "lng": 4.7544622,
+        "slug": "clash-der-titanen-60-2024"
     },
     {
         "name": "Clash Der Titanen 160",
@@ -238,6 +249,17 @@
         "slug": "clash-der-titanen-160-2024"
     },
     {
+        "name": "Grizzly100",
+        "country": "Belgium",
+        "distance": "100km",
+        "date": "26/10/2024",
+        "url": "https://www.bearsports.nl/en/events/bear-trail/",
+        "city": "s'Gravenvoeren",
+        "lat": 50.7588019,
+        "lng": 5.7619737,
+        "slug": "grizzly100-2024"
+    },
+    {
         "name": "Trail de L'Abbaye",
         "country": "Belgium",
         "distance": "50km",
@@ -248,17 +270,6 @@
         "lat": 50.5727285,
         "lng": 4.5342675,
         "slug": "trail-de-l-abbaye-2024"
-    },
-    {
-        "name": "Grizzly100",
-        "country": "Belgium",
-        "distance": "100km",
-        "date": "26/10/2024",
-        "url": "https://www.bearsports.nl/en/events/bear-trail/",
-        "city": "s'Gravenvoeren",
-        "lat": 50.7588019,
-        "lng": 5.7619737,
-        "slug": "grizzly100-2024"
     },
     {
         "name": "L'Ultra by HuyForTrail",
@@ -377,18 +388,7 @@
         "slug": "la-chouffe-trail-51km-2024"
     },
     {
-        "name": "Antwerp Backyard Ultra",
-        "country": "Belgium",
-        "distance": "46h",
-        "date": "28/06/2024",
-        "url": "http://www.antwerpbackyardultra.be",
-        "city": "Schelle",
-        "lat": 51.1245635,
-        "lng": 4.3361875,
-        "slug": "antwerp-backyard-ultra-2024"
-    },
-    {
-        "name": "Haute Ardenne Ultra Trail",
+        "name": "La Chouffe Trail 70km",
         "country": "Belgium",
         "distance": "50km",
         "date": "22/06/2024",
@@ -409,6 +409,29 @@
         "lat": 50.6428391,
         "lng": 3.9423486,
         "slug": "mini-medium-and-megatornado-2024"
+    },
+    {
+        "name": "Haute Ardenne Ultra Trail",
+        "country": "Belgium",
+        "distance": "50km",
+        "date": "22/06/2024",
+        "url": "https://www.mudsweattrails.nl/haute-ardenne-ultra-trail-festival/",
+        "city": "Trois-Ponts",
+        "terrain": "trail",
+        "lat": 50.3726812,
+        "lng": 5.8702957,
+        "slug": "haute-ardenne-ultra-trail-2024"
+    },
+    {
+        "name": "Antwerp Backyard Ultra",
+        "country": "Belgium",
+        "distance": "46h",
+        "date": "28/06/2024",
+        "url": "http://www.antwerpbackyardultra.be",
+        "city": "Schelle",
+        "lat": 51.1245635,
+        "lng": 4.3361875,
+        "slug": "antwerp-backyard-ultra-2024"
     },
     {
         "name": "Trail Godefroy Bouillon",
@@ -550,6 +573,18 @@
         "slug": "grand-trail-des-lacs-et-ch-teaux-85km-2024"
     },
     {
+        "name": "L.A.T Legends Ardennes Trail 100km",
+        "country": "Belgium",
+        "distance": "85km",
+        "date": "19/05/2024",
+        "url": "https://grandtrail.be/",
+        "city": "Ovifat",
+        "terrain": "trail",
+        "lat": 50.4663622,
+        "lng": 6.107063,
+        "slug": "grand-trail-des-lacs-et-ch-teaux-85km-2024"
+    },
+    {
         "name": "Legends Backyard Ultra",
         "country": "Belgium",
         "distance": "53h",
@@ -573,6 +608,16 @@
         "slug": "l-a-t-legends-ardennes-trail-100km-2024"
     },
     {
+        "name": "TDI (Trail des Idylles)",
+        "country": "Belgium",
+        "distance": "52.4km",
+        "date": "13/04/2024",
+        "url": "http://www.traildesidylles.be/",
+        "city": "Malmedy / Chodes",
+        "terrain": "trail",
+        "slug": "tdi-trail-des-idylles-2024"
+    },
+    {
         "name": "Trail des Cisterciens",
         "country": "Belgium",
         "distance": "67km",
@@ -585,26 +630,16 @@
         "slug": "trail-des-cisterciens-2024"
     },
     {
-        "name": "L.A.T Legends Ardennes Trail 60km",
+        "name": "LaThareé Trail  55 km",
         "country": "Belgium",
-        "distance": "62km",
-        "date": "27/04/2024",
-        "url": "https://legendsardennestrail.be",
-        "city": "Lamormenil",
+        "distance": "55km",
+        "date": "16/03/2024",
+        "url": "https://www.latharee-trail.be/",
+        "city": "Rettigny",
         "terrain": "trail",
-        "lat": 50.2542118,
-        "lng": 5.6378252,
-        "slug": "l-a-t-legends-ardennes-trail-60km-2024"
-    },
-    {
-        "name": "TDI (Trail des Idylles)",
-        "country": "Belgium",
-        "distance": "52.4km",
-        "date": "13/04/2024",
-        "url": "http://www.traildesidylles.be/",
-        "city": "Malmedy / Chodes",
-        "terrain": "trail",
-        "slug": "tdi-trail-des-idylles-2024"
+        "lat": 50.1678509,
+        "lng": 5.8801729,
+        "slug": "lathare-trail-55-km-2024"
     },
     {
         "name": "LaThareé Trail  48 km",
@@ -630,29 +665,6 @@
         "slug": "endurance-day-hamme-50-mi-2024"
     },
     {
-        "name": "LaThareé Trail  55 km",
-        "country": "Belgium",
-        "distance": "55km",
-        "date": "16/03/2024",
-        "url": "https://www.latharee-trail.be/",
-        "city": "Rettigny",
-        "terrain": "trail",
-        "lat": 50.1678509,
-        "lng": 5.8801729,
-        "slug": "lathare-trail-55-km-2024"
-    },
-    {
-        "name": "Endurance Day Hamme 50 km",
-        "country": "Belgium",
-        "distance": "50km",
-        "date": "17/03/2024",
-        "url": "https://www.enduranceday.be",
-        "city": "Hamme",
-        "lat": 51.0977642,
-        "lng": 4.1377229,
-        "slug": "endurance-day-hamme-50-km-2024"
-    },
-    {
         "name": "Endurance Day Hamme 100 km",
         "country": "Belgium",
         "distance": "100km",
@@ -664,39 +676,15 @@
         "slug": "endurance-day-hamme-100-km-2024"
     },
     {
-        "name": "Mad Elf Run",
+        "name": "Endurance Day Hamme 50 km",
         "country": "Belgium",
-        "distance": "49km",
-        "date": "17/02/2024",
-        "url": "https://m.facebook.com/events/3148237908819490/",
-        "city": "Aywaille",
-        "lat": 50.4758998,
-        "lng": 5.6763249,
-        "slug": "mad-elf-run-2024"
-    },
-    {
-        "name": "Trail de la Siberie - 50km",
-        "country": "Belgium",
-        "distance": "52km",
-        "date": "24/02/2024",
-        "url": "https://www.trail-de-la-siberie.com/",
-        "city": "Profondeville",
-        "terrain": "trail",
-        "lat": 50.3762043,
-        "lng": 4.8675024,
-        "slug": "trail-de-la-siberie-50km-2024"
-    },
-    {
-        "name": "Muziekbos Trail - 64 km",
-        "country": "Belgium",
-        "distance": "64km",
-        "date": "11/02/2024",
-        "url": "https://hermes-running-events.odoo.com/muziekbos-trail",
-        "city": "Ronse",
-        "terrain": "trail",
-        "lat": 50.7475502,
-        "lng": 3.6020879,
-        "slug": "muziekbos-trail-64-km-2024"
+        "distance": "50km",
+        "date": "17/03/2024",
+        "url": "https://www.enduranceday.be",
+        "city": "Hamme",
+        "lat": 51.0977642,
+        "lng": 4.1377229,
+        "slug": "endurance-day-hamme-50-km-2024"
     },
     {
         "name": "Trail de la Siberie - 100km",
@@ -711,7 +699,43 @@
         "slug": "trail-de-la-siberie-100km-2024"
     },
     {
+        "name": "Trail de la Siberie - 50km",
+        "country": "Belgium",
+        "distance": "52km",
+        "date": "24/02/2024",
+        "url": "https://www.trail-de-la-siberie.com/",
+        "city": "Profondeville",
+        "terrain": "trail",
+        "lat": 50.3762043,
+        "lng": 4.8675024,
+        "slug": "trail-de-la-siberie-50km-2024"
+    },
+    {
         "name": "Trail de la Siberie - 75km",
+        "country": "Belgium",
+        "distance": "76km",
+        "date": "24/02/2024",
+        "url": "https://www.trail-de-la-siberie.com/",
+        "city": "Profondeville",
+        "terrain": "trail",
+        "lat": 50.3762043,
+        "lng": 4.8675024,
+        "slug": "trail-de-la-siberie-75km-2024"
+    },
+    {
+        "name": "Muziekbos Trail - 64 km",
+        "country": "Belgium",
+        "distance": "64km",
+        "date": "11/02/2024",
+        "url": "https://hermes-running-events.odoo.com/muziekbos-trail",
+        "city": "Ronse",
+        "terrain": "trail",
+        "lat": 50.7475502,
+        "lng": 3.6020879,
+        "slug": "muziekbos-trail-64-km-2024"
+    },
+    {
+        "name": "Mad Elf Run",
         "country": "Belgium",
         "distance": "76km",
         "date": "24/02/2024",
@@ -733,17 +757,6 @@
         "lat": 50.7475502,
         "lng": 3.6020879,
         "slug": "muziekbos-trail-45-km-2024"
-    },
-    {
-        "name": "Bostrails Aalter",
-        "country": "Belgium",
-        "distance": "47km",
-        "date": "20/01/2024",
-        "url": "https://www.marathonandmore.be/",
-        "city": "Aalter",
-        "lat": 51.083894,
-        "lng": 3.4485192,
-        "slug": "bostrails-aalter-2024"
     },
     {
         "name": "Trailmarathon Het Leen",
@@ -768,31 +781,42 @@
         "slug": "houffatrail-65km-2024"
     },
     {
-        "name": "Houffatrail 50km",
+        "name": "Trailmarathon Het Leen",
         "country": "Belgium",
-        "distance": "50km",
+        "distance": "45km",
+        "date": "10/02/2024",
+        "url": "http://www.cavalopers.be",
+        "city": "Eeklo",
+        "lat": 51.1844827,
+        "lng": 3.5665965,
+        "slug": "trailmarathon-het-leen-2024"
+    },
+    {
+        "name": "Houffatrail 65km",
+        "country": "Belgium",
+        "distance": "65km",
         "date": "21/01/2024",
         "url": "https://passionforsports.eu/en-houffatrail?count=1",
         "city": "Houffalize",
         "lat": 50.1323761,
         "lng": 5.7886928,
-        "slug": "houffatrail-50km-2024"
+        "slug": "houffatrail-65km-2024"
+    },
+    {
+        "name": "Bostrails Aalter",
+        "country": "Belgium",
+        "distance": "47km",
+        "date": "20/01/2024",
+        "url": "https://www.marathonandmore.be/",
+        "city": "Aalter",
+        "lat": 51.083894,
+        "lng": 3.4485192,
+        "slug": "bostrails-aalter-2024"
     },
     {
         "name": "Bastogne - Wiltz - Bastogne 50km",
         "country": "Belgium",
         "distance": "50km",
-        "date": "28/12/2025",
-        "url": "https://www.trailrun.be/bastogne-wiltz-bastogne/",
-        "city": "Bastogne",
-        "lat": 50.0023102,
-        "lng": 5.7173386,
-        "slug": "bastogne-wiltz-bastogne-50km-2025"
-    },
-    {
-        "name": "Bastogne - Wiltz - Bastogne 70km",
-        "country": "Belgium",
-        "distance": "70km",
         "date": "28/12/2025",
         "url": "https://www.trailrun.be/bastogne-wiltz-bastogne/",
         "city": "Bastogne",
@@ -837,27 +861,15 @@
         "slug": "trail-du-bw-84km-2025"
     },
     {
-        "name": "De Wase (Ultra) Marathon",
+        "name": "Bastogne - Wiltz - Bastogne 70km",
         "country": "Belgium",
-        "distance": "58km",
-        "date": "26/10/2025",
-        "url": "https://www.dewasemarathon.run",
-        "city": "Sinaai",
-        "lat": 51.15689,
-        "lng": 4.04172,
-        "slug": "de-wase-ultra-marathon-2025"
-    },
-    {
-        "name": "Trail de la Soupe",
-        "country": "Belgium",
-        "distance": "45km",
-        "date": "30/11/2025",
-        "url": "https://www.trailrun.be/fr/trail-de-la-soupe/#efaq-45km-dimanche-1730m-d",
-        "city": "La-Roche-en-Ardenne",
-        "terrain": "trail",
-        "lat": 50.1602833,
-        "lng": 5.5627594,
-        "slug": "trail-de-la-soupe-2025"
+        "distance": "70km",
+        "date": "28/12/2025",
+        "url": "https://www.trailrun.be/bastogne-wiltz-bastogne/",
+        "city": "Bastogne",
+        "lat": 50.0023102,
+        "lng": 5.7173386,
+        "slug": "bastogne-wiltz-bastogne-70km-2025"
     },
     {
         "name": "De Warmste Loop - The Warmest Run",
@@ -871,6 +883,29 @@
         "slug": "de-warmste-loop-the-warmest-run-2025"
     },
     {
+        "name": "Trail du BW - 84km",
+        "country": "Belgium",
+        "distance": "84km",
+        "date": "07/12/2025",
+        "url": "https://www.traildubw.be/",
+        "city": "Grez-Doiceau",
+        "terrain": "trail",
+        "lat": 50.7386182,
+        "lng": 4.6962324,
+        "slug": "trail-du-bw-84km-2025"
+    },
+    {
+        "name": "De Wase (Ultra) Marathon",
+        "country": "Belgium",
+        "distance": "58km",
+        "date": "26/10/2025",
+        "url": "https://www.dewasemarathon.run",
+        "city": "Sinaai",
+        "lat": 51.15689,
+        "lng": 4.04172,
+        "slug": "de-wase-ultra-marathon-2025"
+    },
+    {
         "name": "Grand Trail des Lacs et Châteaux Winter",
         "country": "Belgium",
         "distance": "66km",
@@ -881,6 +916,18 @@
         "lat": 50.4663622,
         "lng": 6.107063,
         "slug": "grand-trail-des-lacs-et-ch-teaux-winter-2025"
+    },
+    {
+        "name": "Trail de la Soupe",
+        "country": "Belgium",
+        "distance": "45km",
+        "date": "30/11/2025",
+        "url": "https://www.trailrun.be/fr/trail-de-la-soupe/#efaq-45km-dimanche-1730m-d",
+        "city": "La-Roche-en-Ardenne",
+        "terrain": "trail",
+        "lat": 50.1602833,
+        "lng": 5.5627594,
+        "slug": "trail-de-la-soupe-2025"
     },
     {
         "name": "Olne-Spa-Olne",
@@ -951,15 +998,15 @@
         "slug": "bear-trail-58-km-2025"
     },
     {
-        "name": "Clash Der Titanen 200",
+        "name": "Grizzly100",
         "country": "Belgium",
-        "distance": "203km",
-        "date": "10/10/2025",
-        "url": "https://www.waco-sports.be/clash-der-titanen",
-        "city": "Wezemaal",
-        "lat": 50.9482598,
-        "lng": 4.7544622,
-        "slug": "clash-der-titanen-200-2025"
+        "distance": "100km",
+        "date": "25/10/2025",
+        "url": "https://www.bearsports.nl/bear-trail/",
+        "city": "s'Gravenvoeren",
+        "lat": 50.7588019,
+        "lng": 5.7619737,
+        "slug": "grizzly100-2025"
     },
     {
         "name": "Clash Der Titanen 90",
@@ -971,6 +1018,29 @@
         "lat": 50.9482598,
         "lng": 4.7544622,
         "slug": "clash-der-titanen-90-2025"
+    },
+    {
+        "name": "Clash Der Titanen 200",
+        "country": "Belgium",
+        "distance": "203km",
+        "date": "10/10/2025",
+        "url": "https://www.waco-sports.be/clash-der-titanen",
+        "city": "Wezemaal",
+        "lat": 50.9482598,
+        "lng": 4.7544622,
+        "slug": "clash-der-titanen-200-2025"
+    },
+    {
+        "name": "Infinity Trail - Ultra Trail",
+        "country": "Belgium",
+        "distance": "70km",
+        "date": "04/10/2025",
+        "url": "https://www.facebook.com/profile.php?id=100063772611356",
+        "city": "Vielsalm",
+        "terrain": "trail",
+        "lat": 50.2842154,
+        "lng": 5.9162783,
+        "slug": "infinity-trail-ultra-trail-2025"
     },
     {
         "name": "GR Provincie Trail Henegouwen",
@@ -996,28 +1066,16 @@
         "slug": "clash-der-titanen-160-2025"
     },
     {
-        "name": "Infinity Trail - Ultra Trail",
+        "name": "Europa Trail Brussels 80km",
         "country": "Belgium",
-        "distance": "70km",
-        "date": "04/10/2025",
-        "url": "https://www.facebook.com/profile.php?id=100063772611356",
-        "city": "Vielsalm",
+        "distance": "80km",
+        "date": "06/09/2025",
+        "url": "https://www.zatopekmagazine.com/en/europatrail/distances/#80km",
+        "city": "Uccle",
         "terrain": "trail",
-        "lat": 50.2842154,
-        "lng": 5.9162783,
-        "slug": "infinity-trail-ultra-trail-2025"
-    },
-    {
-        "name": "Trail de L'Abbaye",
-        "country": "Belgium",
-        "distance": "50km",
-        "date": "04/10/2025",
-        "url": "https://traildelabbaye.be/fr",
-        "city": "Villers-la-Ville",
-        "terrain": "trail",
-        "lat": 50.5727285,
-        "lng": 4.5342675,
-        "slug": "trail-de-l-abbaye-2025"
+        "lat": 50.8035441,
+        "lng": 4.3338445,
+        "slug": "europa-trail-brussels-80km-2025"
     },
     {
         "name": "L'Ultratrail by HuyForTrail",
@@ -1031,16 +1089,15 @@
         "slug": "l-ultratrail-by-huyfortrail-2025"
     },
     {
-        "name": "Europa Trail Brussels 80km",
+        "name": "Canceled: 6 uur Challenge van Hamme (BEL)",
         "country": "Belgium",
-        "distance": "80km",
-        "date": "06/09/2025",
-        "url": "https://www.zatopekmagazine.com/en/europatrail/distances/#80km",
-        "city": "Uccle",
-        "terrain": "trail",
-        "lat": 50.8035441,
-        "lng": 4.3338445,
-        "slug": "europa-trail-brussels-80km-2025"
+        "distance": "6h",
+        "date": "07/09/2025",
+        "url": "https://www.enduranceday.be",
+        "city": "Hamme",
+        "lat": 51.0977642,
+        "lng": 4.1377229,
+        "slug": "canceled-6-uur-challenge-van-hamme-bel-2025"
     },
     {
         "name": "Trail des Fées",
@@ -1055,15 +1112,16 @@
         "slug": "trail-des-f-es-2025"
     },
     {
-        "name": "Canceled: 6 uur Challenge van Hamme (BEL)",
+        "name": "Trail de L'Abbaye",
         "country": "Belgium",
-        "distance": "6h",
-        "date": "07/09/2025",
-        "url": "https://www.enduranceday.be",
-        "city": "Hamme",
-        "lat": 51.0977642,
-        "lng": 4.1377229,
-        "slug": "canceled-6-uur-challenge-van-hamme-bel-2025"
+        "distance": "50km",
+        "date": "04/10/2025",
+        "url": "https://traildelabbaye.be/fr",
+        "city": "Villers-la-Ville",
+        "terrain": "trail",
+        "lat": 50.5727285,
+        "lng": 4.5342675,
+        "slug": "trail-de-l-abbaye-2025"
     },
     {
         "name": "One More Loop",
@@ -1089,6 +1147,17 @@
         "slug": "europa-trail-brussels-52km-2025"
     },
     {
+        "name": "Transeuropalauf 2025 19. Etappe Libramont-Chevigny - Simmern",
+        "country": "Belgium",
+        "distance": "66km",
+        "date": "21/08/2025",
+        "url": "https://www.neckarlauf.com",
+        "city": "Libramont-Chevigny",
+        "lat": 49.94991,
+        "lng": 5.4370892,
+        "slug": "transeuropalauf-2025-19-etappe-libramont-chevigny-simmern-2025"
+    },
+    {
         "name": "Transeuropalauf 2025 17. Etappe Eghezee - Givet",
         "country": "Belgium",
         "distance": "72km",
@@ -1111,27 +1180,6 @@
         "slug": "transeuropalauf-2025-16-etappe-bekkevoort-eghezee-2025"
     },
     {
-        "name": "Transeuropalauf 2025 19. Etappe Libramont-Chevigny - Simmern",
-        "country": "Belgium",
-        "distance": "66km",
-        "date": "21/08/2025",
-        "url": "https://www.neckarlauf.com",
-        "city": "Libramont-Chevigny",
-        "lat": 49.94991,
-        "lng": 5.4370892,
-        "slug": "transeuropalauf-2025-19-etappe-libramont-chevigny-simmern-2025"
-    },
-    {
-        "name": "Ultra Trail Haute Ardenne - Jour 2 - 60 km",
-        "country": "Belgium",
-        "distance": "60km",
-        "date": "03/08/2025",
-        "url": "https://www.utha.be/57km",
-        "city": "Station de la Baraque de Fraiture",
-        "terrain": "trail",
-        "slug": "ultra-trail-haute-ardenne-jour-2-60-km-2025"
-    },
-    {
         "name": "Ultra Trail Haute Ardenne - Jour 1 50 km",
         "country": "Belgium",
         "distance": "50km",
@@ -1144,7 +1192,17 @@
         "slug": "ultra-trail-haute-ardenne-jour-1-50-km-2025"
     },
     {
-        "name": "Trail des Fantomes 73km",
+        "name": "Ultra Trail Haute Ardenne - Jour 2 - 60 km",
+        "country": "Belgium",
+        "distance": "60km",
+        "date": "03/08/2025",
+        "url": "https://www.utha.be/57km",
+        "city": "Station de la Baraque de Fraiture",
+        "terrain": "trail",
+        "slug": "ultra-trail-haute-ardenne-jour-2-60-km-2025"
+    },
+    {
+        "name": "Trail des Fantomes 55km",
         "country": "Belgium",
         "distance": "73km",
         "date": "09/08/2025",
@@ -1201,16 +1259,6 @@
         "slug": "ultra-trail-haute-ardenne-jour-1-70-km-2025"
     },
     {
-        "name": "Ultra Trail Haute Ardenne - Jour 1 100 km",
-        "country": "Belgium",
-        "distance": "100km",
-        "date": "02/08/2025",
-        "url": "https://www.utha.be/100km-d1",
-        "city": "Waimes (Signal de Botrange)",
-        "terrain": "trail",
-        "slug": "ultra-trail-haute-ardenne-jour-1-100-km-2025"
-    },
-    {
         "name": "6 uur van Aalter",
         "country": "Belgium",
         "distance": "6h",
@@ -1220,6 +1268,16 @@
         "lat": 51.083894,
         "lng": 3.4485192,
         "slug": "6-uur-van-aalter-2025"
+    },
+    {
+        "name": "GR Provincie Trail Limburg",
+        "country": "Belgium",
+        "distance": "100km",
+        "date": "02/08/2025",
+        "url": "https://www.utha.be/100km-d1",
+        "city": "Waimes (Signal de Botrange)",
+        "terrain": "trail",
+        "slug": "ultra-trail-haute-ardenne-jour-1-100-km-2025"
     },
     {
         "name": "La Chouffe Trail 56km",
@@ -1234,16 +1292,16 @@
         "slug": "la-chouffe-trail-56km-2025"
     },
     {
-        "name": "Festival Trail Semois",
+        "name": "La Chouffe Trail 80km",
         "country": "Belgium",
-        "distance": "49km",
+        "distance": "80km",
         "date": "05/07/2025",
-        "url": "http://www.festival-trail-semois.be/",
-        "city": "Herbeumont",
+        "url": "https://www.passionforsports.eu/fr-la-chouffe-trail?count=2",
+        "city": "Houffalize",
         "terrain": "trail",
-        "lat": 49.7815364,
-        "lng": 5.2377736,
-        "slug": "festival-trail-semois-2025"
+        "lat": 50.1323761,
+        "lng": 5.7886928,
+        "slug": "la-chouffe-trail-80km-2025"
     },
     {
         "name": "Another One Bites the Dust",
@@ -1257,7 +1315,18 @@
         "slug": "another-one-bites-the-dust-2025"
     },
     {
-        "name": "La Chouffe Trail 80km",
+        "name": "Ultra Tour de Liège",
+        "country": "Belgium",
+        "distance": "67km",
+        "date": "05/07/2025",
+        "url": "http://ultratourdeliege.wikeo.net/",
+        "city": "Lüttich",
+        "lat": 50.6450944,
+        "lng": 5.5736112,
+        "slug": "ultra-tour-de-li-ge-2025"
+    },
+    {
+        "name": "Festival Trail Semois",
         "country": "Belgium",
         "distance": "80km",
         "date": "05/07/2025",
@@ -1269,15 +1338,16 @@
         "slug": "la-chouffe-trail-80km-2025"
     },
     {
-        "name": "Ultra Tour de Liège",
+        "name": "Festival Trail Semois",
         "country": "Belgium",
-        "distance": "67km",
+        "distance": "49km",
         "date": "05/07/2025",
-        "url": "http://ultratourdeliege.wikeo.net/",
-        "city": "Lüttich",
-        "lat": 50.6450944,
-        "lng": 5.5736112,
-        "slug": "ultra-tour-de-li-ge-2025"
+        "url": "http://www.festival-trail-semois.be/",
+        "city": "Herbeumont",
+        "terrain": "trail",
+        "lat": 49.7815364,
+        "lng": 5.2377736,
+        "slug": "festival-trail-semois-2025"
     },
     {
         "name": "Festival Trail Semois",
@@ -1303,15 +1373,6 @@
         "slug": "canceled-mini-and-megatornado-bel-2025"
     },
     {
-        "name": "L'assaut du Maquisard",
-        "country": "Belgium",
-        "distance": "45km",
-        "date": "28/06/2025",
-        "url": "https://www.zatopekmagazine.com/lassaut-du-maquisard/les-epreuves-de-lassaut-du-maquisard/#45km",
-        "city": "Thieux",
-        "slug": "l-assaut-du-maquisard-2025"
-    },
-    {
         "name": "Antwerp Backyard Ultra",
         "country": "Belgium",
         "distance": "32h",
@@ -1321,6 +1382,15 @@
         "lat": 51.1245635,
         "lng": 4.3361875,
         "slug": "antwerp-backyard-ultra-2025"
+    },
+    {
+        "name": "L'assaut du Maquisard",
+        "country": "Belgium",
+        "distance": "45km",
+        "date": "28/06/2025",
+        "url": "https://www.zatopekmagazine.com/lassaut-du-maquisard/les-epreuves-de-lassaut-du-maquisard/#45km",
+        "city": "Thieux",
+        "slug": "l-assaut-du-maquisard-2025"
     },
     {
         "name": "Trail Godefroy Bouillon",
@@ -1359,6 +1429,17 @@
         "slug": "trail-godefroy-bouillon-2025"
     },
     {
+        "name": "The Longest Day 50km",
+        "country": "Belgium",
+        "distance": "52km",
+        "date": "07/06/2025",
+        "url": "https://www.trailrun.be/fr/the-longest-day-trail/",
+        "city": "Spa",
+        "lat": 50.4920654,
+        "lng": 5.8627569,
+        "slug": "the-longest-day-50km-2025"
+    },
+    {
         "name": "Ohm Trail - Ultra",
         "country": "Belgium",
         "distance": "80km",
@@ -1380,17 +1461,6 @@
         "lat": 50.5710311,
         "lng": 5.7978592,
         "slug": "les-clochards-c-lestes-2025"
-    },
-    {
-        "name": "The Longest Day 50km",
-        "country": "Belgium",
-        "distance": "52km",
-        "date": "07/06/2025",
-        "url": "https://www.trailrun.be/fr/the-longest-day-trail/",
-        "city": "Spa",
-        "lat": 50.4920654,
-        "lng": 5.8627569,
-        "slug": "the-longest-day-50km-2025"
     },
     {
         "name": "Ohm Trail - XL",
@@ -1450,6 +1520,17 @@
         "slug": "grand-trail-des-lacs-et-ch-teaux-85km-2025"
     },
     {
+        "name": "Until the End - Backyard Ultra",
+        "country": "Belgium",
+        "distance": "29h",
+        "date": "03/05/2025",
+        "url": "https://www.until-the-end.com/",
+        "city": "Spa",
+        "lat": 50.4920654,
+        "lng": 5.8627569,
+        "slug": "until-the-end-backyard-ultra-2025"
+    },
+    {
         "name": "Belgian Front Memorial Trail",
         "country": "Belgium",
         "distance": "103km",
@@ -1486,15 +1567,16 @@
         "slug": "l-a-t-legends-ardennes-trail-100km-2025"
     },
     {
-        "name": "Until the End - Backyard Ultra",
+        "name": "L.A.T Legends Ardennes Trail 100km",
         "country": "Belgium",
-        "distance": "29h",
-        "date": "03/05/2025",
-        "url": "https://www.until-the-end.com/",
-        "city": "Spa",
-        "lat": 50.4920654,
-        "lng": 5.8627569,
-        "slug": "until-the-end-backyard-ultra-2025"
+        "distance": "107km",
+        "date": "26/04/2025",
+        "url": "https://www.ledossard.com/inscription/index.php?id=2508",
+        "city": "Nisramont",
+        "terrain": "trail",
+        "lat": 50.1353549,
+        "lng": 5.6471185,
+        "slug": "l-a-t-legends-ardennes-trail-100km-2025"
     },
     {
         "name": "Legends Backyard Ultra",
@@ -1589,18 +1671,6 @@
         "slug": "dplus-draait-door-6h-2025"
     },
     {
-        "name": "LaThareé Trail  56 km",
-        "country": "Belgium",
-        "distance": "56km",
-        "date": "15/03/2025",
-        "url": "https://www.latharee-trail.be/",
-        "city": "Rettigny",
-        "terrain": "trail",
-        "lat": 50.1678509,
-        "lng": 5.8801729,
-        "slug": "lathare-trail-56-km-2025"
-    },
-    {
         "name": "LaThareé Trail  49 km",
         "country": "Belgium",
         "distance": "49km",
@@ -1613,6 +1683,18 @@
         "slug": "lathare-trail-49-km-2025"
     },
     {
+        "name": "LaThareé Trail  56 km",
+        "country": "Belgium",
+        "distance": "56km",
+        "date": "15/03/2025",
+        "url": "https://www.latharee-trail.be/",
+        "city": "Rettigny",
+        "terrain": "trail",
+        "lat": 50.1678509,
+        "lng": 5.8801729,
+        "slug": "lathare-trail-56-km-2025"
+    },
+    {
         "name": "Trail des Sangliers",
         "country": "Belgium",
         "distance": "75km",
@@ -1623,6 +1705,18 @@
         "lat": 50.1602833,
         "lng": 5.5627594,
         "slug": "trail-des-sangliers-2025"
+    },
+    {
+        "name": "Trail de la Siberie - 100km",
+        "country": "Belgium",
+        "distance": "101km",
+        "date": "22/02/2025",
+        "url": "https://www.trail-de-la-siberie.com/",
+        "city": "Profondeville",
+        "terrain": "trail",
+        "lat": 50.3762043,
+        "lng": 4.8675024,
+        "slug": "trail-de-la-siberie-100km-2025"
     },
     {
         "name": "Trail de la Siberie - 125km",
@@ -1661,18 +1755,6 @@
         "slug": "trail-de-la-siberie-50km-2025"
     },
     {
-        "name": "Trail de la Siberie - 75km",
-        "country": "Belgium",
-        "distance": "76km",
-        "date": "22/02/2025",
-        "url": "https://www.trail-de-la-siberie.com/",
-        "city": "Profondeville",
-        "terrain": "trail",
-        "lat": 50.3762043,
-        "lng": 4.8675024,
-        "slug": "trail-de-la-siberie-75km-2025"
-    },
-    {
         "name": "La Magnetoise",
         "country": "Belgium",
         "distance": "59km",
@@ -1696,15 +1778,16 @@
         "slug": "muziekbos-trail-64-km-2025"
     },
     {
-        "name": "Trailmarathon Het Leen",
+        "name": "Muziekbos Trail - 45 km",
         "country": "Belgium",
         "distance": "45km",
-        "date": "02/02/2025",
-        "url": "http://www.cavalopers.be",
-        "city": "Eeklo",
-        "lat": 51.1844827,
-        "lng": 3.5665965,
-        "slug": "trailmarathon-het-leen-2025"
+        "date": "09/02/2025",
+        "url": "https://hermes-running-events.odoo.com/muziekbos-trail",
+        "city": "Ronse",
+        "terrain": "trail",
+        "lat": 50.7475502,
+        "lng": 3.6020879,
+        "slug": "muziekbos-trail-45-km-2025"
     },
     {
         "name": "Houffatrail 63km",
@@ -1718,16 +1801,15 @@
         "slug": "houffatrail-63km-2025"
     },
     {
-        "name": "Muziekbos Trail - 45 km",
+        "name": "Trailmarathon Het Leen",
         "country": "Belgium",
         "distance": "45km",
-        "date": "09/02/2025",
-        "url": "https://hermes-running-events.odoo.com/muziekbos-trail",
-        "city": "Ronse",
-        "terrain": "trail",
-        "lat": 50.7475502,
-        "lng": 3.6020879,
-        "slug": "muziekbos-trail-45-km-2025"
+        "date": "02/02/2025",
+        "url": "http://www.cavalopers.be",
+        "city": "Eeklo",
+        "lat": 51.1844827,
+        "lng": 3.5665965,
+        "slug": "trailmarathon-het-leen-2025"
     },
     {
         "name": "Houffatrail 50km",
@@ -1775,18 +1857,6 @@
         "slug": "de-warmste-loop-the-warmest-run-2026"
     },
     {
-        "name": "Trail de la Soupe",
-        "country": "Belgium",
-        "distance": "45km",
-        "date": "29/11/2026",
-        "url": "https://www.trailrun.be/fr/trail-de-la-soupe/#efaq-45km-dimanche-1730m-d",
-        "city": "La-Roche-en-Ardenne",
-        "terrain": "trail",
-        "lat": 50.1602833,
-        "lng": 5.5627594,
-        "slug": "trail-de-la-soupe-2026"
-    },
-    {
         "name": "Grand Trail des Lacs et Châteaux Winter",
         "country": "Belgium",
         "distance": "66km",
@@ -1809,16 +1879,6 @@
         "slug": "ultra-trail-haute-ardenne-jour-1-70-km-2026"
     },
     {
-        "name": "Ultra Trail Haute Ardenne - Jour 2 - 57 km",
-        "country": "Belgium",
-        "distance": "57km",
-        "date": "02/08/2026",
-        "url": "https://www.utha.be/57km",
-        "city": "Station de la Baraque de Fraiture",
-        "terrain": "trail",
-        "slug": "ultra-trail-haute-ardenne-jour-2-57-km-2026"
-    },
-    {
         "name": "Ultra Trail Haute Ardenne - Jour 1 50 km",
         "country": "Belgium",
         "distance": "50km",
@@ -1839,6 +1899,26 @@
         "city": "Signal de Botrange",
         "terrain": "trail",
         "slug": "ultra-trail-haute-ardenne-jour-1-100-km-2026"
+    },
+    {
+        "name": "Ultra Trail Haute Ardenne - Jour 1 100 km",
+        "country": "Belgium",
+        "distance": "100km",
+        "date": "01/08/2026",
+        "url": "https://www.utha.be/100km-d1",
+        "city": "Signal de Botrange",
+        "terrain": "trail",
+        "slug": "ultra-trail-haute-ardenne-jour-1-100-km-2026"
+    },
+    {
+        "name": "Ultra Trail Haute Ardenne - Jour 2 - 57 km",
+        "country": "Belgium",
+        "distance": "57km",
+        "date": "02/08/2026",
+        "url": "https://www.utha.be/57km",
+        "city": "Station de la Baraque de Fraiture",
+        "terrain": "trail",
+        "slug": "ultra-trail-haute-ardenne-jour-2-57-km-2026"
     },
     {
         "name": "Another One Bites the Dust",
@@ -1922,6 +2002,18 @@
         "slug": "belgian-front-memorial-trail-2026"
     },
     {
+        "name": "L.A.T Legends Ardennes Trail 100km",
+        "country": "Belgium",
+        "distance": "111km",
+        "date": "02/05/2026",
+        "url": "https://ultratiming.ledossard.com/inscription/index.php?id=3051",
+        "city": "Nisramont",
+        "terrain": "trail",
+        "lat": 50.1353549,
+        "lng": 5.6471185,
+        "slug": "l-a-t-legends-ardennes-trail-100km-2026"
+    },
+    {
         "name": "L.A.T Legends Ardennes Trail 60km",
         "country": "Belgium",
         "distance": "63km",
@@ -1958,28 +2050,15 @@
         "slug": "grand-trail-des-lacs-et-ch-teaux-85km-2026"
     },
     {
-        "name": "L.A.T Legends Ardennes Trail 100km",
+        "name": "Legends Backyard Ultra",
         "country": "Belgium",
-        "distance": "111km",
-        "date": "02/05/2026",
-        "url": "https://ultratiming.ledossard.com/inscription/index.php?id=3051",
-        "city": "Nisramont",
-        "terrain": "trail",
-        "lat": 50.1353549,
-        "lng": 5.6471185,
-        "slug": "l-a-t-legends-ardennes-trail-100km-2026"
-    },
-    {
-        "name": "L.A.T Legends Ardennes Trail - La Saint Remacle Ultra",
-        "country": "Belgium",
-        "distance": "195km",
-        "date": "01/05/2026",
-        "url": "https://ultratiming.ledossard.com/inscription/index.php?id=3051",
-        "city": "Ocquier",
-        "terrain": "trail",
-        "lat": 50.3966356,
-        "lng": 5.3961397,
-        "slug": "l-a-t-legends-ardennes-trail-la-saint-remacle-ultra-2026"
+        "distance": "116h",
+        "date": "25/04/2026",
+        "url": "https://www.backyardbelgium.com/",
+        "city": "Retie",
+        "lat": 51.2675862,
+        "lng": 5.0843883,
+        "slug": "legends-backyard-ultra-2026"
     },
     {
         "name": "Trail Liège Métropole",
@@ -1994,6 +2073,18 @@
         "slug": "trail-li-ge-m-tropole-2026"
     },
     {
+        "name": "LaThareé Trail  56 km",
+        "country": "Belgium",
+        "distance": "56km",
+        "date": "14/03/2026",
+        "url": "https://www.latharee-trail.be/",
+        "city": "Rettigny",
+        "terrain": "trail",
+        "lat": 50.1678509,
+        "lng": 5.8801729,
+        "slug": "lathare-trail-56-km-2026"
+    },
+    {
         "name": "Trail des Sangliers",
         "country": "Belgium",
         "distance": "57km",
@@ -2006,27 +2097,40 @@
         "slug": "trail-des-sangliers-2026"
     },
     {
-        "name": "Legends Backyard Ultra",
+        "name": "L.A.T Legends Ardennes Trail - La Saint Remacle Ultra",
         "country": "Belgium",
-        "distance": "116h",
-        "date": "25/04/2026",
-        "url": "https://www.backyardbelgium.com/",
-        "city": "Retie",
-        "lat": 51.2675862,
-        "lng": 5.0843883,
-        "slug": "legends-backyard-ultra-2026"
+        "distance": "195km",
+        "date": "01/05/2026",
+        "url": "https://ultratiming.ledossard.com/inscription/index.php?id=3051",
+        "city": "Ocquier",
+        "terrain": "trail",
+        "lat": 50.3966356,
+        "lng": 5.3961397,
+        "slug": "l-a-t-legends-ardennes-trail-la-saint-remacle-ultra-2026"
     },
     {
-        "name": "LaThareé Trail  56 km",
+        "name": "Trail de la Siberie - 50km",
         "country": "Belgium",
-        "distance": "56km",
-        "date": "14/03/2026",
-        "url": "https://www.latharee-trail.be/",
-        "city": "Rettigny",
+        "distance": "52km",
+        "date": "21/02/2026",
+        "url": "https://www.trail-de-la-siberie.com/",
+        "city": "Profondeville",
         "terrain": "trail",
-        "lat": 50.1678509,
-        "lng": 5.8801729,
-        "slug": "lathare-trail-56-km-2026"
+        "lat": 50.3762043,
+        "lng": 4.8675024,
+        "slug": "trail-de-la-siberie-50km-2026"
+    },
+    {
+        "name": "Trail de la Siberie - 100km",
+        "country": "Belgium",
+        "distance": "101km",
+        "date": "21/02/2026",
+        "url": "https://www.trail-de-la-siberie.com/",
+        "city": "Profondeville",
+        "terrain": "trail",
+        "lat": 50.3762043,
+        "lng": 4.8675024,
+        "slug": "trail-de-la-siberie-100km-2026"
     },
     {
         "name": "Ultra Trail de la Sibérie - 160km",
@@ -2053,28 +2157,16 @@
         "slug": "trail-de-la-siberie-125km-2026"
     },
     {
-        "name": "Trail de la Siberie - 75km",
+        "name": "Ultra Trail de la Sibérie - 160km",
         "country": "Belgium",
-        "distance": "76km",
-        "date": "21/02/2026",
+        "distance": "161km",
+        "date": "20/02/2026",
         "url": "https://www.trail-de-la-siberie.com/",
         "city": "Profondeville",
         "terrain": "trail",
         "lat": 50.3762043,
         "lng": 4.8675024,
-        "slug": "trail-de-la-siberie-75km-2026"
-    },
-    {
-        "name": "Trail de la Siberie - 50km",
-        "country": "Belgium",
-        "distance": "52km",
-        "date": "21/02/2026",
-        "url": "https://www.trail-de-la-siberie.com/",
-        "city": "Profondeville",
-        "terrain": "trail",
-        "lat": 50.3762043,
-        "lng": 4.8675024,
-        "slug": "trail-de-la-siberie-50km-2026"
+        "slug": "ultra-trail-de-la-sib-rie-160km-2026"
     },
     {
         "name": "Trail de la Siberie - 100km",
@@ -2123,6 +2215,17 @@
         "slug": "houffatrail-50km-2026"
     },
     {
+        "name": "Sint Annen 240 - 50mi",
+        "country": "Netherlands",
+        "distance": "50mi",
+        "date": "27/12/2024",
+        "url": "https://runningrunn.nl/240/2024/240km.php",
+        "city": "Sint Annen",
+        "lat": 53.2979462,
+        "lng": 6.6652567,
+        "slug": "sint-annen-240-50mi-2024"
+    },
+    {
         "name": "Veluwezoom Trail - Winter",
         "country": "Netherlands",
         "distance": "58km",
@@ -2133,17 +2236,6 @@
         "lat": 52.0526703,
         "lng": 6.1014431,
         "slug": "veluwezoom-trail-winter-2024"
-    },
-    {
-        "name": "Sint Annen 240 - 50mi",
-        "country": "Netherlands",
-        "distance": "50mi",
-        "date": "27/12/2024",
-        "url": "https://runningrunn.nl/240/2024/240km.php",
-        "city": "Sint Annen",
-        "lat": 53.2979462,
-        "lng": 6.6652567,
-        "slug": "sint-annen-240-50mi-2024"
     },
     {
         "name": "UHUT UtrechtseHeuvelUltratrail 100km - Rhenen Loop split",
@@ -2180,17 +2272,6 @@
         "slug": "uhut-utrechtseheuvelultratrail-rhenen-loop-2024"
     },
     {
-        "name": "LauwersmeerLoop",
-        "country": "Netherlands",
-        "distance": "60km",
-        "date": "03/11/2024",
-        "url": "https://ultragrunnen.nl/lauwersmeerloop/",
-        "city": "Zoutkamp",
-        "lat": 53.3369602,
-        "lng": 6.3011339,
-        "slug": "lauwersmeerloop-2024"
-    },
-    {
         "name": "UHUT UtrechtseHeuvelUltratrail 100km - Doorn Loop split",
         "country": "Netherlands",
         "distance": "50km",
@@ -2202,16 +2283,26 @@
         "slug": "uhut-utrechtseheuvelultratrail-100km-doorn-loop-split-2024"
     },
     {
-        "name": "Gaasterland Trail",
+        "name": "LauwersmeerLoop",
+        "country": "Netherlands",
+        "distance": "60km",
+        "date": "03/11/2024",
+        "url": "https://ultragrunnen.nl/lauwersmeerloop/",
+        "city": "Zoutkamp",
+        "lat": 53.3369602,
+        "lng": 6.3011339,
+        "slug": "lauwersmeerloop-2024"
+    },
+    {
+        "name": "UHUT UtrechtseHeuvelUltratrail - Doorn Loop",
         "country": "Netherlands",
         "distance": "50km",
-        "date": "26/10/2024",
-        "url": "https://gaasterlandtrail.nl/",
-        "city": "Harich",
-        "terrain": "trail",
-        "lat": 52.902242,
-        "lng": 5.5642127,
-        "slug": "gaasterland-trail-2024"
+        "date": "30/11/2024",
+        "url": "https://www.trail-events.eu/EVENT-Utrechtse-Heuvelrug-Ultra-Trail-Winter-2024",
+        "city": "Leersum",
+        "lat": 52.0102642,
+        "lng": 5.4332757,
+        "slug": "uhut-utrechtseheuvelultratrail-doorn-loop-2024"
     },
     {
         "name": "Graef Castricum Trail Ultra 60km",
@@ -2226,15 +2317,27 @@
         "slug": "graef-castricum-trail-ultra-60km-2024"
     },
     {
-        "name": "UHUT UtrechtseHeuvelUltratrail - Doorn Loop",
+        "name": "Gaasterland Trail",
         "country": "Netherlands",
         "distance": "50km",
-        "date": "30/11/2024",
-        "url": "https://www.trail-events.eu/EVENT-Utrechtse-Heuvelrug-Ultra-Trail-Winter-2024",
-        "city": "Leersum",
-        "lat": 52.0102642,
-        "lng": 5.4332757,
-        "slug": "uhut-utrechtseheuvelultratrail-doorn-loop-2024"
+        "date": "26/10/2024",
+        "url": "https://gaasterlandtrail.nl/",
+        "city": "Harich",
+        "terrain": "trail",
+        "lat": 52.902242,
+        "lng": 5.5642127,
+        "slug": "gaasterland-trail-2024"
+    },
+    {
+        "name": "Indian Summer Ultra 75 km",
+        "country": "Netherlands",
+        "distance": "75km",
+        "date": "12/10/2024",
+        "url": "http://indiansummerultra.nl",
+        "city": "Gasselte",
+        "lat": 52.971916,
+        "lng": 6.7921853,
+        "slug": "indian-summer-ultra-75-km-2024"
     },
     {
         "name": "Brekeld Runners Trail",
@@ -2293,17 +2396,6 @@
         "slug": "indian-summer-ultra-75-km-2024"
     },
     {
-        "name": "Zevenheuvelentrail",
-        "country": "Netherlands",
-        "distance": "60km",
-        "date": "21/09/2024",
-        "url": "https://www.zevenheuvelentrail.nl/zevenheuvelentrail",
-        "city": "Nijmegen",
-        "lat": 51.8425749,
-        "lng": 5.8389606,
-        "slug": "zevenheuvelentrail-2024"
-    },
-    {
         "name": "Zevenheuvelentrail - NK trailrunning lange trail",
         "country": "Netherlands",
         "distance": "60km",
@@ -2314,6 +2406,17 @@
         "lat": 51.8425749,
         "lng": 5.8389606,
         "slug": "zevenheuvelentrail-nk-trailrunning-lange-trail-2024"
+    },
+    {
+        "name": "Zevenheuvelentrail",
+        "country": "Netherlands",
+        "distance": "60km",
+        "date": "21/09/2024",
+        "url": "https://www.zevenheuvelentrail.nl/zevenheuvelentrail",
+        "city": "Nijmegen",
+        "lat": 51.8425749,
+        "lng": 5.8389606,
+        "slug": "zevenheuvelentrail-2024"
     },
     {
         "name": "RUN Winschoten 50 km - open race",
@@ -2327,17 +2430,6 @@
         "slug": "run-winschoten-50-km-open-race-2024"
     },
     {
-        "name": "RUN Winschoten 100 km - Nederlands Kampioenschap",
-        "country": "Netherlands",
-        "distance": "100km",
-        "date": "14/09/2024",
-        "url": "http://runwinschoten.nl",
-        "city": "Winschoten",
-        "lat": 53.143001,
-        "lng": 7.0380717,
-        "slug": "run-winschoten-100-km-nederlands-kampioenschap-2024"
-    },
-    {
         "name": "RUN Winschoten 100 km - open race",
         "country": "Netherlands",
         "distance": "100km",
@@ -2347,6 +2439,17 @@
         "lat": 53.143001,
         "lng": 7.0380717,
         "slug": "run-winschoten-100-km-open-race-2024"
+    },
+    {
+        "name": "RUN Winschoten 100 km - Nederlands Kampioenschap",
+        "country": "Netherlands",
+        "distance": "100km",
+        "date": "14/09/2024",
+        "url": "http://runwinschoten.nl",
+        "city": "Winschoten",
+        "lat": 53.143001,
+        "lng": 7.0380717,
+        "slug": "run-winschoten-100-km-nederlands-kampioenschap-2024"
     },
     {
         "name": "De 6 Uur van Deventer - 50km Split",
@@ -2415,15 +2518,16 @@
         "slug": "rondom-stad-2024"
     },
     {
-        "name": "Linie1629ultra",
+        "name": "Liberation Trail - stage 5: Eindhoven - Groesbeek",
         "country": "Netherlands",
-        "distance": "50km",
-        "date": "01/06/2024",
-        "url": "http://Linie1629ultra.nl",
-        "city": "Vught",
-        "lat": 51.6511806,
-        "lng": 5.2368001,
-        "slug": "linie1629ultra-2024"
+        "distance": "81km",
+        "date": "15/06/2024",
+        "url": "https://liberationtrail.org/",
+        "city": "Eindhoven",
+        "terrain": "trail",
+        "lat": 51.4392648,
+        "lng": 5.478633,
+        "slug": "liberation-trail-stage-5-eindhoven-groesbeek-2024"
     },
     {
         "name": "Amerongse Berg Ultra 50k",
@@ -2437,16 +2541,15 @@
         "slug": "amerongse-berg-ultra-50k-2024"
     },
     {
-        "name": "Liberation Trail - stage 5: Eindhoven - Groesbeek",
+        "name": "Linie1629ultra",
         "country": "Netherlands",
-        "distance": "81km",
-        "date": "15/06/2024",
-        "url": "https://liberationtrail.org/",
-        "city": "Eindhoven",
-        "terrain": "trail",
-        "lat": 51.4392648,
-        "lng": 5.478633,
-        "slug": "liberation-trail-stage-5-eindhoven-groesbeek-2024"
+        "distance": "50km",
+        "date": "01/06/2024",
+        "url": "http://Linie1629ultra.nl",
+        "city": "Vught",
+        "lat": 51.6511806,
+        "lng": 5.2368001,
+        "slug": "linie1629ultra-2024"
     },
     {
         "name": "Pierewaai Summer Beach Trail",
@@ -2461,29 +2564,7 @@
         "slug": "pierewaai-summer-beach-trail-2024"
     },
     {
-        "name": "12-Uurs Run Middelburg",
-        "country": "Netherlands",
-        "distance": "13h",
-        "date": "25/05/2024",
-        "url": "https://www.facebook.com/events/1465860133997868",
-        "city": "Middelburg",
-        "lat": 51.4996784,
-        "lng": 3.6137371,
-        "slug": "12-uurs-run-middelburg-2024"
-    },
-    {
         "name": "VAM8",
-        "country": "Netherlands",
-        "distance": "8h",
-        "date": "25/05/2024",
-        "url": "https://runforestrun.nl/vam",
-        "city": "Wijster",
-        "lat": 52.8148592,
-        "lng": 6.5163531,
-        "slug": "vam8-2024"
-    },
-    {
-        "name": "VAM12",
         "country": "Netherlands",
         "distance": "12h",
         "date": "25/05/2024",
@@ -2505,6 +2586,17 @@
         "slug": "2de-hel-van-westeremden-een-klein-paradijs-2024"
     },
     {
+        "name": "VAM12",
+        "country": "Netherlands",
+        "distance": "12h",
+        "date": "25/05/2024",
+        "url": "https://runforestrun.nl/vam",
+        "city": "Wijster",
+        "lat": 52.8148592,
+        "lng": 6.5163531,
+        "slug": "vam12-2024"
+    },
+    {
         "name": "Sri Chinmoy 50 km-Lauf Amsterdam",
         "country": "Netherlands",
         "distance": "50km",
@@ -2516,6 +2608,17 @@
         "slug": "sri-chinmoy-50-km-lauf-amsterdam-2024"
     },
     {
+        "name": "2de Hel van Westeremden, een klein paradijs",
+        "country": "Netherlands",
+        "distance": "45km",
+        "date": "25/05/2024",
+        "url": "https://runningrunn.nl/hvw/2024/hvw.php",
+        "city": "Sint Annen",
+        "lat": 53.2979462,
+        "lng": 6.6652567,
+        "slug": "2de-hel-van-westeremden-een-klein-paradijs-2024"
+    },
+    {
         "name": "van Balk",
         "country": "Netherlands",
         "distance": "80km",
@@ -2525,18 +2628,6 @@
         "lat": 52.8989296,
         "lng": 5.5830455,
         "slug": "van-balk-2024"
-    },
-    {
-        "name": "Salomon Koning van Spanje Trail - 80km",
-        "country": "Netherlands",
-        "distance": "81km",
-        "date": "11/05/2024",
-        "url": "https://www.mudsweattrails.nl/koningvanspanje/",
-        "city": "Gulpen",
-        "terrain": "trail",
-        "lat": 50.8139879,
-        "lng": 5.8899585,
-        "slug": "salomon-koning-van-spanje-trail-80km-2024"
     },
     {
         "name": "Sri Chinmoy 100km-Lauf Amsterdam",
@@ -2561,6 +2652,18 @@
         "slug": "pallas-67-ultrameerdaagse-stage-5-arnhem-wageningen-2024"
     },
     {
+        "name": "Salomon Koning van Spanje Trail - 80km",
+        "country": "Netherlands",
+        "distance": "81km",
+        "date": "11/05/2024",
+        "url": "https://www.mudsweattrails.nl/koningvanspanje/",
+        "city": "Gulpen",
+        "terrain": "trail",
+        "lat": 50.8139879,
+        "lng": 5.8899585,
+        "slug": "salomon-koning-van-spanje-trail-80km-2024"
+    },
+    {
         "name": "Pallas 67 Ultrameerdaagse - stage 4 - Arnhem - Veluwe",
         "country": "Netherlands",
         "distance": "51km",
@@ -2570,6 +2673,28 @@
         "lat": 51.984257,
         "lng": 5.9108573,
         "slug": "pallas-67-ultrameerdaagse-stage-4-arnhem-veluwe-2024"
+    },
+    {
+        "name": "Petranpad Ultra Run 112k",
+        "country": "Netherlands",
+        "distance": "112km",
+        "date": "04/05/2024",
+        "url": "https://petranultra.nl/",
+        "city": "Meerlo",
+        "lat": 51.51187,
+        "lng": 6.0869555,
+        "slug": "petranpad-ultra-run-112k-2024"
+    },
+    {
+        "name": "Pallas 67 Ultrameerdaagse - stage 3 - Arnhem - Lobith",
+        "country": "Netherlands",
+        "distance": "66km",
+        "date": "10/05/2024",
+        "url": "https://www.pallas67.nl/p67/?page_id=25316",
+        "city": "Arnhem",
+        "lat": 51.984257,
+        "lng": 5.9108573,
+        "slug": "pallas-67-ultrameerdaagse-stage-3-arnhem-lobith-2024"
     },
     {
         "name": "Petranpad Ultra Trail 60k",
@@ -2584,26 +2709,38 @@
         "slug": "petranpad-ultra-trail-60k-2024"
     },
     {
-        "name": "Pallas 67 Ultrameerdaagse - stage 3 - Arnhem - Lobith",
+        "name": "Pallas 67 Ultrameerdaagse - stage 1 - Wageningen - Arnhem",
         "country": "Netherlands",
-        "distance": "66km",
-        "date": "10/05/2024",
+        "distance": "51km",
+        "date": "08/05/2024",
+        "url": "https://www.pallas67.nl/p67/?page_id=25316",
+        "city": "Wageningen",
+        "lat": 51.9663016,
+        "lng": 5.6662814,
+        "slug": "pallas-67-ultrameerdaagse-stage-1-wageningen-arnhem-2024"
+    },
+    {
+        "name": "Pallas 67 Ultrameerdaagse - stage 2 - Arnhem - Doesburg",
+        "country": "Netherlands",
+        "distance": "51km",
+        "date": "09/05/2024",
         "url": "https://www.pallas67.nl/p67/?page_id=25316",
         "city": "Arnhem",
         "lat": 51.984257,
         "lng": 5.9108573,
-        "slug": "pallas-67-ultrameerdaagse-stage-3-arnhem-lobith-2024"
+        "slug": "pallas-67-ultrameerdaagse-stage-2-arnhem-doesburg-2024"
     },
     {
-        "name": "Petranpad Ultra Run 112k",
+        "name": "Pegasus Ultra Trail",
         "country": "Netherlands",
-        "distance": "112km",
-        "date": "04/05/2024",
-        "url": "https://petranultra.nl/",
-        "city": "Meerlo",
-        "lat": 51.51187,
-        "lng": 6.0869555,
-        "slug": "petranpad-ultra-run-112k-2024"
+        "distance": "50km",
+        "date": "20/04/2024",
+        "url": "http://www.trailclub.nl",
+        "city": "Ede",
+        "terrain": "trail",
+        "lat": 52.0716826,
+        "lng": 5.7455106,
+        "slug": "pegasus-ultra-trail-2024"
     },
     {
         "name": "Pallas 67 Ultrameerdaagse - stage 1 - Wageningen - Arnhem",
@@ -2640,6 +2777,17 @@
         "slug": "cauberg-trail-2024"
     },
     {
+        "name": "Eemlake Run (Eemmeerloop)",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "20/04/2024",
+        "url": "http://www.quovadisbunschoten.nl",
+        "city": "Bunschoten",
+        "lat": 52.2391743,
+        "lng": 5.3734101,
+        "slug": "eemlake-run-eemmeerloop-2024"
+    },
+    {
         "name": "Runforestrun Hart van Drenthe",
         "country": "Netherlands",
         "distance": "52km",
@@ -2663,26 +2811,15 @@
         "slug": "pegasus-ultra-trail-2024"
     },
     {
-        "name": "Eemlake Run (Eemmeerloop)",
+        "name": "6hrs Sittard",
         "country": "Netherlands",
-        "distance": "50km",
-        "date": "20/04/2024",
-        "url": "http://www.quovadisbunschoten.nl",
-        "city": "Bunschoten",
-        "lat": 52.2391743,
-        "lng": 5.3734101,
-        "slug": "eemlake-run-eemmeerloop-2024"
-    },
-    {
-        "name": "6hrs Sittard - 50km Split",
-        "country": "Netherlands",
-        "distance": "50km",
+        "distance": "6h",
         "date": "24/03/2024",
         "url": "https://www.24hrssittard.com/",
         "city": "Sittard",
         "lat": 50.9974235,
         "lng": 5.8666627,
-        "slug": "6hrs-sittard-50km-split-2024"
+        "slug": "6hrs-sittard-2024"
     },
     {
         "name": "12hrs Sittard - 50km Split",
@@ -2694,17 +2831,6 @@
         "lat": 50.9974235,
         "lng": 5.8666627,
         "slug": "12hrs-sittard-50km-split-2024"
-    },
-    {
-        "name": "6hrs Sittard",
-        "country": "Netherlands",
-        "distance": "6h",
-        "date": "24/03/2024",
-        "url": "https://www.24hrssittard.com/",
-        "city": "Sittard",
-        "lat": 50.9974235,
-        "lng": 5.8666627,
-        "slug": "6hrs-sittard-2024"
     },
     {
         "name": "De 120 van Texel",
@@ -2747,6 +2873,28 @@
         "slug": "65-van-walcheren-2024"
     },
     {
+        "name": "65 van Walcheren",
+        "country": "Netherlands",
+        "distance": "65km",
+        "date": "03/03/2024",
+        "url": "http://65vanwalcheren.nl",
+        "city": "Vrouwenpolder",
+        "lat": 51.576602,
+        "lng": 3.6165776,
+        "slug": "65-van-walcheren-2024"
+    },
+    {
+        "name": "SallandTrail 50 km",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "09/03/2024",
+        "url": "http://www.sallandtrail.nl/",
+        "city": "Nijverdal",
+        "lat": 52.3592015,
+        "lng": 6.4654075,
+        "slug": "sallandtrail-50-km-2024"
+    },
+    {
         "name": "Salomon Vuurtorentrail Festival Ameland 60km",
         "country": "Netherlands",
         "distance": "60km",
@@ -2778,15 +2926,16 @@
         "slug": "sallandtrail-80-km-50-mijl-2024"
     },
     {
-        "name": "SallandTrail 50 km",
+        "name": "Bosbokken Trail",
         "country": "Netherlands",
-        "distance": "50km",
-        "date": "09/03/2024",
-        "url": "http://www.sallandtrail.nl/",
-        "city": "Nijverdal",
-        "lat": 52.3592015,
-        "lng": 6.4654075,
-        "slug": "sallandtrail-50-km-2024"
+        "distance": "47km",
+        "date": "25/02/2024",
+        "url": "https://www.bosbokken.nl/",
+        "city": "Burgh-Haamstede",
+        "terrain": "trail",
+        "lat": 51.7022441,
+        "lng": 3.722061,
+        "slug": "bosbokken-trail-2024"
     },
     {
         "name": "Bosbokken Trail",
@@ -2810,17 +2959,6 @@
         "lat": 52.957976,
         "lng": 4.760279,
         "slug": "dutch-coast-ultra-run-by-night-75km-2024"
-    },
-    {
-        "name": "Dutch Coast Ultra Run by Night 50km",
-        "country": "Netherlands",
-        "distance": "50km",
-        "date": "09/02/2024",
-        "url": "https://www.facebook.com/groups/140119496133094",
-        "city": "Den Helder",
-        "lat": 52.957976,
-        "lng": 4.760279,
-        "slug": "dutch-coast-ultra-run-by-night-50km-2024"
     },
     {
         "name": "Drielandenpunt Winter Trail",
@@ -2859,17 +2997,6 @@
         "slug": "pierewaai-trail-2024"
     },
     {
-        "name": "Friends of the SM run ultra",
-        "country": "Netherlands",
-        "distance": "45km",
-        "date": "27/12/2025",
-        "url": "http://www.bemelenbeweegt.nl",
-        "city": "Meerssen",
-        "lat": 50.9047092,
-        "lng": 5.7352078,
-        "slug": "friends-of-the-sm-run-ultra-2025"
-    },
-    {
         "name": "Voorne's Duin Trail",
         "country": "Netherlands",
         "distance": "60km",
@@ -2882,7 +3009,29 @@
         "slug": "voorne-s-duin-trail-2025"
     },
     {
-        "name": "UHUT UtrechtseHeuvelUltratrail - Doorn Loop",
+        "name": "Friends of the SM run ultra",
+        "country": "Netherlands",
+        "distance": "45km",
+        "date": "27/12/2025",
+        "url": "http://www.bemelenbeweegt.nl",
+        "city": "Meerssen",
+        "lat": 50.9047092,
+        "lng": 5.7352078,
+        "slug": "friends-of-the-sm-run-ultra-2025"
+    },
+    {
+        "name": "West Coast Challenge - Halfway",
+        "country": "Netherlands",
+        "distance": "62km",
+        "date": "13/12/2025",
+        "url": "https://www.westcoastchallenge.nl/",
+        "city": "Wijk aan Zee",
+        "lat": 52.4939272,
+        "lng": 4.593759,
+        "slug": "west-coast-challenge-halfway-2025"
+    },
+    {
+        "name": "UHUT UtrechtseHeuvelUltratrail - Rhenen Loop",
         "country": "Netherlands",
         "distance": "50km",
         "date": "30/11/2025",
@@ -2915,19 +3064,7 @@
         "slug": "west-coast-challenge-halfway-2025"
     },
     {
-        "name": "Graef Castricum Trail Ultra 60km",
-        "country": "Netherlands",
-        "distance": "60km",
-        "date": "23/11/2025",
-        "url": "https://cairnadventures.nl/trail/graef-castricum-trail/",
-        "city": "Castricum",
-        "terrain": "trail",
-        "lat": 52.5496739,
-        "lng": 4.6696185,
-        "slug": "graef-castricum-trail-ultra-60km-2025"
-    },
-    {
-        "name": "Gaasterland Trail",
+        "name": "Indian Summer Ultra 50 km",
         "country": "Netherlands",
         "distance": "50km",
         "date": "25/10/2025",
@@ -2950,26 +3087,16 @@
         "slug": "indian-summer-ultra-100-km-2025"
     },
     {
-        "name": "Indian Summer Ultra 50 km",
+        "name": "Graef Castricum Trail Ultra 60km",
         "country": "Netherlands",
-        "distance": "50km",
-        "date": "11/10/2025",
-        "url": "http://indiansummerultra.nl",
-        "city": "Gasselte",
-        "lat": 52.971916,
-        "lng": 6.7921853,
-        "slug": "indian-summer-ultra-50-km-2025"
-    },
-    {
-        "name": "Dutch Backyard Ultra",
-        "country": "Netherlands",
-        "distance": "36h",
-        "date": "18/10/2025",
-        "url": "https://www.trail-events.eu/EVENT-Dutch-Backyard-Ultra-10-2025#/",
-        "city": "Zeewolde",
-        "lat": 52.331111,
-        "lng": 5.5430312,
-        "slug": "dutch-backyard-ultra-2025"
+        "distance": "60km",
+        "date": "23/11/2025",
+        "url": "https://cairnadventures.nl/trail/graef-castricum-trail/",
+        "city": "Castricum",
+        "terrain": "trail",
+        "lat": 52.5496739,
+        "lng": 4.6696185,
+        "slug": "graef-castricum-trail-ultra-60km-2025"
     },
     {
         "name": "Doelgericht deur Stad",
@@ -3006,7 +3133,18 @@
         "slug": "pegasus-ultra-trail-2025"
     },
     {
-        "name": "Fun Runner",
+        "name": "Indian Summer Ultra 75 km",
+        "country": "Netherlands",
+        "distance": "75km",
+        "date": "11/10/2025",
+        "url": "http://indiansummerultra.nl",
+        "city": "Gasselte",
+        "lat": 52.971916,
+        "lng": 6.7921853,
+        "slug": "indian-summer-ultra-75-km-2025"
+    },
+    {
+        "name": "Devil's Ultra",
         "country": "Netherlands",
         "distance": "47.4km",
         "date": "04/10/2025",
@@ -3015,6 +3153,18 @@
         "lat": 51.8113566,
         "lng": 5.9170257,
         "slug": "fun-runner-2025"
+    },
+    {
+        "name": "Zevenheuvelentrail - NK trailrunning lange trail",
+        "country": "Netherlands",
+        "distance": "56km",
+        "date": "27/09/2025",
+        "url": "https://www.zevenheuvelentrail.nl/nk-trailrunning",
+        "city": "Heilig Landstichting",
+        "terrain": "trail",
+        "lat": 51.8171099,
+        "lng": 5.8916867,
+        "slug": "zevenheuvelentrail-nk-trailrunning-lange-trail-2025"
     },
     {
         "name": "Brekeld Runners Trail",
@@ -3040,27 +3190,6 @@
         "slug": "zevenheuvelentrail-2025"
     },
     {
-        "name": "Zevenheuvelentrail - NK trailrunning lange trail",
-        "country": "Netherlands",
-        "distance": "56km",
-        "date": "27/09/2025",
-        "url": "https://www.zevenheuvelentrail.nl/nk-trailrunning",
-        "city": "Heilig Landstichting",
-        "terrain": "trail",
-        "lat": 51.8171099,
-        "lng": 5.8916867,
-        "slug": "zevenheuvelentrail-nk-trailrunning-lange-trail-2025"
-    },
-    {
-        "name": "Devil's Ultra",
-        "country": "Netherlands",
-        "distance": "24h",
-        "date": "04/10/2025",
-        "url": "https://devilstrail.nl/evenementen/devils-trail-utrechtse-heuvelrug/",
-        "city": "Doornse",
-        "slug": "devil-s-ultra-2025"
-    },
-    {
         "name": "Sri Chinmoy 6-Stunden-Lauf Amsterdam",
         "country": "Netherlands",
         "distance": "6h",
@@ -3083,17 +3212,6 @@
         "slug": "ommetjesultra-55km-2025"
     },
     {
-        "name": "Eddy 60 Ultra",
-        "country": "Netherlands",
-        "distance": "60km",
-        "date": "27/07/2025",
-        "url": "https://mdlopers.nl/zondag-27-juli-2025-eddy-60-marathon-assen-e-o/",
-        "city": "Assen",
-        "lat": 52.997225,
-        "lng": 6.5506458,
-        "slug": "eddy-60-ultra-2025"
-    },
-    {
         "name": "Groote Heide Ultra",
         "country": "Netherlands",
         "distance": "50km",
@@ -3101,6 +3219,15 @@
         "url": "https://www.trail-events.eu/EVENT-Groote-Heide-Ultra-30-08-2025",
         "city": "Leende, Noord-Brabant",
         "slug": "groote-heide-ultra-2025"
+    },
+    {
+        "name": "Devil's Ultra",
+        "country": "Netherlands",
+        "distance": "24h",
+        "date": "04/10/2025",
+        "url": "https://devilstrail.nl/evenementen/devils-trail-utrechtse-heuvelrug/",
+        "city": "Doornse",
+        "slug": "devil-s-ultra-2025"
     },
     {
         "name": "RUN Winschoten 50 km",
@@ -3137,7 +3264,7 @@
         "slug": "vut100-veluwse-ultra-trail-50km-zuid-2025"
     },
     {
-        "name": "VUT100 (Veluwse Ultra Trail) - 100km",
+        "name": "VUT100 (Veluwse Ultra Trail) - 50km noord",
         "country": "Netherlands",
         "distance": "100km",
         "date": "26/07/2025",
@@ -3184,15 +3311,26 @@
         "slug": "vechtdaltrail-2025"
     },
     {
-        "name": "BUT100 (Brabants UltraTrail) - 50 km Zuid",
+        "name": "VechtdalTrail",
         "country": "Netherlands",
         "distance": "50km",
+        "date": "05/07/2025",
+        "url": "https://vechtdaltrail.nl",
+        "city": "Ommen",
+        "lat": 52.510347,
+        "lng": 6.4524247,
+        "slug": "vechtdaltrail-2025"
+    },
+    {
+        "name": "BUT100 (Brabants UltraTrail) - 75 km",
+        "country": "Netherlands",
+        "distance": "75km",
         "date": "28/06/2025",
         "url": "https://www.trail-events.eu/EVENT-Brabantse-Ultra-Trail-BUT100-28-06-2025",
         "city": "Leende",
         "lat": 51.3484037,
         "lng": 5.5518897,
-        "slug": "but100-brabants-ultratrail-50-km-zuid-2025"
+        "slug": "but100-brabants-ultratrail-75-km-2025"
     },
     {
         "name": "BUT100 (Brabants UltraTrail) - 100 km",
@@ -3217,7 +3355,18 @@
         "slug": "but100-brabants-ultratrail-50-km-noord-2025"
     },
     {
-        "name": "BUT100 (Brabants UltraTrail) - 75 km",
+        "name": "BUT100 (Brabants UltraTrail) - 50 km Zuid",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "28/06/2025",
+        "url": "https://www.trail-events.eu/EVENT-Brabantse-Ultra-Trail-BUT100-28-06-2025",
+        "city": "Leende",
+        "lat": 51.3484037,
+        "lng": 5.5518897,
+        "slug": "but100-brabants-ultratrail-50-km-zuid-2025"
+    },
+    {
+        "name": "BUT100 (Brabants UltraTrail) - 100 km",
         "country": "Netherlands",
         "distance": "75km",
         "date": "28/06/2025",
@@ -3239,6 +3388,17 @@
         "slug": "zes-uur-van-de-haarlemmermeer-2025"
     },
     {
+        "name": "Rondom Stad",
+        "country": "Netherlands",
+        "distance": "70km",
+        "date": "21/06/2025",
+        "url": "https://runningrunn.nl/rondomstad/2025/informatie.php",
+        "city": "Sint Annen",
+        "lat": 53.2979462,
+        "lng": 6.6652567,
+        "slug": "rondom-stad-2025"
+    },
+    {
         "name": "Marathon van Kerkwerve",
         "country": "Netherlands",
         "distance": "45.8km",
@@ -3248,6 +3408,18 @@
         "lat": 51.6863988,
         "lng": 3.8994996,
         "slug": "marathon-van-kerkwerve-2025"
+    },
+    {
+        "name": "Liberation Trail - stage 5: Eindhoven - Nijmegen",
+        "country": "Netherlands",
+        "distance": "81km",
+        "date": "14/06/2025",
+        "url": "https://liberationtrail.org/",
+        "city": "Eindhoven",
+        "terrain": "trail",
+        "lat": 51.4392648,
+        "lng": 5.478633,
+        "slug": "liberation-trail-stage-5-eindhoven-nijmegen-2025"
     },
     {
         "name": "Pierewaai Summer Beach Trail",
@@ -3273,16 +3445,15 @@
         "slug": "12-uurs-run-middelburg-2025"
     },
     {
-        "name": "Liberation Trail - stage 5: Eindhoven - Nijmegen",
+        "name": "Linie1629ultra",
         "country": "Netherlands",
-        "distance": "81km",
-        "date": "14/06/2025",
-        "url": "https://liberationtrail.org/",
-        "city": "Eindhoven",
-        "terrain": "trail",
-        "lat": 51.4392648,
-        "lng": 5.478633,
-        "slug": "liberation-trail-stage-5-eindhoven-nijmegen-2025"
+        "distance": "50km",
+        "date": "07/06/2025",
+        "url": "http://Linie1629ultra.nl",
+        "city": "Vught",
+        "lat": 51.6511806,
+        "lng": 5.2368001,
+        "slug": "linie1629ultra-2025"
     },
     {
         "name": "Rondom Stad",
@@ -3318,17 +3489,6 @@
         "slug": "vam12-2025"
     },
     {
-        "name": "Linie1629ultra",
-        "country": "Netherlands",
-        "distance": "50km",
-        "date": "07/06/2025",
-        "url": "http://Linie1629ultra.nl",
-        "city": "Vught",
-        "lat": 51.6511806,
-        "lng": 5.2368001,
-        "slug": "linie1629ultra-2025"
-    },
-    {
         "name": "Pallas 67 Ultrameerdaagse - stage 5",
         "country": "Netherlands",
         "distance": "52km",
@@ -3362,17 +3522,6 @@
         "slug": "vam8-2025"
     },
     {
-        "name": "UHUT UtrechtseHeuvelUltratrail 75 km - Spring Edition",
-        "country": "Netherlands",
-        "distance": "75km",
-        "date": "24/05/2025",
-        "url": "https://www.trail-events.eu/EVENT-Utrechtse-Heuvelrug-Ultra-Trail-UHUT100-24-05-2025",
-        "city": "Leersum",
-        "lat": 52.0102642,
-        "lng": 5.4332757,
-        "slug": "uhut-utrechtseheuvelultratrail-75-km-spring-edition-2025"
-    },
-    {
         "name": "Pallas 67 Ultrameerdaagse - stage 3",
         "country": "Netherlands",
         "distance": "54.5km",
@@ -3382,17 +3531,6 @@
         "lat": 50.8775239,
         "lng": 5.9815066,
         "slug": "pallas-67-ultrameerdaagse-stage-3-2025"
-    },
-    {
-        "name": "Pallas 67 Ultrameerdaagse - stage 1",
-        "country": "Netherlands",
-        "distance": "58km",
-        "date": "28/05/2025",
-        "url": "https://www.pallas67.nl/p67/?page_id=25316",
-        "city": "Heerlen",
-        "lat": 50.8775239,
-        "lng": 5.9815066,
-        "slug": "pallas-67-ultrameerdaagse-stage-1-2025"
     },
     {
         "name": "Pallas 67 Ultrameerdaagse - stage 2",
@@ -3406,26 +3544,38 @@
         "slug": "pallas-67-ultrameerdaagse-stage-2-2025"
     },
     {
-        "name": "Sri Chinmoy 100km-Lauf Amsterdam",
+        "name": "UHUT UtrechtseHeuvelUltratrail 75 km - Spring Edition",
         "country": "Netherlands",
-        "distance": "100km",
+        "distance": "75km",
         "date": "24/05/2025",
-        "url": "http://nl.srichinmoyraces.org/",
-        "city": "Amstelveen",
-        "lat": 52.3028209,
-        "lng": 4.8596844,
-        "slug": "sri-chinmoy-100km-lauf-amsterdam-2025"
+        "url": "https://www.trail-events.eu/EVENT-Utrechtse-Heuvelrug-Ultra-Trail-UHUT100-24-05-2025",
+        "city": "Leersum",
+        "lat": 52.0102642,
+        "lng": 5.4332757,
+        "slug": "uhut-utrechtseheuvelultratrail-75-km-spring-edition-2025"
     },
     {
-        "name": "Sri Chinmoy 50 km-Lauf Amsterdam",
+        "name": "Pallas 67 Ultrameerdaagse - stage 2",
         "country": "Netherlands",
-        "distance": "50km",
-        "date": "24/05/2025",
-        "url": "http://nl.srichinmoyraces.org/",
-        "city": "Amstelveen",
-        "lat": 52.3028209,
-        "lng": 4.8596844,
-        "slug": "sri-chinmoy-50-km-lauf-amsterdam-2025"
+        "distance": "53.2km",
+        "date": "29/05/2025",
+        "url": "https://www.pallas67.nl/p67/?page_id=25316",
+        "city": "Heerlen",
+        "lat": 50.8775239,
+        "lng": 5.9815066,
+        "slug": "pallas-67-ultrameerdaagse-stage-2-2025"
+    },
+    {
+        "name": "Salomon Koning van Spanje Trail - 72km",
+        "country": "Netherlands",
+        "distance": "72km",
+        "date": "17/05/2025",
+        "url": "https://www.mudsweattrails.nl/koningvanspanje/",
+        "city": "Gulpen",
+        "terrain": "trail",
+        "lat": 50.8139879,
+        "lng": 5.8899585,
+        "slug": "salomon-koning-van-spanje-trail-72km-2025"
     },
     {
         "name": "UHUT UtrechtseHeuvelUltratrail 50km",
@@ -3450,18 +3600,6 @@
         "slug": "uhut-utrechtseheuvelultratrail-100km-2025"
     },
     {
-        "name": "Salomon Koning van Spanje Trail - 72km",
-        "country": "Netherlands",
-        "distance": "72km",
-        "date": "17/05/2025",
-        "url": "https://www.mudsweattrails.nl/koningvanspanje/",
-        "city": "Gulpen",
-        "terrain": "trail",
-        "lat": 50.8139879,
-        "lng": 5.8899585,
-        "slug": "salomon-koning-van-spanje-trail-72km-2025"
-    },
-    {
         "name": "Salomon Koning van Spanje Trail - 101km",
         "country": "Netherlands",
         "distance": "101km",
@@ -3474,37 +3612,15 @@
         "slug": "salomon-koning-van-spanje-trail-101km-2025"
     },
     {
-        "name": "Petranpad Ultra Run 112k",
+        "name": "Sri Chinmoy 100km-Lauf Amsterdam",
         "country": "Netherlands",
-        "distance": "112km",
-        "date": "02/05/2025",
-        "url": "https://petranultra.nl/",
-        "city": "Meerlo",
-        "lat": 51.51187,
-        "lng": 6.0869555,
-        "slug": "petranpad-ultra-run-112k-2025"
-    },
-    {
-        "name": "Hollands Duin Ultra",
-        "country": "Netherlands",
-        "distance": "50km",
-        "date": "26/04/2025",
-        "url": "https://www.trail-events.eu/EVENT-Hollands-Duin-Ultra-26-04-2025",
-        "city": "Noordwijk",
-        "lat": 52.2410856,
-        "lng": 4.4461969,
-        "slug": "hollands-duin-ultra-2025"
-    },
-    {
-        "name": "6hrs Sittard",
-        "country": "Netherlands",
-        "distance": "6h",
-        "date": "04/05/2025",
-        "url": "https://www.24hrssittard.com/",
-        "city": "Sittard",
-        "lat": 50.9974235,
-        "lng": 5.8666627,
-        "slug": "6hrs-sittard-2025"
+        "distance": "100km",
+        "date": "24/05/2025",
+        "url": "http://nl.srichinmoyraces.org/",
+        "city": "Amstelveen",
+        "lat": 52.3028209,
+        "lng": 4.8596844,
+        "slug": "sri-chinmoy-100km-lauf-amsterdam-2025"
     },
     {
         "name": "6hrs Sittard - 50km Split",
@@ -3518,6 +3634,39 @@
         "slug": "6hrs-sittard-50km-split-2025"
     },
     {
+        "name": "Hollands Duin Ultra",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "26/04/2025",
+        "url": "https://www.trail-events.eu/EVENT-Hollands-Duin-Ultra-26-04-2025",
+        "city": "Noordwijk",
+        "lat": 52.2410856,
+        "lng": 4.4461969,
+        "slug": "hollands-duin-ultra-2025"
+    },
+    {
+        "name": "Petranpad Ultra Run 112k",
+        "country": "Netherlands",
+        "distance": "112km",
+        "date": "02/05/2025",
+        "url": "https://petranultra.nl/",
+        "city": "Meerlo",
+        "lat": 51.51187,
+        "lng": 6.0869555,
+        "slug": "petranpad-ultra-run-112k-2025"
+    },
+    {
+        "name": "6hrs Sittard",
+        "country": "Netherlands",
+        "distance": "6h",
+        "date": "04/05/2025",
+        "url": "https://www.24hrssittard.com/",
+        "city": "Sittard",
+        "lat": 50.9974235,
+        "lng": 5.8666627,
+        "slug": "6hrs-sittard-2025"
+    },
+    {
         "name": "Stadspark Ultra",
         "country": "Netherlands",
         "distance": "6h",
@@ -3529,15 +3678,15 @@
         "slug": "stadspark-ultra-2025"
     },
     {
-        "name": "Dinah Might 100km Ultra Run",
+        "name": "Stadspark Ultra",
         "country": "Netherlands",
-        "distance": "100km",
-        "date": "05/04/2025",
-        "url": "https://www.facebook.com/events/1913917769103717/",
-        "city": "Emmeloord",
-        "lat": 52.7087448,
-        "lng": 5.7466367,
-        "slug": "dinah-might-100km-ultra-run-2025"
+        "distance": "6h",
+        "date": "11/04/2025",
+        "url": "https://forms.gle/eJC9gB8Z19LY3swD6",
+        "city": "Groningen",
+        "lat": 53.2190652,
+        "lng": 6.5680077,
+        "slug": "stadspark-ultra-2025"
     },
     {
         "name": "Runforestrun Hart van Drenthe",
@@ -3549,6 +3698,17 @@
         "lat": 52.8964673,
         "lng": 6.7409769,
         "slug": "runforestrun-hart-van-drenthe-2025"
+    },
+    {
+        "name": "Dinah Might 100km Ultra Run",
+        "country": "Netherlands",
+        "distance": "100km",
+        "date": "05/04/2025",
+        "url": "https://www.facebook.com/events/1913917769103717/",
+        "city": "Emmeloord",
+        "lat": 52.7087448,
+        "lng": 5.7466367,
+        "slug": "dinah-might-100km-ultra-run-2025"
     },
     {
         "name": "Dinah Might 50 Miles Ultra Run",
@@ -3624,17 +3784,6 @@
         "slug": "sallandtrail-50-km-2025"
     },
     {
-        "name": "WoldjerspoorZoeker",
-        "country": "Netherlands",
-        "distance": "50km",
-        "date": "23/02/2025",
-        "url": "https://ultragrunnen.nl/woldjerspoorzoeker/",
-        "city": "Delfzijl",
-        "lat": 53.3325644,
-        "lng": 6.9135144,
-        "slug": "woldjerspoorzoeker-2025"
-    },
-    {
         "name": "65 van Walcheren",
         "country": "Netherlands",
         "distance": "65km",
@@ -3644,6 +3793,17 @@
         "lat": 51.576602,
         "lng": 3.6165776,
         "slug": "65-van-walcheren-2025"
+    },
+    {
+        "name": "WoldjerspoorZoeker",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "23/02/2025",
+        "url": "https://ultragrunnen.nl/woldjerspoorzoeker/",
+        "city": "Delfzijl",
+        "lat": 53.3325644,
+        "lng": 6.9135144,
+        "slug": "woldjerspoorzoeker-2025"
     },
     {
         "name": "Bosbokken Trail",
@@ -3680,26 +3840,16 @@
         "slug": "dutch-coast-ultra-run-by-night-50km-2025"
     },
     {
-        "name": "Dutch Coast Ultra Run by Night 75km",
+        "name": "Pierewaai Trail Winter Ed. 50km",
         "country": "Netherlands",
-        "distance": "75km",
-        "date": "07/02/2025",
-        "url": "https://www.facebook.com/groups/140119496133094",
-        "city": "Den Helder",
-        "lat": 52.957976,
-        "lng": 4.760279,
-        "slug": "dutch-coast-ultra-run-by-night-75km-2025"
-    },
-    {
-        "name": "West Coast Challenge - Halfway",
-        "country": "Netherlands",
-        "distance": "62km",
-        "date": "18/01/2025",
-        "url": "https://www.westcoastchallenge.nl/",
+        "distance": "50km",
+        "date": "25/01/2025",
+        "url": "https://www.pierewaaitrail.nl",
         "city": "Hoek van Holland",
+        "terrain": "trail",
         "lat": 51.9771615,
         "lng": 4.1314526,
-        "slug": "west-coast-challenge-halfway-2025"
+        "slug": "pierewaai-trail-winter-ed-50km-2025"
     },
     {
         "name": "Leenderbos Ultra Trail",
@@ -3714,16 +3864,26 @@
         "slug": "leenderbos-ultra-trail-2025"
     },
     {
-        "name": "Pierewaai Trail Winter Ed. 50km",
+        "name": "West Coast Challenge - Halfway",
         "country": "Netherlands",
-        "distance": "50km",
-        "date": "25/01/2025",
-        "url": "https://www.pierewaaitrail.nl",
+        "distance": "62km",
+        "date": "18/01/2025",
+        "url": "https://www.westcoastchallenge.nl/",
         "city": "Hoek van Holland",
-        "terrain": "trail",
         "lat": 51.9771615,
         "lng": 4.1314526,
-        "slug": "pierewaai-trail-winter-ed-50km-2025"
+        "slug": "west-coast-challenge-halfway-2025"
+    },
+    {
+        "name": "Dutch Coast Ultra Run by Night 75km",
+        "country": "Netherlands",
+        "distance": "75km",
+        "date": "07/02/2025",
+        "url": "https://www.facebook.com/groups/140119496133094",
+        "city": "Den Helder",
+        "lat": 52.957976,
+        "lng": 4.760279,
+        "slug": "dutch-coast-ultra-run-by-night-75km-2025"
     },
     {
         "name": "Drielandenpunt Winter Trail",
@@ -3784,15 +3944,16 @@
         "slug": "lage-vuursche-ultra-2026"
     },
     {
-        "name": "Hollands Duin Ultra",
+        "name": "Gaasterland Trail",
         "country": "Netherlands",
         "distance": "50km",
-        "date": "19/12/2026",
-        "url": "http://www.trail-events.eu/EVENT-Hollands-Duin-Ultra-19-12-2026",
-        "city": "Noordwijk",
-        "lat": 52.2410856,
-        "lng": 4.4461969,
-        "slug": "hollands-duin-ultra-2026"
+        "date": "24/10/2026",
+        "url": "https://gaasterlandtrail.nl/",
+        "city": "Harich",
+        "terrain": "trail",
+        "lat": 52.902242,
+        "lng": 5.5642127,
+        "slug": "gaasterland-trail-2026"
     },
     {
         "name": "UHUT100 Winter - Rhenen",
@@ -3806,37 +3967,15 @@
         "slug": "uhut100-winter-rhenen-2026"
     },
     {
-        "name": "Indian Summer Ultra 50 km",
+        "name": "UHUT100 Winter - Doorn",
         "country": "Netherlands",
         "distance": "50km",
-        "date": "10/10/2026",
-        "url": "http://indiansummerultra.nl",
-        "city": "Gasselte",
-        "lat": 52.971916,
-        "lng": 6.7921853,
-        "slug": "indian-summer-ultra-50-km-2026"
-    },
-    {
-        "name": "Dutch Backyard Ultra Zeewolde",
-        "country": "Netherlands",
-        "distance": "36h",
-        "date": "17/10/2026",
-        "url": "http://www.trail-events.eu/EVENT-Dutch-Backyard-Ultra-10-2026#/",
-        "city": "Zeewolde",
-        "lat": 52.331111,
-        "lng": 5.5430312,
-        "slug": "dutch-backyard-ultra-zeewolde-2026"
-    },
-    {
-        "name": "Indian Summer Ultra 75 km",
-        "country": "Netherlands",
-        "distance": "75km",
-        "date": "10/10/2026",
-        "url": "http://indiansummerultra.nl",
-        "city": "Gasselte",
-        "lat": 52.971916,
-        "lng": 6.7921853,
-        "slug": "indian-summer-ultra-75-km-2026"
+        "date": "29/11/2026",
+        "url": "http://www.trail-events.eu/EVENT-Utrechtse-Heuvelrug-Ultra-Trail-Winter-UHUT100-28-11-2026",
+        "city": "Leersum",
+        "lat": 52.0102642,
+        "lng": 5.4332757,
+        "slug": "uhut100-winter-doorn-2026"
     },
     {
         "name": "Gelderse Poort Ultra",
@@ -3859,6 +3998,39 @@
         "lat": 52.971916,
         "lng": 6.7921853,
         "slug": "indian-summer-ultra-100-km-2026"
+    },
+    {
+        "name": "Dutch Backyard Ultra Zeewolde",
+        "country": "Netherlands",
+        "distance": "36h",
+        "date": "17/10/2026",
+        "url": "http://www.trail-events.eu/EVENT-Dutch-Backyard-Ultra-10-2026#/",
+        "city": "Zeewolde",
+        "lat": 52.331111,
+        "lng": 5.5430312,
+        "slug": "dutch-backyard-ultra-zeewolde-2026"
+    },
+    {
+        "name": "Dutch Backyard Ultra Zeewolde",
+        "country": "Netherlands",
+        "distance": "36h",
+        "date": "17/10/2026",
+        "url": "http://www.trail-events.eu/EVENT-Dutch-Backyard-Ultra-10-2026#/",
+        "city": "Zeewolde",
+        "lat": 52.331111,
+        "lng": 5.5430312,
+        "slug": "dutch-backyard-ultra-zeewolde-2026"
+    },
+    {
+        "name": "Indian Summer Ultra 50 km",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "10/10/2026",
+        "url": "http://indiansummerultra.nl",
+        "city": "Gasselte",
+        "lat": 52.971916,
+        "lng": 6.7921853,
+        "slug": "indian-summer-ultra-50-km-2026"
     },
     {
         "name": "Austerlitz Ultra",
@@ -3884,17 +4056,6 @@
         "slug": "vut100-veluwse-ultra-trail-50km-noord-2026"
     },
     {
-        "name": "RUN Winschoten 50 km",
-        "country": "Netherlands",
-        "distance": "50km",
-        "date": "12/09/2026",
-        "url": "http://www.runwinschoten.nl",
-        "city": "Winschoten",
-        "lat": 53.143001,
-        "lng": 7.0380717,
-        "slug": "run-winschoten-50-km-2026"
-    },
-    {
         "name": "VUT100 (Veluwse Ultra Trail) - 75km",
         "country": "Netherlands",
         "distance": "75km",
@@ -3905,6 +4066,17 @@
         "lat": 52.2910649,
         "lng": 5.7884632,
         "slug": "vut100-veluwse-ultra-trail-75km-2026"
+    },
+    {
+        "name": "RUN Winschoten 100 km",
+        "country": "Netherlands",
+        "distance": "100km",
+        "date": "12/09/2026",
+        "url": "http://www.runwinschoten.nl",
+        "city": "Winschoten",
+        "lat": 53.143001,
+        "lng": 7.0380717,
+        "slug": "run-winschoten-100-km-2026"
     },
     {
         "name": "RUN Winschoten 100 km",
@@ -3930,28 +4102,6 @@
         "slug": "vut100-veluwse-ultra-trail-100km-2026"
     },
     {
-        "name": "BUT100 (Brabants UltraTrail) - 75 km",
-        "country": "Netherlands",
-        "distance": "75km",
-        "date": "27/06/2026",
-        "url": "http://www.trail-events.eu/EVENT-Brabantse-Ultra-Trail-BUT100-27-06-2026#/?lang=nl",
-        "city": "Leende",
-        "lat": 51.3484037,
-        "lng": 5.5518897,
-        "slug": "but100-brabants-ultratrail-75-km-2026"
-    },
-    {
-        "name": "Westerwolde Ultra",
-        "country": "Netherlands",
-        "distance": "100km",
-        "date": "28/06/2026",
-        "url": "https://ultragrunnen.nl/westerwolde-ultra/",
-        "city": "Wedde",
-        "lat": 53.0690643,
-        "lng": 7.0762777,
-        "slug": "westerwolde-ultra-2026"
-    },
-    {
         "name": "BUT100 (Brabants UltraTrail) - 50 km Noord",
         "country": "Netherlands",
         "distance": "50km",
@@ -3963,15 +4113,38 @@
         "slug": "but100-brabants-ultratrail-50-km-noord-2026"
     },
     {
-        "name": "BUT100 (Brabants UltraTrail) - 50 km Zuid",
+        "name": "Westerwolde Ultra",
         "country": "Netherlands",
-        "distance": "50km",
-        "date": "28/06/2026",
+        "distance": "100km",
+        "date": "25/07/2026",
+        "url": "http://www.trail-events.eu/EVENT-Veluwse-Ultra-Trail-VUT100-25-07-2026#/?lang=nl",
+        "city": "Elspeet",
+        "terrain": "trail",
+        "lat": 52.2910649,
+        "lng": 5.7884632,
+        "slug": "vut100-veluwse-ultra-trail-100km-2026"
+    },
+    {
+        "name": "BUT100 (Brabants UltraTrail) - 75 km",
+        "country": "Netherlands",
+        "distance": "75km",
+        "date": "27/06/2026",
         "url": "http://www.trail-events.eu/EVENT-Brabantse-Ultra-Trail-BUT100-27-06-2026#/?lang=nl",
         "city": "Leende",
         "lat": 51.3484037,
         "lng": 5.5518897,
-        "slug": "but100-brabants-ultratrail-50-km-zuid-2026"
+        "slug": "but100-brabants-ultratrail-75-km-2026"
+    },
+    {
+        "name": "BUT100 (Brabants UltraTrail) - 75 km",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "27/06/2026",
+        "url": "http://www.trail-events.eu/EVENT-Brabantse-Ultra-Trail-BUT100-27-06-2026#/?lang=nl",
+        "city": "Leende",
+        "lat": 51.3484037,
+        "lng": 5.5518897,
+        "slug": "but100-brabants-ultratrail-50-km-noord-2026"
     },
     {
         "name": "BUT100 (Brabants UltraTrail) - 100 km",
@@ -4031,6 +4204,28 @@
         "slug": "pierewaai-summer-beach-trail-2026"
     },
     {
+        "name": "Rondom Stad",
+        "country": "Netherlands",
+        "distance": "64km",
+        "date": "13/06/2026",
+        "url": "https://runningrunn.nl/rondomstad/2026/informatie.php",
+        "city": "Sint Annen",
+        "lat": 53.2979462,
+        "lng": 6.6652567,
+        "slug": "rondom-stad-2026"
+    },
+    {
+        "name": "Sri Chinmoy 50 km-Lauf Amsterdam",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "30/05/2026",
+        "url": "http://nl.srichinmoyraces.org/",
+        "city": "Amstelveen",
+        "lat": 52.3028209,
+        "lng": 4.8596844,
+        "slug": "sri-chinmoy-50-km-lauf-amsterdam-2026"
+    },
+    {
         "name": "UHUT UtrechtseHeuvelUltratrail 100km",
         "country": "Netherlands",
         "distance": "100km",
@@ -4075,15 +4270,37 @@
         "slug": "uhut-utrechtseheuvelultratrail-doorn-loop-2026"
     },
     {
-        "name": "Sri Chinmoy 50 km-Lauf Amsterdam",
+        "name": "UHUT UtrechtseHeuvelUltratrail 75 km",
+        "country": "Netherlands",
+        "distance": "75km",
+        "date": "30/05/2026",
+        "url": "http://www.trail-events.eu/EVENT-Utrechtse-Heuvelrug-Ultra-Trail-UHUT100-30-05-2026",
+        "city": "Leersum",
+        "lat": 52.0102642,
+        "lng": 5.4332757,
+        "slug": "uhut-utrechtseheuvelultratrail-75-km-2026"
+    },
+    {
+        "name": "Linie1629ultra",
         "country": "Netherlands",
         "distance": "50km",
-        "date": "30/05/2026",
-        "url": "http://nl.srichinmoyraces.org/",
-        "city": "Amstelveen",
-        "lat": 52.3028209,
-        "lng": 4.8596844,
-        "slug": "sri-chinmoy-50-km-lauf-amsterdam-2026"
+        "date": "06/06/2026",
+        "url": "http://Linie1629ultra.nl",
+        "city": "Vught",
+        "lat": 51.6511806,
+        "lng": 5.2368001,
+        "slug": "linie1629ultra-2026"
+    },
+    {
+        "name": "UHUT UtrechtseHeuvelUltratrail - Doorn Loop",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "31/05/2026",
+        "url": "http://www.trail-events.eu/EVENT-Utrechtse-Heuvelrug-Ultra-Trail-UHUT100-30-05-2026",
+        "city": "Leersum",
+        "lat": 52.0102642,
+        "lng": 5.4332757,
+        "slug": "uhut-utrechtseheuvelultratrail-doorn-loop-2026"
     },
     {
         "name": "VAM12",
@@ -4097,26 +4314,24 @@
         "slug": "vam12-2026"
     },
     {
-        "name": "UHUT UtrechtseHeuvelUltratrail 75 km",
+        "name": "VAM12",
         "country": "Netherlands",
-        "distance": "75km",
+        "distance": "12h",
         "date": "30/05/2026",
-        "url": "http://www.trail-events.eu/EVENT-Utrechtse-Heuvelrug-Ultra-Trail-UHUT100-30-05-2026",
-        "city": "Leersum",
-        "lat": 52.0102642,
-        "lng": 5.4332757,
-        "slug": "uhut-utrechtseheuvelultratrail-75-km-2026"
+        "url": "https://runforestrun.nl/vam",
+        "city": "Wijster",
+        "lat": 52.8148592,
+        "lng": 6.5163531,
+        "slug": "vam12-2026"
     },
     {
-        "name": "Sri Chinmoy 100km-Lauf Amsterdam",
+        "name": "Schipholloop (Ronde om de Haarlemmermeer)",
         "country": "Netherlands",
-        "distance": "100km",
-        "date": "30/05/2026",
-        "url": "http://nl.srichinmoyraces.org/",
-        "city": "Amstelveen",
-        "lat": 52.3028209,
-        "lng": 4.8596844,
-        "slug": "sri-chinmoy-100km-lauf-amsterdam-2026"
+        "distance": "60km",
+        "date": "23/05/2026",
+        "url": "https://schipholloop.nl",
+        "city": "Amsterdam Airport Schiphol",
+        "slug": "schipholloop-ronde-om-de-haarlemmermeer-2026"
     },
     {
         "name": "UHUT UtrechtseHeuvelUltratrail - Rhenen Loop",
@@ -4130,16 +4345,7 @@
         "slug": "uhut-utrechtseheuvelultratrail-rhenen-loop-2026"
     },
     {
-        "name": "Schipholloop (Ronde om de Haarlemmermeer)",
-        "country": "Netherlands",
-        "distance": "60km",
-        "date": "23/05/2026",
-        "url": "https://schipholloop.nl",
-        "city": "Amsterdam Airport Schiphol",
-        "slug": "schipholloop-ronde-om-de-haarlemmermeer-2026"
-    },
-    {
-        "name": "6-uursloop Terwille",
+        "name": "12-uursloop Terwille",
         "country": "Netherlands",
         "distance": "6h",
         "date": "16/05/2026",
@@ -4147,7 +4353,7 @@
         "city": "Tynaarlo",
         "lat": 53.1119991,
         "lng": 6.5598398,
-        "slug": "6-uursloop-terwille-2026"
+        "slug": "12-uursloop-terwille-2026"
     },
     {
         "name": "6hrs Sittard",
@@ -4226,15 +4432,6 @@
         "slug": "dutch-backyard-ultra-2026"
     },
     {
-        "name": "Salomon Vuurtorentrail Festival Ameland 60km",
-        "country": "Netherlands",
-        "distance": "60km",
-        "date": "15/03/2026",
-        "url": "https://cairnadventures.nl/trail/vuurtorentrail-festival-ameland/",
-        "city": "Hollum Ameland",
-        "slug": "salomon-vuurtorentrail-festival-ameland-60km-2026"
-    },
-    {
         "name": "De Zestig van Texel",
         "country": "Netherlands",
         "distance": "60km",
@@ -4242,17 +4439,6 @@
         "url": "https://dezestigvantexel.nl/",
         "city": "Den Hoorn (Texel)",
         "slug": "de-zestig-van-texel-2026"
-    },
-    {
-        "name": "SallandTrail 100 km",
-        "country": "Netherlands",
-        "distance": "100km",
-        "date": "07/03/2026",
-        "url": "https://sallandtrail.nl/",
-        "city": "Nijverdal",
-        "lat": 52.3592015,
-        "lng": 6.4654075,
-        "slug": "sallandtrail-100-km-2026"
     },
     {
         "name": "Gerrit Krolmarathon",
@@ -4266,15 +4452,15 @@
         "slug": "gerrit-krolmarathon-2026"
     },
     {
-        "name": "SallandTrail 80 km (50 Mijl)",
+        "name": "SallandTrail 100 km",
         "country": "Netherlands",
-        "distance": "80km",
+        "distance": "100km",
         "date": "07/03/2026",
         "url": "https://sallandtrail.nl/",
         "city": "Nijverdal",
         "lat": 52.3592015,
         "lng": 6.4654075,
-        "slug": "sallandtrail-80-km-50-mijl-2026"
+        "slug": "sallandtrail-100-km-2026"
     },
     {
         "name": "SallandTrail 60 km",
@@ -4288,6 +4474,17 @@
         "slug": "sallandtrail-60-km-2026"
     },
     {
+        "name": "SallandTrail 80 km (50 Mijl)",
+        "country": "Netherlands",
+        "distance": "80km",
+        "date": "07/03/2026",
+        "url": "https://sallandtrail.nl/",
+        "city": "Nijverdal",
+        "lat": 52.3592015,
+        "lng": 6.4654075,
+        "slug": "sallandtrail-80-km-50-mijl-2026"
+    },
+    {
         "name": "SallandTrail 50 km",
         "country": "Netherlands",
         "distance": "50km",
@@ -4297,6 +4494,17 @@
         "lat": 52.3592015,
         "lng": 6.4654075,
         "slug": "sallandtrail-50-km-2026"
+    },
+    {
+        "name": "Maasduinen Ultra",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "28/02/2026",
+        "url": "http://www.trail-events.eu/EVENT-Maasduinen-Ultra-28-03-2026",
+        "city": "Arcen",
+        "lat": 51.476261,
+        "lng": 6.1785077,
+        "slug": "maasduinen-ultra-2026"
     },
     {
         "name": "times MMMM",
@@ -4310,15 +4518,15 @@
         "slug": "times-mmmm-2026"
     },
     {
-        "name": "Maasduinen Ultra",
+        "name": "Leersumse Veld Ultra",
         "country": "Netherlands",
         "distance": "50km",
-        "date": "28/02/2026",
-        "url": "http://www.trail-events.eu/EVENT-Maasduinen-Ultra-28-03-2026",
-        "city": "Arcen",
-        "lat": 51.476261,
-        "lng": 6.1785077,
-        "slug": "maasduinen-ultra-2026"
+        "date": "31/01/2026",
+        "url": "http://www.trail-events.eu/EVENT-Leersumse-Veld-Ultra-31-01-2026",
+        "city": "Leersum",
+        "lat": 52.0102642,
+        "lng": 5.4332757,
+        "slug": "leersumse-veld-ultra-2026"
     },
     {
         "name": "Pierewaai Winter Trail 50km",
@@ -4343,17 +4551,6 @@
         "lat": 50.7781016,
         "lng": 5.9810696,
         "slug": "drielandenpunt-winter-trail-2026"
-    },
-    {
-        "name": "Leersumse Veld Ultra",
-        "country": "Netherlands",
-        "distance": "50km",
-        "date": "31/01/2026",
-        "url": "http://www.trail-events.eu/EVENT-Leersumse-Veld-Ultra-31-01-2026",
-        "city": "Leersum",
-        "lat": 52.0102642,
-        "lng": 5.4332757,
-        "slug": "leersumse-veld-ultra-2026"
     },
     {
         "name": "Pierewaai Winter Trail 70km (nightrun)",
@@ -4402,15 +4599,15 @@
         "slug": "moselsteig-lauf-1-etappe-2024"
     },
     {
-        "name": "The Great Escape 100 miles",
+        "name": "The Great Escape 50 miles",
         "country": "Luxembourg",
-        "distance": "100mi",
-        "date": "14/09/2024",
+        "distance": "50mi",
+        "date": "15/09/2024",
         "url": "https://www.great-escape.be",
-        "city": "Ettelbruck",
-        "lat": 49.8470016,
-        "lng": 6.0984659,
-        "slug": "the-great-escape-100-miles-2024"
+        "city": "Clervaux",
+        "lat": 50.0547912,
+        "lng": 6.0275511,
+        "slug": "the-great-escape-50-miles-2024"
     },
     {
         "name": "Leopard Ultratrail du Mullerthal (UTML) - Long Trail 75km",

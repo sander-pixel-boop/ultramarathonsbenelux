@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 
 const i18n = {
     en: {
-        title: "Benelux Ultra Race Directory",
+        title: "Ultramarathons Benelux",
         aboutUs: "About Us",
         privacyPolicy: "Privacy Policy",
         termsOfService: "Terms of Service",
@@ -43,7 +43,7 @@ const i18n = {
         clearSearch: "Clear search"
     },
     nl: {
-        title: "Benelux Ultra Race Gids",
+        title: "Ultramarathons Benelux",
         aboutUs: "Over Ons",
         privacyPolicy: "Privacybeleid",
         termsOfService: "Servicevoorwaarden",
@@ -78,7 +78,7 @@ const i18n = {
         clearSearch: "Wis zoekopdracht"
     },
     fr: {
-        title: "Annuaire des Ultra Courses du Benelux",
+        title: "Ultramarathons Benelux",
         aboutUs: "À Propos",
         privacyPolicy: "Politique de Confidentialité",
         termsOfService: "Conditions d'Utilisation",
@@ -293,7 +293,7 @@ import FOMO from "../components/FOMO";
 import Quiz from '../components/Quiz';
 
 export default function Home({ initialRaces }) {
-    const [lang, setLang] = useState('en');
+    const [lang, setLang] = useState('nl');
     const [search, setSearch] = useState('');
     const [countryFilter, setCountryFilter] = useState('');
     const [yearFilter, setYearFilter] = useState('');
@@ -326,7 +326,7 @@ export default function Home({ initialRaces }) {
     }, [showQuiz, selectedRace]);
 
 
-    const t = i18n[lang];
+    const t = { ...i18n[lang], lang };
 
     // ⚡ Bolt Performance Optimization:
     // Why: Creating object wrappers and calling string functions (.toLowerCase) on every filter evaluation

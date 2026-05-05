@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'Terms of Service | Ultra Marathons Benelux',
+    title: 'Terms of Service | Ultramarathons Benelux',
 };
 
 export default function TermsOfService() {

@@ -72,9 +72,7 @@ export default function FinishTimeCalculator({ race, t }) {
         fr: { title: "Estimer le Temps", pbLabel: "RP Plat (HH:MM):", timeTitle: "Temps Estimé" }
     };
 
-    const lang = t && t.title === "Benelux Ultra Race Directory" ? 'en' :
-                 (t && t.title === "Benelux Ultra Race Gids" ? 'nl' :
-                 (t && t.title === "Annuaire des Ultra Courses du Benelux" ? 'fr' : 'en'));
+    const lang = t && t.lang ? t.lang : "en";
     const txt = i18n[lang];
 
     // Do not render for timed events
