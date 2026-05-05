@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'Privacy Policy | Ultra Marathons Benelux',
+    title: 'Privacy Policy | Ultramarathons Benelux',
 };
 
 export default function PrivacyPolicy() {
