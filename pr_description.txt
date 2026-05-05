@@ -1,8 +1,1 @@
-💡 **What:** Refactored `getRaces` in `app/races/[slug]/page.js` to use asynchronous `fs.promises.readFile` rather than synchronous `fs.readFileSync` and `fs.existsSync`. This avoids blocking the Node.js event loop when Next.js generates static parameters and static site metadata.
-
-🎯 **Why:** Using `fs.readFileSync` during `generateStaticParams` and other Next.js build operations creates a blocking I/O task that prevents concurrency and unnecessarily extends the static site generation phase, particularly when processing hundreds of routes for a pSEO build. Utilizing `fs.promises.readFile` allows the Node event loop to schedule overlapping asynchronous operations more efficiently.
-
-📊 **Measured Improvement:** We ran a focused test of the build command (`pnpm run build` targeting `next build` exclusively) before and after the change.
-*   **Baseline:** The static site generation step and overall Next.js build completed in **15,280 ms** on the test machine.
-*   **Improvement:** After making the `fs.promises.readFile` optimization, the same build completed in **13,540 ms**.
-*   **Net Result:** An **11.4% improvement** (~1.7s reduction) in total build time for this operation. This time-saving is especially beneficial when scaling up to thousands of generated pages.
+Added a new blog post in Dutch about the best medium and large sized running vests (10-15L) for trail running and ultramarathons. Included affiliate links to popular options like Salomon ADV Skin 12, CamelBak Zephyr Pro, and Osprey Duro/Dyna 15. The post is properly formatted and stored in data/blog.json.
