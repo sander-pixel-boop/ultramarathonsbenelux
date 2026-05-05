@@ -6,7 +6,7 @@ const i18n = {
     en: {
         title: "About Us",
         subtitle: "Benelux Ultra Expertise",
-        content1: "Welcome to the Benelux Ultra Race Directory. We are deeply passionate about the toughest footraces and gravel events across Belgium, the Netherlands, and Luxembourg.",
+        content1: "Welcome to the Ultramarathons Benelux. We are deeply passionate about the toughest footraces and gravel events across Belgium, the Netherlands, and Luxembourg.",
         content2: "Our mission is to provide a comprehensive, accurate, and easy-to-use directory for ultra runners of all levels. Whether you are looking for your first 50k or a multi-day backyard ultra, we curate the best events in the region.",
         content3: "Built by runners, for runners. We understand the specific terrain, weather challenges, and the unique ultra community in the Benelux. This platform is our contribution to growing and supporting this incredible sport.",
         backToHome: "Back to Home",
@@ -20,7 +20,7 @@ const i18n = {
     nl: {
         title: "Over Ons",
         subtitle: "Benelux Ultra Expertise",
-        content1: "Welkom bij de Benelux Ultra Race Gids. Wij hebben een diepe passie voor de zwaarste hardloop- en gravel-evenementen in België, Nederland en Luxemburg.",
+        content1: "Welkom bij de Ultramarathons Benelux. Wij hebben een diepe passie voor de zwaarste hardloop- en gravel-evenementen in België, Nederland en Luxemburg.",
         content2: "Onze missie is om een uitgebreide, nauwkeurige en gebruiksvriendelijke gids te bieden voor ultra lopers van alle niveaus. Of je nu op zoek bent naar je eerste 50k of een meerdaagse backyard ultra, wij verzamelen de beste evenementen in de regio.",
         content3: "Gemaakt door hardlopers, voor hardlopers. We begrijpen het specifieke terrein, de weersuitdagingen en de unieke ultra-gemeenschap in de Benelux. Dit platform is onze bijdrage aan het laten groeien en ondersteunen van deze geweldige sport.",
         backToHome: "Terug naar Home",
@@ -34,7 +34,7 @@ const i18n = {
     fr: {
         title: "À Propos de Nous",
         subtitle: "Expertise Ultra Benelux",
-        content1: "Bienvenue dans l'Annuaire des Ultra Courses du Benelux. Nous sommes passionnés par les courses à pied et les événements gravel les plus difficiles de Belgique, des Pays-Bas et du Luxembourg.",
+        content1: "Bienvenue dans l'Ultramarathons Benelux. Nous sommes passionnés par les courses à pied et les événements gravel les plus difficiles de Belgique, des Pays-Bas et du Luxembourg.",
         content2: "Notre mission est de fournir un annuaire complet, précis et facile à utiliser pour les ultra-marathoniens de tous niveaux. Que vous cherchiez votre premier 50 km ou un backyard ultra de plusieurs jours, nous sélectionnons les meilleurs événements de la région.",
         content3: "Conçu par des coureurs, pour des coureurs. Nous comprenons le terrain spécifique, les défis météorologiques et la communauté ultra unique du Benelux. Cette plateforme est notre contribution au développement et au soutien de ce sport incroyable.",
         backToHome: "Retour à l'Accueil",
@@ -54,7 +54,7 @@ export default function About() {
     return (
         <>
             <Head>
-                <title>{t.title} - Benelux Ultra Race Directory</title>
+                <title>{t.title} - Ultramarathons Benelux</title>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />

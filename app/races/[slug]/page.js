@@ -35,7 +35,7 @@ export async function generateMetadata({ params }) {
 
     const year = new Date(race.date_iso).getFullYear();
     return {
-        title: `${race.name} ${year} | Course, Elevation & Tips | Ultra Marathons Benelux`,
+        title: `${race.name} ${year} | Course, Elevation & Tips | Ultramarathons Benelux`,
         description: `Guide for ${race.name} in ${race.city}. Distance: ${race.dist_km}KM, Elevation: ${race.elev_m}M. View registration details and mandatory gear.`,
         alternates: {
             canonical: `https://ultramarathonsbenelux.com/races/${slug}`
