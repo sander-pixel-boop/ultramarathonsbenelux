@@ -48,8 +48,8 @@ const i18n = {
 };
 
 export default function About() {
-    const [lang, setLang] = useState('en');
-    const t = { ...i18n[lang], lang };
+    const [lang, setLang] = useState('nl');
+    const t = i18n[lang];
 
     return (
         <>

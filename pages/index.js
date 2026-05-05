@@ -293,7 +293,7 @@ import FOMO from "../components/FOMO";
 import Quiz from '../components/Quiz';
 
 export default function Home({ initialRaces }) {
-    const [lang, setLang] = useState('en');
+    const [lang, setLang] = useState('nl');
     const [search, setSearch] = useState('');
     const [countryFilter, setCountryFilter] = useState('');
     const [yearFilter, setYearFilter] = useState('');
