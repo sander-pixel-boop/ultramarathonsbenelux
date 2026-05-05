@@ -2,7 +2,7 @@ import { getGearRecommendations } from '../utils/gear';
 
 export default function AffiliateGearBlock({ elev_m, surface_trail_pct, date_iso }) {
     const { highElevation, technicalTrail, winter, standardKit } = getGearRecommendations(elev_m, surface_trail_pct, date_iso);
-    const amazonTag = process.env.NEXT_PUBLIC_AMAZON_TAG || 'your_amazon_tag_here';
+    const amazonTag = process.env.NEXT_PUBLIC_AMAZON_TAG || 'ultramarath00-20';
 
     return (
         <div style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
