@@ -1,15 +1,8 @@
-import Script from 'next/script';
-
 export default function RootLayout({ children }) {
     return (
         <html lang="nl">
             <head>
-                <Script
-                        async
-                        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ID || 'ca-pub-8237448051425451'}`}
-                        crossOrigin="anonymous"
-                        strategy="afterInteractive"
-                    />
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8237448051425451" crossOrigin="anonymous"></script>
             </head>
             <body>
                 <header style={{ padding: '10px 20px', backgroundColor: '#f8f9fa', borderBottom: '1px solid #ddd' }}>
