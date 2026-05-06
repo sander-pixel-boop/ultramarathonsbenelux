@@ -5,6 +5,7 @@ import { parseStandardDate } from '../utils/date';
 import { sanitizeUrl } from '../utils/sanitizeUrl';
 import { getTranslatedCountry, formatLocationStr } from '../utils/country';
 import dynamic from 'next/dynamic';
+import SearchInput from '../components/SearchInput';
 
 const i18n = {
     en: {
@@ -464,20 +465,7 @@ export default function Home({ initialRaces }) {
 
             <div className="container">
                 <div className="controls">
-                    <div className="input-group">
-                        <i className="fas fa-search"></i>
-                        <input type="text" id="search" placeholder={t.searchPlaceholder} aria-label={t.searchPlaceholder} value={search} onChange={(e) => setSearch(e.target.value)} style={{ paddingRight: search ? '40px' : '15px' }} />
-                        {search && (
-                            <button
-                                type="button"
-                                aria-label={t.clearSearch}
-                                onClick={() => setSearch('')}
-                                className="clear-search-btn"
-                            >
-                                <i className="fas fa-times"></i>
-                            </button>
-                        )}
-                    </div>
+                    <SearchInput value={search} onChange={setSearch} placeholder={t.searchPlaceholder} t={t} />
                     <select id="country-filter" className="filter-select" aria-label="Filter by country" value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)}>
                         <option value="">{t.allCountries}</option>
                         <option value="belgium">{t.belgium}</option>
