@@ -865,13 +865,17 @@ async function main() {
     });
 
     // Write audit log
+    // Filter out races marked for removal
+    const final_races = filtered_races.filter(race => !permanentFixes[race.slug] || !permanentFixes[race.slug].remove);
+
+    // Write audit log
     const auditHeaders = [
         'slug', 'name', 'date', 'distance', 'elevation', 'city', 'country',
         'corrected_distance', 'corrected_name', 'corrected_date',
-        'corrected_elevation', 'corrected_city', 'corrected_country'
+        'corrected_elevation', 'corrected_city', 'corrected_country', 'remove'
     ];
     const auditLines = [auditHeaders.join(',')];
-    filtered_races.forEach(race => {
+    final_races.forEach(race => {
         // Escape quotes if present
         const safeName = '"' + (race.name || '').replace(/"/g, '""') + '"';
         const safeDate = '"' + (race.date || '').replace(/"/g, '""') + '"';
@@ -879,13 +883,13 @@ async function main() {
         const safeElev = '"' + (race.elevation || '').toString().replace(/"/g, '""') + '"';
         const safeCity = '"' + (race.city || '').replace(/"/g, '""') + '"';
         const safeCountry = '"' + (race.country || '').replace(/"/g, '""') + '"';
-        auditLines.push(`${race.slug},${safeName},${safeDate},${safeDist},${safeElev},${safeCity},${safeCountry},,,,,,`);
+        auditLines.push(`${race.slug},${safeName},${safeDate},${safeDist},${safeElev},${safeCity},${safeCountry},,,,,,,`);
     });
 
     await fs.writeFile('data/audit_log.csv', auditLines.join('\n'));
 
-    await fs.writeFile('data/races.json', JSON.stringify(filtered_races, null, 4));
-    console.log(`Successfully scraped and verified ${filtered_races.length} races and saved to races.json`);
+    await fs.writeFile('data/races.json', JSON.stringify(final_races, null, 4));
+    console.log(`Successfully scraped and verified ${final_races.length} races and saved to races.json`);
 }
 
 main().catch(console.error);
