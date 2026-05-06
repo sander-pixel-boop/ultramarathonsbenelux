@@ -56,3 +56,7 @@
 ## 2024-05-18 - Avoid Memory Allocation in Inner React Filter Loops
 **Learning:** Even when using memoized parsing functions (e.g. `parseStandardDate`), returning objects and subsequently instantiating new objects (like `new Date(...)`) inside a high-frequency React `useMemo` filter loop causes significant Garbage Collection (GC) pressure. This was verified via a benchmark script which showed that preprocessing values outside the filter loop reduced execution time by 98%.
 **Action:** Always hoist object instantiations and data transformations out of inner loops (like search or filter filters) and pre-calculate invariant fields (e.g., sort keys, stringified years/months) during an initial preprocessing map phase.
+
+## 2024-05-06 - Search Filter Debouncing
+**Learning:** In a codebase with over 800+ mapped items in React where rendering relies on inline arrow functions and lacks component-level memoization, rapidly updating the state variable driving the `useMemo` filter array causes excessive filtering and DOM updates. Furthermore, adding debounced state directly to the top-level parent component fails to solve the issue because the keystroke state updates still force the entire parent and all its unmemoized children to re-render.
+**Action:** Extract the fast-updating input into its own isolated component (`<SearchInput />`). This component should manage its own local keystroke state and use a `useEffect` debounce to push the final value up to the parent component, entirely skipping the parent render cycle during active typing.
