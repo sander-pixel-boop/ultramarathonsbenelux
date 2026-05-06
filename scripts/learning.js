@@ -40,10 +40,22 @@ async function main() {
             const row = lines[i];
 
             // Regex to parse CSV keeping quoted strings intact
-            const matches = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-            if (!matches) continue;
-
-            const values = matches.map(m => m.replace(/(^"|"$)/g, '').trim());
+            // Split by comma, handling quotes
+            let inQuotes = false;
+            let currentVal = '';
+            const values = [];
+            for (let j = 0; j < row.length; j++) {
+                const char = row[j];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    values.push(currentVal.trim());
+                    currentVal = '';
+                } else {
+                    currentVal += char;
+                }
+            }
+            values.push(currentVal.trim());
 
             const entry = {};
             headers.forEach((h, index) => {
@@ -57,7 +69,8 @@ async function main() {
                 { key: 'corrected_date', target: 'date' },
                 { key: 'corrected_elevation', target: 'elevation' },
                 { key: 'corrected_city', target: 'city' },
-                { key: 'corrected_country', target: 'country' }
+                { key: 'corrected_country', target: 'country' },
+                { key: 'remove', target: 'remove' }
             ];
 
             let hasCorrections = false;
@@ -72,12 +85,18 @@ async function main() {
                     if (!permanentFixes[slug]) {
                         permanentFixes[slug] = {};
                     }
-                    permanentFixes[slug][field.target] = entry[field.key];
+                    if (field.key === 'remove') {
+                        permanentFixes[slug][field.target] = true;
+                    } else {
+                        permanentFixes[slug][field.target] = entry[field.key];
+                    }
 
-                    // 2. Apply to races.json
-                    const raceIndex = races.findIndex(r => r.slug === slug);
-                    if (raceIndex !== -1) {
-                        races[raceIndex][field.target] = entry[field.key];
+                    // 2. Apply to races.json (if not remove)
+                    if (field.key !== 'remove') {
+                        const raceIndex = races.findIndex(r => r.slug === slug);
+                        if (raceIndex !== -1) {
+                            races[raceIndex][field.target] = entry[field.key];
+                        }
                     }
                 }
             });
@@ -88,6 +107,9 @@ async function main() {
         }
 
         if (correctedRaces.length > 0) {
+            // Remove races flagged for removal
+            races = races.filter(r => !permanentFixes[r.slug] || !permanentFixes[r.slug].remove);
+
             await fs.writeFile(PERMANENT_FIXES_PATH, JSON.stringify(permanentFixes, null, 4));
             await fs.writeFile(RACES_JSON_PATH, JSON.stringify(races, null, 4));
             console.log(`Successfully applied ${correctedRaces.length} corrections and saved to permanent_fixes.json`);
