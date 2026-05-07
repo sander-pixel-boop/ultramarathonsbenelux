@@ -193,61 +193,71 @@ async function scrape_ultraned() {
         const $ = cheerio.load(html);
 
         const events = $('.type-tribe_events').toArray();
-        for (const el of events) {
-            const event = $(el);
-            let title = '';
-            let event_url = '';
-            let date_str = '';
+        const MAX_CONCURRENT = 5;
 
-            const linkTag = event.find('a.tribe-events-calendar-list__event-title-link');
-            if (linkTag.length > 0) {
-                title = linkTag.text().trim();
-                event_url = linkTag.attr('href');
-                const timeTag = event.find('time');
-                if (timeTag.length > 0) {
-                    date_str = timeTag.attr('datetime') || timeTag.text().trim();
-                }
-            } else {
-                const title_a = event.find('h3.tribe-events-list-event-title a');
-                if (title_a.length === 0) continue;
-                title = title_a.text().trim();
-                event_url = title_a.attr('href');
-                const timeTag = event.find('.tribe-event-schedule-details');
-                if (timeTag.length > 0) {
-                    date_str = timeTag.text().trim();
-                }
-            }
+        for (let i = 0; i < events.length; i += MAX_CONCURRENT) {
+            const chunk = events.slice(i, i + MAX_CONCURRENT);
+            const chunkPromises = chunk.map(async (el) => {
+                const event = $(el);
+                let title = '';
+                let event_url = '';
+                let date_str = '';
 
-            let original_url = event_url;
-            try {
-                if (event_url) {
-                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
-                    const event_html = await event_page.text();
-                    const event_soup = cheerio.load(event_html);
-
-                    const url_elem = event_soup('.tribe-events-event-url a');
-                    if (url_elem.length > 0) {
-                        original_url = url_elem.attr('href');
-                    } else {
-                        event_soup('a').each((i, aTag) => {
-                            const href = $(aTag).attr('href') || '';
-                            if (href && href.includes('http') && !href.includes('ultraned.org') && !href.includes('facebook') && !href.includes('google')) {
-                                original_url = href;
-                                return false; // break each loop
-                            }
-                        });
+                const linkTag = event.find('a.tribe-events-calendar-list__event-title-link');
+                if (linkTag.length > 0) {
+                    title = linkTag.text().trim();
+                    event_url = linkTag.attr('href');
+                    const timeTag = event.find('time');
+                    if (timeTag.length > 0) {
+                        date_str = timeTag.attr('datetime') || timeTag.text().trim();
+                    }
+                } else {
+                    const title_a = event.find('h3.tribe-events-list-event-title a');
+                    if (title_a.length === 0) return null;
+                    title = title_a.text().trim();
+                    event_url = title_a.attr('href');
+                    const timeTag = event.find('.tribe-event-schedule-details');
+                    if (timeTag.length > 0) {
+                        date_str = timeTag.text().trim();
                     }
                 }
-            } catch {}
 
-            races.push({
-                name: title,
-                country: "Netherlands",
-                distance: "Ultra",
-                date: date_str,
-                url: original_url,
-                city: ""
+                let original_url = event_url;
+                try {
+                    if (event_url) {
+                        const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
+                        const event_html = await event_page.text();
+                        const event_soup = cheerio.load(event_html);
+
+                        const url_elem = event_soup('.tribe-events-event-url a');
+                        if (url_elem.length > 0) {
+                            original_url = url_elem.attr('href');
+                        } else {
+                            event_soup('a').each((i, aTag) => {
+                                const href = $(aTag).attr('href') || '';
+                                if (href && href.includes('http') && !href.includes('ultraned.org') && !href.includes('facebook') && !href.includes('google')) {
+                                    original_url = href;
+                                    return false; // break each loop
+                                }
+                            });
+                        }
+                    }
+                } catch {}
+
+                return {
+                    name: title,
+                    country: "Netherlands",
+                    distance: "Ultra",
+                    date: date_str,
+                    url: original_url,
+                    city: ""
+                };
             });
+
+            const results = await Promise.all(chunkPromises);
+            for (const res of results) {
+                if (res) races.push(res);
+            }
         }
     } catch (e) {
         console.error(`Error scraping Ultraned: ${e}`);
@@ -265,56 +275,76 @@ async function scrape_hardloopkalender() {
         const $ = cheerio.load(html);
 
         const rows = $('tr').toArray();
-        for (const row of rows) {
-            const cells = $(row).find('td');
-            if (cells.length === 0) continue;
+        const MAX_CONCURRENT = 5;
 
-            const date_str = $(cells[0]).text().trim();
-            if (!date_str) continue;
+        for (let i = 0; i < rows.length; i += MAX_CONCURRENT) {
+            const chunk = rows.slice(i, i + MAX_CONCURRENT);
+            const chunkPromises = chunk.map(async (row) => {
+                const cells = $(row).find('td');
+                if (cells.length === 0) return null;
 
-            let event_link = null;
-            let title = "";
-            $(cells[1]).find('a[href]').each((i, a) => {
-                const href = $(a).attr('href');
-                if (href.includes('/loopevenement/') || href.includes('/hardloopevenement/')) {
-                    event_link = href;
-                    title = $(a).attr('title') || $(a).text().trim();
-                    return false; // break
-                }
-            });
+                const date_str = $(cells[0]).text().trim();
+                if (!date_str) return null;
 
-            if (!event_link) continue;
-
-            let full_url = event_link.startsWith('/') ? "https://hardloopkalender.nl" + event_link : event_link;
-            let original_url = full_url;
-
-            try {
-                const event_page = await fetchWithTimeout(full_url, { headers, timeout: 15000 });
-                const event_html = await event_page.text();
-                const event_soup = cheerio.load(event_html);
-
-                let found = false;
-                event_soup('a').each((i, a) => {
-                    const text = $(a).text().toLowerCase();
-                    if (text.includes('website')) {
-                        const href = $(a).attr('href');
-                        if (href) {
-                            original_url = href;
-                            found = true;
-                            return false; // break
-                        }
+                let event_link = null;
+                let title = "";
+                $(cells[1]).find('a[href]').each((i, a) => {
+                    const href = $(a).attr('href');
+                    if (href.includes('/loopevenement/') || href.includes('/hardloopevenement/')) {
+                        event_link = href;
+                        title = $(a).attr('title') || $(a).text().trim();
+                        return false; // break
                     }
                 });
-            } catch {}
 
-            races.push({
-                name: title,
-                country: "Netherlands",
-                distance: "Ultra",
-                date: date_str,
-                url: original_url,
-                city: ""
+                if (!event_link) return null;
+
+                let full_url = event_link.startsWith('/') ? "https://hardloopkalender.nl" + event_link : event_link;
+                let original_url = full_url;
+
+                try {
+                    const event_page = await fetchWithTimeout(full_url, { headers, timeout: 15000 });
+                    const event_html = await event_page.text();
+                    const event_soup = cheerio.load(event_html);
+
+                    let found = false;
+                    event_soup('a').each((i, a) => {
+                        const text = $(a).text().toLowerCase();
+                        if (text.includes("website")) {
+                            const link = $(a).attr('href');
+                            if (link && !link.includes('hardloopkalender')) {
+                                original_url = link;
+                                found = true;
+                                return false; // break
+                            }
+                        }
+                    });
+
+                    if (!found) {
+                        event_soup('a[target="_blank"]').each((i, a) => {
+                            const link = $(a).attr('href');
+                            if (link && !link.includes('hardloopkalender') && !link.includes('facebook') && !link.includes('twitter')) {
+                                original_url = link;
+                                return false; // break
+                            }
+                        });
+                    }
+                } catch {}
+
+                return {
+                    name: title,
+                    country: "Netherlands",
+                    distance: "Ultra",
+                    date: date_str,
+                    url: original_url,
+                    city: ""
+                };
             });
+
+            const results = await Promise.all(chunkPromises);
+            for (const res of results) {
+                if (res) races.push(res);
+            }
         }
     } catch (e) {
         console.error(`Error scraping Hardloopkalender: ${e}`);
@@ -333,13 +363,23 @@ async function scrape_finishers() {
 
         const events = $('a[href]').toArray();
         const visited = new Set();
+        const validEvents = [];
 
         for (const a of events) {
             const href = $(a).attr('href');
             if (href && href.includes('/nl/evenement/') && !visited.has(href)) {
                 visited.add(href);
+                validEvents.push(href);
+            }
+        }
+
+        const MAX_CONCURRENT = 5;
+        for (let i = 0; i < validEvents.length; i += MAX_CONCURRENT) {
+            const chunk = validEvents.slice(i, i + MAX_CONCURRENT);
+            const chunkPromises = chunk.map(async (href) => {
                 let full_url = "https://www.finishers.com" + href;
                 let original_url = full_url;
+                let title = "";
 
                 try {
                     const event_page = await fetchWithTimeout(full_url, { headers, timeout: 15000 });
@@ -347,7 +387,7 @@ async function scrape_finishers() {
                     const event_soup = cheerio.load(event_html);
 
                     const title_elem = event_soup('h1');
-                    let title = title_elem.length > 0 ? title_elem.text().trim() : href.split('/').pop();
+                    title = title_elem.length > 0 ? title_elem.text().trim() : href.split('/').pop();
 
                     event_soup('a[href]').each((i, link) => {
                         const l_href = $(link).attr('href');
@@ -357,15 +397,22 @@ async function scrape_finishers() {
                         }
                     });
 
-                    races.push({
+                    return {
                         name: title,
                         country: "Netherlands",
                         distance: "Ultra",
                         date: "TBD",
                         url: original_url,
                         city: ""
-                    });
-                } catch {}
+                    };
+                } catch {
+                    return null;
+                }
+            });
+
+            const results = await Promise.all(chunkPromises);
+            for (const res of results) {
+                if (res) races.push(res);
             }
         }
     } catch (e) {
@@ -384,38 +431,47 @@ async function scrape_trail_running() {
 
         const data = await response.json();
         const items = data.items || [];
+        const MAX_CONCURRENT = 5;
 
-        for (const item of items) {
-            const title = item.title || "";
-            const date_str = item.date_nice || item.date || "";
-            const distances = item.distances_nice || "";
-            const event_url = item.permalink || "";
+        for (let i = 0; i < items.length; i += MAX_CONCURRENT) {
+            const chunk = items.slice(i, i + MAX_CONCURRENT);
+            const chunkPromises = chunk.map(async (item) => {
+                const title = item.title || "";
+                const date_str = item.date_nice || item.date || "";
+                const distances = item.distances_nice || "";
+                const event_url = item.permalink || "";
 
-            let original_url = event_url;
-            try {
-                if (event_url) {
-                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
-                    const event_html = await event_page.text();
-                    const event_soup = cheerio.load(event_html);
+                let original_url = event_url;
+                try {
+                    if (event_url) {
+                        const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
+                        const event_html = await event_page.text();
+                        const event_soup = cheerio.load(event_html);
 
-                    event_soup('a[href]').each((i, link) => {
-                        const l_href = $(link).attr('href');
-                        if (l_href && l_href.includes('http') && !l_href.includes('trail-running.eu') && !l_href.includes('facebook') && !l_href.includes('google')) {
-                            original_url = l_href;
-                            return false; // break
-                        }
-                    });
-                }
-            } catch {}
+                        event_soup('a[href]').each((i, link) => {
+                            const l_href = $(link).attr('href');
+                            if (l_href && l_href.includes('http') && !l_href.includes('trail-running.eu') && !l_href.includes('facebook') && !l_href.includes('google')) {
+                                original_url = l_href;
+                                return false; // break
+                            }
+                        });
+                    }
+                } catch {}
 
-            races.push({
-                name: title,
-                country: "Netherlands",
-                distance: distances,
-                date: date_str,
-                url: original_url,
-                city: ""
+                return {
+                    name: title,
+                    country: "Netherlands",
+                    distance: distances,
+                    date: date_str,
+                    url: original_url,
+                    city: ""
+                };
             });
+
+            const results = await Promise.all(chunkPromises);
+            for (const res of results) {
+                if (res) races.push(res);
+            }
         }
     } catch (e) {
         console.error(`Error scraping Trail-running.eu: ${e}`);
@@ -500,39 +556,49 @@ async function scrape_ahotu() {
         const $ = cheerio.load(html);
 
         const events = $('a.event-link').toArray();
-        for (const el of events) {
-            const event = $(el);
-            const title = event.text().trim();
-            let event_url = event.attr('href') || '';
-            let original_url = event_url;
+        const MAX_CONCURRENT = 5;
 
-            if (event_url) {
-                if (!event_url.startsWith('http')) {
-                    event_url = 'https://www.ahotu.com' + event_url;
+        for (let i = 0; i < events.length; i += MAX_CONCURRENT) {
+            const chunk = events.slice(i, i + MAX_CONCURRENT);
+            const chunkPromises = chunk.map(async (el) => {
+                const event = $(el);
+                const title = event.text().trim();
+                let event_url = event.attr('href') || '';
+                let original_url = event_url;
+
+                if (event_url) {
+                    if (!event_url.startsWith('http')) {
+                        event_url = 'https://www.ahotu.com' + event_url;
+                    }
+                    try {
+                        const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
+                        const event_html = await event_page.text();
+                        const event_soup = cheerio.load(event_html);
+
+                        event_soup('a[href]').each((i, link) => {
+                            const l_href = $(link).attr('href');
+                            if (l_href && l_href.includes('http') && !l_href.includes('ahotu.com') && !l_href.includes('facebook')) {
+                                original_url = l_href;
+                                return false; // break
+                            }
+                        });
+                    } catch {}
                 }
-                try {
-                    const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
-                    const event_html = await event_page.text();
-                    const event_soup = cheerio.load(event_html);
 
-                    event_soup('a[href]').each((i, link) => {
-                        const l_href = $(link).attr('href');
-                        if (l_href && l_href.includes('http') && !l_href.includes('ahotu.com') && !l_href.includes('facebook')) {
-                            original_url = l_href;
-                            return false; // break
-                        }
-                    });
-                } catch {}
-            }
-
-            races.push({
-                name: title,
-                country: "Belgium",
-                distance: "Ultra",
-                date: "TBD",
-                url: original_url,
-                city: ""
+                return {
+                    name: title,
+                    country: "Belgium",
+                    distance: "Ultra",
+                    date: "TBD",
+                    url: original_url,
+                    city: ""
+                };
             });
+
+            const results = await Promise.all(chunkPromises);
+            for (const res of results) {
+                if (res) races.push(res);
+            }
         }
     } catch (e) {
         console.error(`Error scraping ahotu: ${e}`);

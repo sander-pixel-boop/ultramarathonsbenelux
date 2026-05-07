@@ -1,3 +1,0 @@
-Updates the application layout to properly inject the Google AdSense script inside the `<head>` tag across the entire application, as required.
-
-This involves replacing the dynamic `next/script` usage with standard `<script>` tags, ensuring they are placed directly within the document head for both App Router and Page Router paths.
