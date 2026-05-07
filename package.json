@@ -1,8 +1,8 @@
 {
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/scraper.js && next build",
-    "scrape": "node scripts/scraper.js",
+    "build": "next build",
+    "scrape": "node scripts/run_all_scrapers.js",
     "start": "next start",
     "test": "node --test utils/*.test.js"
   },

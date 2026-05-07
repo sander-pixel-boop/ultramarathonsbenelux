@@ -1,3 +1,3 @@
-Updates the application layout to properly inject the Google AdSense script inside the `<head>` tag across the entire application, as required.
+chore: split scrapers for individual sites
 
-This involves replacing the dynamic `next/script` usage with standard `<script>` tags, ensuring they are placed directly within the document head for both App Router and Page Router paths.
+I have split the monolithic scripts/scraper.js and root scraper.js scripts into separate files for each targeted website. This isolates scraping failures from one site blocking data collection from the others, and allows independent scheduling on Monday mornings via GitHub actions.
