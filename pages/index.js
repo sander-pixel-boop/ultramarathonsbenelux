@@ -560,7 +560,7 @@ export default function Home({ initialRaces }) {
 
             {showQuiz && (
                 <div className="modal-overlay" onClick={() => setShowQuiz(false)}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Find my Race Quiz">
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Find my Race Quiz" tabIndex={-1} autoFocus style={{ outline: 'none' }}>
                         <Quiz
                             races={filteredRaces}
                             onClose={() => setShowQuiz(false)}
@@ -579,7 +579,7 @@ export default function Home({ initialRaces }) {
 
             {selectedRace && (
                 <div className="modal-overlay" onClick={() => setSelectedRace(null)}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1} autoFocus style={{ outline: 'none' }}>
                         <button className="modal-close" aria-label="Close" onClick={() => setSelectedRace(null)}>&times;</button>
                         <h2 id="modal-title">{selectedRace.formattedRace.name}</h2>
                         <p><i className="fas fa-running"></i> <strong>{t.type}</strong> {selectedRace.formattedRace.type}</p>

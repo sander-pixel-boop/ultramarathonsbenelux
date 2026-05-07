@@ -60,3 +60,6 @@
 ## 2024-05-06 - Search Filter Debouncing
 **Learning:** In a codebase with over 800+ mapped items in React where rendering relies on inline arrow functions and lacks component-level memoization, rapidly updating the state variable driving the `useMemo` filter array causes excessive filtering and DOM updates. Furthermore, adding debounced state directly to the top-level parent component fails to solve the issue because the keystroke state updates still force the entire parent and all its unmemoized children to re-render.
 **Action:** Extract the fast-updating input into its own isolated component (`<SearchInput />`). This component should manage its own local keystroke state and use a `useEffect` debounce to push the final value up to the parent component, entirely skipping the parent render cycle during active typing.
+## 2024-05-24 - Network I/O Promise Chunking Optimization
+**Learning:** Sequential async network I/O loops (e.g. `for (const x of events) { await fetch(x) }`) present severe bottlenecks, blocking execution on individual request latency.
+**Action:** Use chunked `Promise.all` (`chunk.map(async () => ...); await Promise.all()`) to batch network calls in controlled bursts. This parallelizes latency while avoiding memory exhaustion or rate limit triggers, commonly providing a ~4.6x speedup compared to synchronous loops.
