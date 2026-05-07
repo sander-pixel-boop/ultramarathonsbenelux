@@ -153,7 +153,7 @@ export default function Quiz({ races, onClose, onSelectRace, t }) {
             <style jsx>{`
                 .quiz-btn {
                     padding: 12px 20px;
-                    background-color: #3b82f6;
+                    background-color: #475569;
                     color: white;
                     border: none;
                     border-radius: 8px;
@@ -163,7 +163,7 @@ export default function Quiz({ races, onClose, onSelectRace, t }) {
                     text-align: left;
                 }
                 .quiz-btn:hover {
-                    background-color: #2563eb;
+                    background-color: #334155;
                 }
                 .quiz-btn:focus-visible {
                     outline: none;

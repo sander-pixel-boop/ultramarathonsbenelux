@@ -96,7 +96,7 @@ export default function CourseProfile({ race, t }) {
                     <path d={profile.fillPathData} fill="rgba(59, 130, 246, 0.2)" />
 
                     {/* Line */}
-                    <path d={profile.pathData} fill="none" stroke="#3b82f6" strokeWidth="3" strokeLinejoin="round" />
+                    <path d={profile.pathData} fill="none" stroke="#475569" strokeWidth="3" strokeLinejoin="round" />
 
                     {/* Aid Stations */}
                     {profile.aidMarkers.map((marker, i) => (

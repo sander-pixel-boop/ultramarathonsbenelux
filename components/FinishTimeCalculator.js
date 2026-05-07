@@ -109,7 +109,7 @@ export default function FinishTimeCalculator({ race, t }) {
             </div>
             {calculatedTime && (
                 <div style={{ marginTop: '10px', fontWeight: '600', color: '#0f172a' }}>
-                    {txt.timeTitle}: <span style={{ color: '#3b82f6' }}>{calculatedTime}</span>
+                    {txt.timeTitle}: <span style={{ color: '#475569' }}>{calculatedTime}</span>
                 </div>
             )}
         </div>
