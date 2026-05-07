@@ -8,7 +8,7 @@ export default function Disclaimer() {
                 <title>Disclaimer | Ultramarathons Benelux</title>
             </Head>
 
-            <Link href="/" style={{ color: '#3b82f6', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+            <Link href="/" style={{ color: '#475569', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
                 <i className="fas fa-arrow-left"></i> Back to Home
             </Link>
 

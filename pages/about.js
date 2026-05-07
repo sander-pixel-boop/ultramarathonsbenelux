@@ -81,7 +81,7 @@ export default function About() {
                     <Link href="/" style={{
                         display: 'inline-block',
                         padding: '12px 24px',
-                        backgroundColor: '#3b82f6',
+                        backgroundColor: '#475569',
                         color: 'white',
                         textDecoration: 'none',
                         borderRadius: '8px',

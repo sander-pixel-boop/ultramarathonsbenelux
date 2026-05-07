@@ -524,9 +524,9 @@ export default function Home({ initialRaces }) {
                                     setMonthFilter('');
                                     setDistanceFilter('');
                                 }}
-                                style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', transition: 'background-color 0.2s' }}
-                                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
-                                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
+                                style={{ padding: '10px 20px', backgroundColor: '#475569', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', transition: 'background-color 0.2s' }}
+                                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#334155'}
+                                onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#475569'}
                             >
                                 {t.clearFilters}
                             </button>

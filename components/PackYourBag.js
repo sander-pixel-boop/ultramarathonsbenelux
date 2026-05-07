@@ -77,7 +77,7 @@ export default function PackYourBag({ race, t }) {
                             <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                                 {item.affiliateLinks.map((link, i) => (
                                     <a key={i} href={sanitizeUrl(link.url)} target="_blank" rel="noopener noreferrer" style={{
-                                        backgroundColor: link.store === 'Amazon' ? '#f59e0b' : '#3b82f6',
+                                        backgroundColor: link.store === 'Amazon' ? '#f59e0b' : '#475569',
                                         color: 'white',
                                         padding: '4px 8px',
                                         borderRadius: '4px',
