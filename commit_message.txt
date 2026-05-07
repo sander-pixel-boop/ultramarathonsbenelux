@@ -1,6 +1,0 @@
-chore: inject AdSense script into head on all pages
-
-Replaces next/script with a raw <script> tag within the <head>
-in app/layout.js and creates pages/_document.js to ensure the
-script is consistently injected into the <head> of legacy pages,
-meeting the specific requirement of the AdSense integration.

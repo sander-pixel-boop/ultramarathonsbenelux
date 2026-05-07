@@ -1,3 +1,0 @@
-chore: split scrapers for individual sites
-
-I have split the monolithic scripts/scraper.js and root scraper.js scripts into separate files for each targeted website. This isolates scraping failures from one site blocking data collection from the others, and allows independent scheduling on Monday mornings via GitHub actions.
