@@ -80,14 +80,14 @@
         "slug": "ultra-trail-haute-ardenne-jour-1-50-km-2026"
     },
     {
-        "name": "Ultra Trail Haute Ardenne - Jour 1 100 km",
+        "name": "Ultra Trail Haute Ardenne - Jour 1 70 km",
         "country": "Belgium",
-        "distance": "100km",
+        "distance": "70km",
         "date": "01/08/2026",
-        "url": "https://www.utha.be/100km-d1",
+        "url": "https://www.utha.be/70km-d1",
         "city": "Signal de Botrange",
         "terrain": "trail",
-        "slug": "ultra-trail-haute-ardenne-jour-1-100-km-2026"
+        "slug": "ultra-trail-haute-ardenne-jour-1-70-km-2026"
     },
     {
         "name": "Another One Bites the Dust",
@@ -282,6 +282,17 @@
         "slug": "indian-summer-ultra-75-km-2026"
     },
     {
+        "name": "Gelderse Poort Ultra",
+        "country": "Netherlands",
+        "distance": "50km",
+        "date": "26/09/2026",
+        "url": "http://www.trail-events.eu/EVENT-Gelderse-Poort-Ultra-26-09-2026",
+        "city": "Berg en Dal",
+        "lat": 51.8113566,
+        "lng": 5.9170257,
+        "slug": "gelderse-poort-ultra-2026"
+    },
+    {
         "name": "Dutch Backyard Ultra Zeewolde",
         "country": "Netherlands",
         "distance": "36h",
@@ -293,15 +304,15 @@
         "slug": "dutch-backyard-ultra-zeewolde-2026"
     },
     {
-        "name": "Indian Summer Ultra 100 km",
+        "name": "Indian Summer Ultra 50 km",
         "country": "Netherlands",
-        "distance": "100km",
+        "distance": "50km",
         "date": "10/10/2026",
         "url": "http://indiansummerultra.nl",
         "city": "Gasselte",
         "lat": 52.971916,
         "lng": 6.7921853,
-        "slug": "indian-summer-ultra-100-km-2026"
+        "slug": "indian-summer-ultra-50-km-2026"
     },
     {
         "name": "VUT100 (Veluwse Ultra Trail) - 75km",
@@ -316,16 +327,16 @@
         "slug": "vut100-veluwse-ultra-trail-75km-2026"
     },
     {
-        "name": "VUT100 (Veluwse Ultra Trail) - 50km noord",
+        "name": "VUT100 (Veluwse Ultra Trail) - 75km",
         "country": "Netherlands",
-        "distance": "50km",
+        "distance": "75km",
         "date": "25/07/2026",
         "url": "http://www.trail-events.eu/EVENT-Veluwse-Ultra-Trail-VUT100-25-07-2026#/?lang=nl",
         "city": "Elspeet",
         "terrain": "trail",
         "lat": 52.2910649,
         "lng": 5.7884632,
-        "slug": "vut100-veluwse-ultra-trail-50km-noord-2026"
+        "slug": "vut100-veluwse-ultra-trail-75km-2026"
     },
     {
         "name": "Austerlitz Ultra",
@@ -372,15 +383,15 @@
         "slug": "westerwolde-ultra-2026"
     },
     {
-        "name": "BUT100 (Brabants UltraTrail) - 75 km",
+        "name": "BUT100 (Brabants UltraTrail) - 50 km Zuid",
         "country": "Netherlands",
-        "distance": "75km",
-        "date": "27/06/2026",
+        "distance": "50km",
+        "date": "28/06/2026",
         "url": "http://www.trail-events.eu/EVENT-Brabantse-Ultra-Trail-BUT100-27-06-2026#/?lang=nl",
         "city": "Leende",
         "lat": 51.3484037,
         "lng": 5.5518897,
-        "slug": "but100-brabants-ultratrail-75-km-2026"
+        "slug": "but100-brabants-ultratrail-50-km-zuid-2026"
     },
     {
         "name": "BUT100 (Brabants UltraTrail) - 50 km Noord",
@@ -516,6 +527,17 @@
         "lat": 52.0102642,
         "lng": 5.4332757,
         "slug": "uhut-utrechtseheuvelultratrail-100km-2026"
+    },
+    {
+        "name": "VAM8",
+        "country": "Netherlands",
+        "distance": "8h",
+        "date": "30/05/2026",
+        "url": "https://runforestrun.nl/vam",
+        "city": "Wijster",
+        "lat": 52.8148592,
+        "lng": 6.5163531,
+        "slug": "vam8-2026"
     },
     {
         "name": "Sri Chinmoy 50 km-Lauf Amsterdam",
