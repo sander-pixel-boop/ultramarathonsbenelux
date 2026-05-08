@@ -63,3 +63,6 @@
 ## 2024-05-24 - Network I/O Promise Chunking Optimization
 **Learning:** Sequential async network I/O loops (e.g. `for (const x of events) { await fetch(x) }`) present severe bottlenecks, blocking execution on individual request latency.
 **Action:** Use chunked `Promise.all` (`chunk.map(async () => ...); await Promise.all()`) to batch network calls in controlled bursts. This parallelizes latency while avoiding memory exhaustion or rate limit triggers, commonly providing a ~4.6x speedup compared to synchronous loops.
+## 2026-05-04 - Quiz Results Refactor
+**Learning:** The previous implementation used .map() and object spreading inside a quiz results calculation function, allocating many objects unnecessarily before a sort, contributing to GC overhead and increasing execution time from ~550ms up to ~1100ms.
+**Action:** Use primitive loops to accumulate items and scores into an array, sort in-place, and only return a sliced new object copy of the top results.
