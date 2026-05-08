@@ -34,6 +34,7 @@ export default function SearchInput({ value, onChange, placeholder, t }) {
                 <button
                     type="button"
                     aria-label={t.clearSearch}
+                    title={t.clearSearch}
                     onClick={() => {
                         setInputValue('');
                         onChange('');

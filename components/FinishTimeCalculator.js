@@ -89,6 +89,9 @@ export default function FinishTimeCalculator({ race, t }) {
                 {txt.title}
             </h3>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <label htmlFor="pb-input" style={{ fontSize: '0.9em', color: '#475569', fontWeight: '500' }}>
+                    {txt.pbLabel}
+                </label>
                 <select
                     value={pbType}
                     onChange={e => setPbType(e.target.value)}
@@ -99,9 +102,9 @@ export default function FinishTimeCalculator({ race, t }) {
                     <option value="marathon">Marathon PB</option>
                 </select>
                 <input
+                    id="pb-input"
                     type="text"
                     placeholder="e.g. 00:45 or 03:30"
-                    aria-label={txt.pbLabel.replace(':', '')}
                     value={pbTimeStr}
                     onChange={e => setPbTimeStr(e.target.value)}
                     style={{ padding: '6px', borderRadius: '4px', border: '1px solid #cbd5e1', flex: 2, minWidth: '120px' }}
