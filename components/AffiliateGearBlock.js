@@ -1,4 +1,5 @@
 import { getGearRecommendations } from '../utils/gear';
+import { sanitizeUrl } from '../utils/sanitizeUrl';
 
 export default function AffiliateGearBlock({ elev_m, surface_trail_pct, date_iso }) {
     const { highElevation, technicalTrail, winter, standardKit } = getGearRecommendations(elev_m, surface_trail_pct, date_iso);
@@ -9,16 +10,16 @@ export default function AffiliateGearBlock({ elev_m, surface_trail_pct, date_iso
             <h3>Recommended Gear</h3>
             <ul>
                 {highElevation && (
-                    <li>⛰️ <strong>Recommended Poles & Compression:</strong> Essential for the high elevation gain. <a href={`https://www.amazon.com/s?k=trail+running+poles&tag=${amazonTag}`} target="_blank" rel="noopener noreferrer">Shop Poles</a></li>
+                    <li>⛰️ <strong>Recommended Poles & Compression:</strong> Essential for the high elevation gain. <a href={sanitizeUrl(`https://www.amazon.com/s?k=trail+running+poles&tag=${amazonTag}`)} target="_blank" rel="noopener noreferrer">Shop Poles</a></li>
                 )}
                 {technicalTrail && (
-                    <li>👟 <strong>Top Technical Trail Shoes:</strong> Required for heavy trail surfaces. <a href={`https://www.amazon.com/s?k=technical+trail+running+shoes&tag=${amazonTag}`} target="_blank" rel="noopener noreferrer">Shop Shoes</a></li>
+                    <li>👟 <strong>Top Technical Trail Shoes:</strong> Required for heavy trail surfaces. <a href={sanitizeUrl(`https://www.amazon.com/s?k=technical+trail+running+shoes&tag=${amazonTag}`)} target="_blank" rel="noopener noreferrer">Shop Shoes</a></li>
                 )}
                 {winter && (
-                    <li>❄️ <strong>Winter Ultra Survival Kit:</strong> Stay warm during the cold months. <a href={`https://www.amazon.com/s?k=winter+running+gear&tag=${amazonTag}`} target="_blank" rel="noopener noreferrer">Shop Winter Gear</a></li>
+                    <li>❄️ <strong>Winter Ultra Survival Kit:</strong> Stay warm during the cold months. <a href={sanitizeUrl(`https://www.amazon.com/s?k=winter+running+gear&tag=${amazonTag}`)} target="_blank" rel="noopener noreferrer">Shop Winter Gear</a></li>
                 )}
                 {standardKit && (
-                    <li>🎒 <strong>Standard Ultra Kit:</strong> Vest, hydration, and nutrition. <a href={`https://www.amazon.com/s?k=trail+running+vest&tag=${amazonTag}`} target="_blank" rel="noopener noreferrer">Shop Gear</a></li>
+                    <li>🎒 <strong>Standard Ultra Kit:</strong> Vest, hydration, and nutrition. <a href={sanitizeUrl(`https://www.amazon.com/s?k=trail+running+vest&tag=${amazonTag}`)} target="_blank" rel="noopener noreferrer">Shop Gear</a></li>
                 )}
             </ul>
         </div>
