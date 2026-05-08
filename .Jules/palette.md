@@ -23,3 +23,11 @@
 ## 2024-05-18 - Modal Focus Management
 **Learning:** Screen readers and keyboard users may not realize a modal has opened unless focus is explicitly moved into the modal container.
 **Action:** When implementing custom modals, add `tabIndex={-1}`, `autoFocus`, and `style={{ outline: 'none' }}` to the modal container (the element with `role="dialog"`) so focus is automatically captured without showing a persistent visual outline.
+
+## 2024-05-23 - Explicit labels vs placeholders
+**Learning:** Using placeholders as the only visual label for inputs is an accessibility and UX anti-pattern. Placeholders disappear when text is entered, forcing users to rely on memory. While `aria-label` is sufficient for screen readers, it does not help visual users.
+**Action:** When creating form inputs, avoid relying solely on placeholders or `aria-label`. Always provide a visible `<label>` element explicitly linked to the input via `htmlFor` and `id` to ensure clarity for all users.
+
+## 2024-05-23 - Hover feedback for icon-only buttons
+**Learning:** While `aria-label` makes icon-only buttons accessible to screen readers, sighted users relying on a mouse may not understand the icon's meaning without hovering.
+**Action:** When using icon-only buttons, always provide a `title` attribute in addition to the `aria-label`. This provides a native tooltip on hover, improving clarity for sighted mouse users without cluttering the UI.
