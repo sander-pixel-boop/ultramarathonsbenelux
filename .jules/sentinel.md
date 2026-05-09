@@ -24,3 +24,7 @@
 **Vulnerability:** Cross-Site Scripting (XSS) via unescaped characters in JSON-LD script blocks using `dangerouslySetInnerHTML`.
 **Learning:** Using `JSON.stringify()` directly inside `dangerouslySetInnerHTML` for `<script type="application/ld+json">` blocks is unsafe. Characters like `<`, `>`, and `&` are not escaped by `JSON.stringify()`, which can allow an attacker to prematurely close the `<script>` tag and inject malicious HTML or JavaScript if the data source is compromised or contains user input.
 **Prevention:** Always use a utility function (like `safeJsonLd`) to properly escape HTML-sensitive characters (`<`, `>`, `&`) and Unicode line terminators (` `, ` `) before rendering JSON data into the DOM via `dangerouslySetInnerHTML`.
+## 2026-05-09 - [Missing Permissions-Policy Security Header]
+**Vulnerability:** The application was missing the `Permissions-Policy` HTTP header, which could allow compromised code or third-party scripts to access sensitive browser features (like the camera, microphone, or geolocation) without explicit restriction by the server.
+**Learning:** Security headers act as a defense-in-depth measure. Relying only on users to deny browser prompts is less robust than proactively disabling unneeded features at the application level via the `Permissions-Policy` header.
+**Prevention:** Configure Next.js headers (in `next.config.js`) to include `Permissions-Policy` with a strict default (e.g., `camera=(), microphone=(), geolocation=(), browsing-topics=()`) to disable unused features.
