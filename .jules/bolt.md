@@ -66,3 +66,6 @@
 ## 2026-05-04 - Quiz Results Refactor
 **Learning:** The previous implementation used .map() and object spreading inside a quiz results calculation function, allocating many objects unnecessarily before a sort, contributing to GC overhead and increasing execution time from ~550ms up to ~1100ms.
 **Action:** Use primitive loops to accumulate items and scores into an array, sort in-place, and only return a sliced new object copy of the top results.
+## 2024-05-24 - Pre-calculating Volatile Sort and Filter Keys
+**Learning:** React inner loops (like `Array.prototype.filter()` or `.sort()`) operating inside highly volatile context like `pages/index.js` cause severe performance degradation (O(N) mapping leading into O(N log N) sorting executions multiplied by user interaction/scrolling rate). String operations, Regex matching, or returning `new Date()` locally inside `.filter()` operations scales very poorly and leads to UI thread blocking.
+**Action:** Extract all variable computation out of inner react loops. Compute numerical sorting, filtering values, or epoch representations inside a single-pass `useMemo` block that only fires on `initialRaces` dataset changes. Feed the extracted keys downstream to volatile elements (like `FOMO.js`), thereby allowing the volatile functions to strictly deal with O(1) integer/float comparisons.
