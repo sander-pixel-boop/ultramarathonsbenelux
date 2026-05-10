@@ -31,3 +31,7 @@
 ## 2024-05-23 - Hover feedback for icon-only buttons
 **Learning:** While `aria-label` makes icon-only buttons accessible to screen readers, sighted users relying on a mouse may not understand the icon's meaning without hovering.
 **Action:** When using icon-only buttons, always provide a `title` attribute in addition to the `aria-label`. This provides a native tooltip on hover, improving clarity for sighted mouse users without cluttering the UI.
+
+## 2026-05-10 - Consistent accessibility on replicated UI patterns
+**Learning:** When a UI pattern (like interactive language flag images) is duplicated across multiple pages (e.g., `index.js` and `about.js`), accessibility features like keyboard event handlers, `tabIndex`, and ARIA roles are often missed in the replicated versions, creating an inconsistent experience for non-mouse users.
+**Action:** When auditing or implementing interactive elements that exist on multiple pages, ensure accessibility standards are applied consistently across all instances, not just the main page.
