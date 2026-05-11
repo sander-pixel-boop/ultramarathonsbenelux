@@ -25,6 +25,10 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: "frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content;",
           },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+          },
         ],
       },
     ];
