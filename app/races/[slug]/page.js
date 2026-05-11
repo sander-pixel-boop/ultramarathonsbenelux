@@ -7,10 +7,14 @@ import { safeJsonLd } from '../../../utils/jsonLd';
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'races.json');
 
+let cachedRaces = null;
+
 async function getRaces() {
+    if (cachedRaces) return cachedRaces;
     try {
         const data = await fs.promises.readFile(DATA_FILE, 'utf8');
-        return JSON.parse(data);
+        cachedRaces = JSON.parse(data);
+        return cachedRaces;
     } catch (err) {
         if (err.code === 'ENOENT') return [];
         throw err;

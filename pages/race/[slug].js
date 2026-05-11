@@ -5,6 +5,16 @@ import path from 'path';
 import { sanitizeUrl } from '../../utils/sanitizeUrl';
 import { safeJsonLd } from '../../utils/jsonLd';
 
+let cachedRaces = null;
+
+function getRacesData() {
+  if (cachedRaces) return cachedRaces;
+  const dataPath = path.join(process.cwd(), 'data/races.json');
+  const racesJson = fs.readFileSync(dataPath, 'utf8');
+  cachedRaces = JSON.parse(racesJson);
+  return cachedRaces;
+}
+
 export default function RacePage({ race }) {
   if (!race) return <div>Race not found</div>;
 
@@ -57,9 +67,7 @@ export default function RacePage({ race }) {
 }
 
 export async function getStaticPaths() {
-  const dataPath = path.join(process.cwd(), 'data/races.json');
-  const racesJson = fs.readFileSync(dataPath, 'utf8');
-  const races = JSON.parse(racesJson);
+  const races = getRacesData();
 
   // Generate paths based on slugs.
   // Need to ensure all races have slugs!
@@ -73,9 +81,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const dataPath = path.join(process.cwd(), 'data/races.json');
-  const racesJson = fs.readFileSync(dataPath, 'utf8');
-  const races = JSON.parse(racesJson);
+  const races = getRacesData();
 
   const race = races.find((r) => r.slug === params.slug);
 
