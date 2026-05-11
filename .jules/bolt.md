@@ -66,3 +66,7 @@
 ## 2026-05-04 - Quiz Results Refactor
 **Learning:** The previous implementation used .map() and object spreading inside a quiz results calculation function, allocating many objects unnecessarily before a sort, contributing to GC overhead and increasing execution time from ~550ms up to ~1100ms.
 **Action:** Use primitive loops to accumulate items and scores into an array, sort in-place, and only return a sliced new object copy of the top results.
+
+## 2024-05-18 - Fast-fail Array Filtering with Precomputed Primitives
+**Learning:** Parsing strings into complex objects like `Date` inside `Array.prototype.filter` or `Array.prototype.sort` iterations generates massive GC overhead and blocks the main thread when called on large lists.
+**Action:** When filtering or determining relations between list items dynamically (like finding the "next available race" in FOMO.js), always hoist parsing operations to an initial mapping block outside the component lifecycle (or wrapped tightly in a `useMemo`) that precalculates static integers (like `_regDateTime`, `_fomoMonth`). Filter functions can then safely do fast-fail integer comparisons without memory allocation overhead.

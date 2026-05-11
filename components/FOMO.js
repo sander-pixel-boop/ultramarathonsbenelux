@@ -14,40 +14,26 @@ function FOMO({ race, allRaces, onSelectRace }) {
     const [nextRace, setNextRace] = useState(null);
 
     useEffect(() => {
-        let targetDateStr = race.registration_close || race.date;
-        if (!targetDateStr) return;
-
-        const targetDate = parseDate(targetDateStr);
-        if (!targetDate) return;
-
-        targetDate.setHours(23, 59, 59, 999);
+        // ⚡ Bolt Performance Optimization:
+        // Why: Parsing strings into Date objects inside .filter() and .sort() caused extreme GC overhead.
+        // Impact: Precomputed integer/timestamp checks avoid repeating O(N) array mapping tasks.
+        if (race._targetDateTime === undefined || race._targetDateTime <= 0) return;
 
         const findNextRace = () => {
-            const raceDate = parseDate(race.date);
-            if (!raceDate) return null;
+            if (race._fomoMonth === undefined || race._fomoMonth < 0) return null;
 
-            const currentMonth = raceDate.getMonth();
-            const currentYear = raceDate.getFullYear();
+            const currentMonth = race._fomoMonth;
+            const currentYear = race._fomoYear;
+            const nowTime = new Date().getTime();
 
             const candidates = allRaces.filter(r => {
                 if (r.name === race.name) return false;
 
-                const rDateObj = parseDate(r.date);
-                if (!rDateObj) return false;
-
-                if (rDateObj.getMonth() !== currentMonth || rDateObj.getFullYear() !== currentYear) return false;
+                // Fast-fail primitive checks
+                if (r._fomoMonth !== currentMonth || r._fomoYear !== currentYear) return false;
 
                 // Ensure the alternative race is still open for registration
-                let rRegDate = rDateObj;
-                if (r.registration_close) {
-                    const parsedReg = parseDate(r.registration_close);
-                    if (parsedReg) {
-                        parsedReg.setHours(23, 59, 59, 999);
-                        rRegDate = parsedReg;
-                    }
-                }
-
-                if (rRegDate.getTime() < new Date().getTime()) return false;
+                if (r._regDateTime < nowTime) return false;
 
                 return true;
             });
@@ -55,7 +41,7 @@ function FOMO({ race, allRaces, onSelectRace }) {
             if (candidates.length > 0) {
                 const sortMapped = [];
                 for(let i=0; i<candidates.length; i++) {
-                    sortMapped.push({ item: candidates[i], sortKey: parseDate(candidates[i].date).getTime() });
+                    sortMapped.push({ item: candidates[i], sortKey: candidates[i]._raceDateTime });
                 }
                 sortMapped.sort((a, b) => {
                     return a.sortKey - b.sortKey;
@@ -68,7 +54,7 @@ function FOMO({ race, allRaces, onSelectRace }) {
 
         const updateStatus = () => {
             const now = new Date();
-            const diff = targetDate.getTime() - now.getTime();
+            const diff = race._targetDateTime - now.getTime();
 
             if (diff <= 0) {
                 setIsSoldOut(true);
