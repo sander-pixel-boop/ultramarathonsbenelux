@@ -338,6 +338,10 @@ export default function Home({ initialRaces }) {
         if (!initialRaces) return [];
         return initialRaces.map(r => {
             const parsedDate = r.date ? parseStandardDate(r.date) : null;
+            let regParsed = parsedDate;
+            if (r.registration_close) {
+                regParsed = parseStandardDate(r.registration_close) || parsedDate;
+            }
             return {
                 ...r,
                 _lowerName: r.name ? r.name.toLowerCase() : '',
@@ -348,20 +352,10 @@ export default function Home({ initialRaces }) {
                 _parsedYear: parsedDate ? String(parsedDate.year) : null,
                 _parsedMonth: parsedDate ? String(parsedDate.month).padStart(2, '0') : null,
                 _raceDateTime: parsedDate ? new Date(parsedDate.year, parsedDate.month - 1, parsedDate.day).getTime() : 0,
-                _fomoMonth: parsedDate ? parsedDate.month - 1 : -1,
-                _fomoYear: parsedDate ? parsedDate.year : -1,
-                _regDateTime: (() => {
-                    let t = parsedDate ? new Date(parsedDate.year, parsedDate.month - 1, parsedDate.day).getTime() : 0;
-                    if (r.registration_close) {
-                        const p = parseStandardDate(r.registration_close);
-                        if (p) t = new Date(p.year, p.month - 1, p.day, 23, 59, 59, 999).getTime();
-                    }
-                    return t;
-                })(),
-                _targetDateTime: (() => {
-                    const p = parseStandardDate(r.registration_close || r.date);
-                    return p ? new Date(p.year, p.month - 1, p.day, 23, 59, 59, 999).getTime() : 0;
-                })()
+                _fomoMonth: parsedDate ? parsedDate.month : null,
+                _fomoYear: parsedDate ? parsedDate.year : null,
+                _regDateTime: regParsed ? new Date(regParsed.year, regParsed.month - 1, regParsed.day, 23, 59, 59, 999).getTime() : 0,
+                _targetDateTime: regParsed ? new Date(regParsed.year, regParsed.month - 1, regParsed.day, 23, 59, 59, 999).getTime() : 0
             };
         });
     }, [initialRaces]);

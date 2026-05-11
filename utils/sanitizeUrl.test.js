@@ -24,6 +24,16 @@ test('sanitizeUrl', async (t) => {
     await t.test('returns # for unsafe protocols', () => {
         assert.strictEqual(sanitizeUrl('javascript:alert(1)'), '#');
         assert.strictEqual(sanitizeUrl('data:text/html,<html></html>'), '#');
+        assert.strictEqual(sanitizeUrl('vbscript:msgbox(1)'), '#');
+    });
+
+    await t.test('returns # for XSS bypass attempts using control characters and whitespace', () => {
+        assert.strictEqual(sanitizeUrl(' javascript:alert(1)'), '#');
+        assert.strictEqual(sanitizeUrl('j a v a s c r i p t :alert(1)'), '#');
+        assert.strictEqual(sanitizeUrl('\x01javascript:alert(1)'), '#');
+        assert.strictEqual(sanitizeUrl('java\nscript:alert(1)'), '#');
+        assert.strictEqual(sanitizeUrl('javascript\t:alert(1)'), '#');
+        assert.strictEqual(sanitizeUrl('JaVaScRiPt:alert(1)'), '#');
     });
 
     await t.test('returns # for malformed URLs that cause URL constructor to throw', () => {

@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { parseStandardDate } from '../utils/date';
-
-function parseDate(dateStr) {
-    const parsed = parseStandardDate(dateStr);
-    if (parsed) {
-        return new Date(parsed.year, parsed.month - 1, parsed.day);
-    }
-    return null;
-}
 
 function FOMO({ race, allRaces, onSelectRace }) {
     const [isSoldOut, setIsSoldOut] = useState(false);
     const [nextRace, setNextRace] = useState(null);
 
     useEffect(() => {
-        // ⚡ Bolt Performance Optimization:
-        // Why: Parsing strings into Date objects inside .filter() and .sort() caused extreme GC overhead.
-        // Impact: Precomputed integer/timestamp checks avoid repeating O(N) array mapping tasks.
-        if (race._targetDateTime === undefined || race._targetDateTime <= 0) return;
+        if (!race._targetDateTime) return;
 
         const findNextRace = () => {
-            if (race._fomoMonth === undefined || race._fomoMonth < 0) return null;
+            if (!race._fomoMonth || !race._fomoYear) return null;
 
             const currentMonth = race._fomoMonth;
             const currentYear = race._fomoYear;
@@ -29,10 +17,8 @@ function FOMO({ race, allRaces, onSelectRace }) {
             const candidates = allRaces.filter(r => {
                 if (r.name === race.name) return false;
 
-                // Fast-fail primitive checks
                 if (r._fomoMonth !== currentMonth || r._fomoYear !== currentYear) return false;
 
-                // Ensure the alternative race is still open for registration
                 if (r._regDateTime < nowTime) return false;
 
                 return true;
@@ -53,8 +39,8 @@ function FOMO({ race, allRaces, onSelectRace }) {
         };
 
         const updateStatus = () => {
-            const now = new Date();
-            const diff = race._targetDateTime - now.getTime();
+            const nowTime = new Date().getTime();
+            const diff = race._targetDateTime - nowTime;
 
             if (diff <= 0) {
                 setIsSoldOut(true);
