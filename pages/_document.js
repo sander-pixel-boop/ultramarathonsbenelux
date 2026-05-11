@@ -4,7 +4,9 @@ export default function Document() {
   return (
     <Html lang="nl">
       <Head>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8237448051425451" crossOrigin="anonymous"></script>
+        {process.env.NEXT_PUBLIC_ADSENSE_ID && (
+          <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`} crossOrigin="anonymous"></script>
+        )}
       </Head>
       <body>
         <Main />

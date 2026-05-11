@@ -2,7 +2,9 @@ export default function RootLayout({ children }) {
     return (
         <html lang="nl">
             <head>
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8237448051425451" crossOrigin="anonymous"></script>
+                {process.env.NEXT_PUBLIC_ADSENSE_ID && (
+                    <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`} crossOrigin="anonymous"></script>
+                )}
             </head>
             <body>
                 <header style={{ padding: '10px 20px', backgroundColor: '#f8f9fa', borderBottom: '1px solid #ddd' }}>
