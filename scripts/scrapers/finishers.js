@@ -46,14 +46,31 @@ async function scrape_finishers() {
                         }
                     });
 
+                    let distance = "Ultra";
+                    let date = "TBD";
+
+                    const bodyText = event_soup('body').text();
+
+                    // Extract distance
+                    const distMatch = bodyText.match(/\b(\d+(?:\.\d+)?)\s*(km|mi|miles|k)\b/i);
+                    if (distMatch) {
+                        distance = distMatch[0];
+                    }
+
+                    // Extract date
+                    const dateMatch = bodyText.match(/\b(\d{1,2})\s+(january|february|march|april|may|june|july|august|september|october|november|december|januari|februari|maart|mei|juni|juli|augustus|oktober|jan|feb|mar|apr|jun|jul|aug|sep|oct|nov|dec)\s+(\d{4})\b/i);
+                    if (dateMatch) {
+                        date = dateMatch[0];
+                    }
+
                     return {
                         name: title,
                         country: "Netherlands",
-                        distance: "Ultra",
-                        date: "TBD",
+                        distance: distance,
+                        date: date,
                         url: original_url,
                         city: ""
-                    };
+                    }
                 } catch {
                     return null;
                 }

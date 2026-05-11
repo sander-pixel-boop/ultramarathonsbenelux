@@ -30,6 +30,8 @@ async function scrape_ultraracecalendar() {
                 const event_url = link_elem.length > 0 ? link_elem.attr('href') : "";
                 let original_url = event_url;
 
+                let distance = "Ultra";
+
                 if (event_url) {
                     try {
                         const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
@@ -43,13 +45,19 @@ async function scrape_ultraracecalendar() {
                                 return false; // break
                             }
                         });
+
+                        const bodyText = event_soup('body').text();
+                        const distMatch = bodyText.match(/\b(\d+(?:\.\d+)?)\s*(km|mi|miles|k)\b/i);
+                        if (distMatch) {
+                            distance = distMatch[0];
+                        }
                     } catch {}
                 }
 
                 return {
                     name: title,
                     country: "Unknown",
-                    distance: "Ultra",
+                    distance: distance,
                     date: date_str,
                     url: original_url,
                     city: ""

@@ -37,6 +37,7 @@ async function scrape_hardloopkalender() {
 
                 let full_url = event_link.startsWith('/') ? "https://hardloopkalender.nl" + event_link : event_link;
                 let original_url = full_url;
+                let distance = "Ultra";
 
                 try {
                     const event_page = await fetchWithTimeout(full_url, { headers, timeout: 15000 });
@@ -65,12 +66,18 @@ async function scrape_hardloopkalender() {
                             }
                         });
                     }
+
+                    const bodyText = event_soup('body').text();
+                    const distMatch = bodyText.match(/\b(\d+(?:\.\d+)?)\s*(km|mi|miles|k)\b/i);
+                    if (distMatch) {
+                        distance = distMatch[0];
+                    }
                 } catch {}
 
                 return {
                     name: title,
                     country: "Netherlands",
-                    distance: "Ultra",
+                    distance: distance,
                     date: date_str,
                     url: original_url,
                     city: ""

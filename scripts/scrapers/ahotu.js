@@ -25,6 +25,9 @@ async function scrape_ahotu() {
                 let event_url = event.attr('href') || '';
                 let original_url = event_url;
 
+                let distance = "Ultra";
+                let date = "TBD";
+
                 if (event_url) {
                     if (!event_url.startsWith('http')) {
                         event_url = 'https://www.ahotu.com' + event_url;
@@ -34,6 +37,7 @@ async function scrape_ahotu() {
                         const event_html = await event_page.text();
                         const event_soup = cheerio.load(event_html);
 
+                        // Extract actual URL
                         event_soup('a[href]').each((i, link) => {
                             const l_href = $(link).attr('href');
                             if (l_href && l_href.includes('http') && !l_href.includes('ahotu.com') && !l_href.includes('facebook')) {
@@ -41,14 +45,30 @@ async function scrape_ahotu() {
                                 return false; // break
                             }
                         });
+
+                        // Extract distance and date from page text
+                        const bodyText = event_soup('body').text();
+
+                        // Extract distance
+                        const distMatch = bodyText.match(/\b(\d+(?:\.\d+)?)\s*(km|mi|miles|k)\b/i);
+                        if (distMatch) {
+                            distance = distMatch[0];
+                        }
+
+                        // Extract date
+                        const dateMatch = bodyText.match(/\b(\d{1,2})\s+(january|february|march|april|may|june|july|august|september|october|november|december|januari|februari|maart|mei|juni|juli|augustus|oktober|jan|feb|mar|apr|jun|jul|aug|sep|oct|nov|dec)\s+(\d{4})\b/i);
+                        if (dateMatch) {
+                            date = dateMatch[0];
+                        }
+
                     } catch {}
                 }
 
                 return {
                     name: title,
                     country: "Belgium",
-                    distance: "Ultra",
-                    date: "TBD",
+                    distance: distance,
+                    date: date,
                     url: original_url,
                     city: ""
                 };
