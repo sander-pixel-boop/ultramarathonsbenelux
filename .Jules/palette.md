@@ -31,3 +31,7 @@
 ## 2024-05-23 - Hover feedback for icon-only buttons
 **Learning:** While `aria-label` makes icon-only buttons accessible to screen readers, sighted users relying on a mouse may not understand the icon's meaning without hovering.
 **Action:** When using icon-only buttons, always provide a `title` attribute in addition to the `aria-label`. This provides a native tooltip on hover, improving clarity for sighted mouse users without cluttering the UI.
+
+## 2024-05-24 - Added Skip to Content link
+**Learning:** Screen reader and keyboard-only users must tab through every header navigation link (like language flags and blog links) before reaching the primary application content, causing a tedious and frustrating experience.
+**Action:** Always implement a visually hidden "Skip to main content" link as the first focusable element in the DOM. It should become visible on focus and link directly to the `<main>` container (which should have an `id` and `tabIndex={-1}`).
