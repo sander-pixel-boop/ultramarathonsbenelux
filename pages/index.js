@@ -7,6 +7,8 @@ import { getTranslatedCountry, formatLocationStr } from '../utils/country';
 import dynamic from 'next/dynamic';
 import SearchInput from '../components/SearchInput';
 
+let cachedMappedRaces = null;
+
 const i18n = {
     en: {
         title: "Ultramarathons Benelux",
@@ -627,6 +629,14 @@ export default function Home({ initialRaces }) {
 }
 
 export async function getStaticProps() {
+    if (cachedMappedRaces) {
+        return {
+            props: {
+                initialRaces: cachedMappedRaces
+            }
+        };
+    }
+
     let races = [];
     try {
         const fs = require('fs').promises;
@@ -640,6 +650,7 @@ export async function getStaticProps() {
             distance: r.dist_km ? r.dist_km + 'km' : r.distance,
             url: r.registration_url || r.official_site_url || r.url
         }));
+        cachedMappedRaces = races;
     } catch (e) {
         console.error("Error reading races.json during build:", e);
     }
