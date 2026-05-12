@@ -41,6 +41,7 @@ async function scrape_ultraned() {
                 }
 
                 let original_url = event_url;
+                let distance = "Ultra";
                 try {
                     if (event_url) {
                         const event_page = await fetchWithTimeout(event_url, { headers, timeout: 15000 });
@@ -59,13 +60,19 @@ async function scrape_ultraned() {
                                 }
                             });
                         }
+
+                        const bodyText = event_soup('body').text();
+                        const distMatch = bodyText.match(/\b(\d+(?:\.\d+)?)\s*(km|mi|miles|k)\b/i);
+                        if (distMatch) {
+                            distance = distMatch[0];
+                        }
                     }
                 } catch {}
 
                 return {
                     name: title,
                     country: "Netherlands",
-                    distance: "Ultra",
+                    distance: distance,
                     date: date_str,
                     url: original_url,
                     city: ""
