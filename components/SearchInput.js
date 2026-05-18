@@ -21,12 +21,14 @@ export default function SearchInput({ value, onChange, placeholder, t }) {
     return (
         <div className="input-group">
             <i className="fas fa-search"></i>
+            {/* 🛡️ Sentinel: Added maxLength to prevent excessively large strings (DoS risk) */}
             <input
                 type="text"
                 id="search"
                 placeholder={placeholder}
                 aria-label={placeholder}
                 value={inputValue}
+                maxLength={100}
                 onChange={(e) => setInputValue(e.target.value)}
                 style={{ paddingRight: inputValue ? '40px' : '15px' }}
             />
