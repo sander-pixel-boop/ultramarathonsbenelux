@@ -41,7 +41,8 @@ const i18n = {
         noRacesFound: "No races found",
         tryAdjusting: "Try adjusting your search or filters to find what you're looking for.",
         clearFilters: "Clear filters",
-        clearSearch: "Clear search"
+        clearSearch: "Clear search",
+        skipToMain: "Skip to main content"
     },
     nl: {
         title: "Ultramarathons Benelux",
@@ -76,7 +77,8 @@ const i18n = {
         noRacesFound: "Geen races gevonden",
         tryAdjusting: "Probeer je zoekopdracht of filters aan te passen om te vinden wat je zoekt.",
         clearFilters: "Wis filters",
-        clearSearch: "Wis zoekopdracht"
+        clearSearch: "Wis zoekopdracht",
+        skipToMain: "Ga direct naar hoofdinhoud"
     },
     fr: {
         title: "Ultramarathons Benelux",
@@ -111,7 +113,8 @@ const i18n = {
         noRacesFound: "Aucune course trouvée",
         tryAdjusting: "Essayez de modifier votre recherche ou vos filtres pour trouver ce que vous cherchez.",
         clearFilters: "Effacer les filtres",
-        clearSearch: "Effacer la recherche"
+        clearSearch: "Effacer la recherche",
+        skipToMain: "Passer au contenu principal"
     }
 };
 
@@ -441,6 +444,26 @@ export default function Home({ initialRaces }) {
                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
             </Head>
+            <a
+                href="#main-content"
+                style={{
+                    position: 'absolute',
+                    top: '-40px',
+                    left: '0px',
+                    background: '#0f172a',
+                    color: 'white',
+                    padding: '8px',
+                    zIndex: 2000,
+                    transition: 'top 0.2s',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    borderRadius: '0 0 8px 0'
+                }}
+                onFocus={(e) => e.currentTarget.style.top = '0px'}
+                onBlur={(e) => e.currentTarget.style.top = '-40px'}
+            >
+                {t.skipToMain}
+            </a>
 
             <div className="language-flags">
                 <Link href="/blog" style={{ color: 'white', marginRight: '20px', textDecoration: 'none', fontWeight: '500', fontSize: '1.2em' }}>Blog</Link>
@@ -471,7 +494,7 @@ export default function Home({ initialRaces }) {
                 </button>
             </div>
 
-            <div className="container">
+            <main id="main-content" className="container" tabIndex={-1} style={{ outline: 'none' }}>
                 <div className="controls">
                     <SearchInput value={search} onChange={setSearch} placeholder={t.searchPlaceholder} t={t} />
                     <select id="country-filter" className="filter-select" aria-label="Filter by country" value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)}>
@@ -564,7 +587,7 @@ export default function Home({ initialRaces }) {
                         );
                     })}
                 </div>
-            </div>
+            </main>
 
             {showQuiz && (
                 <div className="modal-overlay" onClick={() => setShowQuiz(false)}>
